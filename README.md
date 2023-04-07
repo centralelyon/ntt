@@ -1,5 +1,7 @@
 # ntt
 
+[![CircleCI](https://dl.circleci.com/status-badge/img/gh/centralelyon/ntt/tree/main.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/centralelyon/ntt/tree/main)
+
 _A modular video processing pipeline_
 
 To use it in your project, add the following to your `requirements.txt` file:
