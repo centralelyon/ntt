@@ -26,7 +26,6 @@ if __name__ == "__main__":
                     frame_path_out = "samples/",
                     frame_name_out = "C0005.jpg" 
                     )
-
 ```
 
 ## Repository structure
@@ -38,8 +37,20 @@ if __name__ == "__main__":
 ├── samples : sample videos, images and data
 │   ├── (files)
 │   └── ...
+├── ntt : the main module
+│   ├── README.md
+│   ├── __init__.py
+│   ├── frames : module for frame extraction
+│   │   └── ...
+│   ├── ...
+│   └── ...
+├── .circleci : configuration for CircleCI
+│   ├── config.yml
+│   └── ...
+├── .gitignore
+├── Dockerfile
+└──
 ```
-
 
 ## Module structure
 
@@ -47,27 +58,29 @@ Each module structure is as follows:
 
 ```bash
 .
-├── Dockerfile
-├── README.md
-├── requirements.txt
-├── name_of_module
+├── ...
+├── ntt/
+│   ├── name_of_the_module
 │   ├── README.md
 │   ├── __init__.py
-│   ├── function1.py
-│   ├── function2.py
-│   ├── examples
+│   ├── name_of_the_module/
+│   │   ├── README.md
 │   │   ├── __init__.py
-│   │   ├── example_my_function1.py
-│   │   └── example_my_function2.py
-│   ├── tests
-│   │   ├── __init__.py
-│   │   ├── test_my_function1.py
-│   │   └── test_my_function2.py
+│   │   ├── name_of_the_function1.py
+│   │   ├── name_of_the_function2.py
+│   │   ├── examples
+│   │   │   ├── __init__.py
+│   │   │   ├── example_name_of_the_function1.py
+│   │   │   └── example_name_of_the_function2.py
+│   │   ├── tests
+│   │   │   ├── __init__.py
+│   │   │   ├── test_name_of_the_function1.py
+│   │   │   └── test_name_of_the_function2.py
+│   │   └── ...
+│   ├── ...
 │   └── ...
-
+└── ...
 ```
-
-
 
 ## Tests
 
@@ -87,7 +100,7 @@ The project is configured to run tests on CircleCI. The configuration file is `.
 
 - build the image
 
-> docker build -t app . 
+> docker build -t ntt . 
 
 ```bash
 $ docker build -t ntt .
@@ -97,7 +110,7 @@ $ docker build -t ntt .
 
 - run the image
 
-> docker run --rm -v ${PWD}:/app app
+> docker run --rm -v ${PWD}:/app ntt
 
 (rm is to remove the container after it is stopped)
 
@@ -107,11 +120,26 @@ $ docker build -t ntt .
 
 - run a custom script
 
-> docker run --rm -v ${PWD}:/app app python frames/test/test_frame_extraction.py
+> docker run --rm -v ${PWD}:/app ntt python ntt/frames/test/test_frame_extraction.py
 
 #### Windows
 
 - run the image
 
-> docker run --rm -v ${PWD}:/app app
+> docker run -v "$(pwd)":/app ntt python ntt/frames/test/test_frame_extraction.py
+
+
+## Modules orchestration
+
+_Example of a pipeline_
+
+The general idea is to have a pipeline that looks like this:
+
+1. store videos
+2. loaders
+3. pre-processors
+4. analysis(tracking, detection, segmentation, etc.)
+5. post-processors
+6. visualizers
+7. debug/monitoring
 

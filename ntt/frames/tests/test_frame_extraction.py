@@ -3,7 +3,7 @@ import cv2
 import pytest
 import sys
 sys.path.append('./')
-from frames.frame_extraction import extract_first_frame
+from ntt.frames.frame_extraction import extract_first_frame
 
 def test_extract_first_frame():
 
@@ -28,7 +28,6 @@ def test_extract_first_frame():
     saved_image = cv2.imread(frame_path)
     assert saved_image.shape == image.shape
     assert (saved_image == image).all()
-
 
 if __name__ == '__main__':
     test_extract_first_frame()

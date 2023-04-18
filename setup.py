@@ -1,10 +1,9 @@
-from setuptools import setup
+
+from setuptools import setup, find_packages
 
 setup(
-    name='ntt',
-    version='0.1',
-    description='pipeline module',
-    author='Romain Vuillemot',
-    author_email='romain.vuillemot@ec-lyon.fr',
-    packages=['ntt']
+    name="ntt", 
+    version="0.1", 
+    packages=find_packages(),
+    include_package_data=True,
 )

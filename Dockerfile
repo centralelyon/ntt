@@ -9,7 +9,7 @@ RUN apt-get update && apt-get install -y \
     libgl1-mesa-glx \
     ffmpeg    
 
-RUN pip install numpy moviepy opencv-python-headless eyed3 pydub pyAudioAnalysis matplotlib scipy pandas
+RUN pip install numpy moviepy opencv-python-headless eyed3 pydub pyAudioAnalysis matplotlib scipy pandas pytest
 
 WORKDIR /app
 
