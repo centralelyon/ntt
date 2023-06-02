@@ -1,7 +1,5 @@
-import sys
 
-sys.path.append('../ntt')
-from frames.frame_extraction import extract_first_frame
+from ntt.frames.frame_extraction import extract_first_frame
 
 if __name__ == "__main__":
 
