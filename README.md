@@ -4,19 +4,17 @@
 
 _A modular video processing pipeline_
 
-To use it in your project, add the following to your `requirements.txt` file:
+## Import using pip (editable mode)
 
-```bash
-ntt @ git+https://github.com/centralelyon/ntt.git@main#egg=ntt
-```
+> pip install -e .    
 
+## Import with a clone
 
 Or import the module (assuming you cloned this repository):
 
 ```python
 import sys
 
-sys.path.append('../ntt')
 from frames.frame_extraction import extract_first_frame
 
 if __name__ == "__main__":
