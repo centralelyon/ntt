@@ -16,15 +16,15 @@ maintainers = [
 ]
 classifiers = [
     "Development Status :: 2 - Pre-Alpha",
-    "Environment :: Web Environment",
-    "Framework :: Flask",
     "Intended Audience :: Developers",
-    "License :: OSI Approved :: BSD License",
+    "Operating System :: OS Independent",
     "Natural Language :: English",
-    "Operating System :: POSIX :: Linux",
     "Programming Language :: Python :: 3 :: Only",
-    "Topic :: Database :: Front-Ends",
-    "Topic :: Scientific/Engineering"
+    "Topic :: Multimedia :: Video",
+    "Topic :: Multimedia :: Sound/Audio :: Analysis",
+    "Topic :: Scientific/Engineering :: Image Processing",
+    "Topic :: Scientific/Engineering :: Visualization",
+    "Topic :: Software Development :: Libraries"
 ]
 requires-python = ">=3.9"
 dependencies = ["requests", "opencv-python", "ffmpeg-python"]
@@ -34,6 +34,7 @@ repository = "https://github.com/centralelyon/ntt/"
 
 [project.optional-dependencies]
 dev = [
-    "flit",
-    "pytest"
+    "black",
+    "pytest",
+    "flit"
 ]

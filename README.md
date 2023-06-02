@@ -6,7 +6,10 @@ _A modular video processing pipeline_
 
 ## Import using pip (editable mode)
 
-> pip install -e .    
+Install ntt in editable mode, with its dependencies and the "dev" dependencies
+(pytest, ...).
+
+> pip install -e .[dev]
 
 ## Import with a clone
 
