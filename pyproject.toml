@@ -1,0 +1,39 @@
+[build-system]
+requires = [ "flit_core" ]
+build-backend = "flit_core.buildapi"
+
+[project]
+name = "ntt"
+version = "0.1.0"
+description = "Library for sport analysis"
+readme = "README.md"
+license = {file = "LICENSE"}
+authors = [
+    {name = "Romain Vuillemot", email = "romain.vuillemot@ec-lyon.fr"},
+]
+maintainers = [
+    {name = "Romain Vuillemot", email = "romain.vuillemot@ec-lyon.fr"},
+]
+classifiers = [
+    "Development Status :: 2 - Pre-Alpha",
+    "Environment :: Web Environment",
+    "Framework :: Flask",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: BSD License",
+    "Natural Language :: English",
+    "Operating System :: POSIX :: Linux",
+    "Programming Language :: Python :: 3 :: Only",
+    "Topic :: Database :: Front-Ends",
+    "Topic :: Scientific/Engineering"
+]
+requires-python = ">=3.9"
+dependencies = ["requests", "opencv-python", "ffmpeg-python"]
+
+[project.urls]
+repository = "https://github.com/centralelyon/ntt/"
+
+[project.optional-dependencies]
+dev = [
+    "flit",
+    "pytest"
+]

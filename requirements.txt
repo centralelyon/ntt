@@ -2,4 +2,3 @@ requests
 opencv-python
 ffmpeg-python
 pytest
-ntt @ git+https://github.com/centralelyon/ntt.git@main#egg=ntt
