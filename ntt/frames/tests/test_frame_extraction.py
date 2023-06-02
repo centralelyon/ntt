@@ -23,8 +23,7 @@ def test_extract_first_frame():
     saved_image = cv2.imread(frame_path)
     assert saved_image.shape == image.shape
     assert (saved_image == image).all()
-def test_extract_n_frame():
-     n=int(input('choose n :'))
+def test_extract_n_frame(n=0):
      video_path_in = "samples/" 
      video_name_in = "crop.mp4"
      frame_path_in = "samples/"
