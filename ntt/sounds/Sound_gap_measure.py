@@ -2,7 +2,8 @@ from scipy import signal
 import numpy as np
 import moviepy.editor as mp
 
-def Sound_gap_measure(video1:str,video2:str)->float:
+
+def sound_gap_measure(video1: str, video2: str) -> float:
     """
     Args:
         video1 (str): Path of the reference video
@@ -34,8 +35,8 @@ def Sound_gap_measure(video1:str,video2:str)->float:
     y2 = y2 / y2.std()
 
     # Calculation of the cross-correlation
-    corr = signal.correlate(y1, y2) # , mode="same")
+    corr = signal.correlate(y1, y2)  # , mode="same")
     time = np.arange(1 - size_analysed, size_analysed)
-    shift_calculated = time[corr.argmax()] * 1.0 * (1/samplerate1)
+    shift_calculated = time[corr.argmax()] * 1.0 * (1 / samplerate1)
 
-    return(shift_calculated)
+    return shift_calculated
