@@ -2,4 +2,6 @@ requests
 opencv-python
 ffmpeg-python
 pytest
+moviepy
+scipy
 -e .

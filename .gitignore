@@ -2,4 +2,5 @@
 *.DS_Store
 *.pyc
 .vscode/settings.json
+.venv
 output/

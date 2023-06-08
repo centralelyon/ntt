@@ -36,7 +36,11 @@ def sound_gap_measure(video1: str, video2: str) -> float:
 
     # Calculation of the cross-correlation
     corr = signal.correlate(y1, y2)  # , mode="same")
+    
     time = np.arange(1 - size_analysed, size_analysed)
     shift_calculated = time[corr.argmax()] * 1.0 * (1 / samplerate1)
+
+    my_clip1.close()
+    my_clip2.close()
 
     return shift_calculated
