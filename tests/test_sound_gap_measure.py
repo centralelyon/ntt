@@ -25,18 +25,9 @@ def test_decalage():
     res=sound_gap_measure(path2,path1)
     os.remove(path1)
     os.remove(path2)
-
     assert res == decal
-
-def test_local():
-    path1="samples/2022_CF_Limoges_papillon_dames_50_finaleA_fixeDroiteCompressed.mp4"
-    path2="samples/2022_CF_Limoges_papillon_dames_50_finaleA_fixeGaucheCompressed.mp4"
-    res=sound_gap_measure(path1,path2)
-
-    assert res == 1.7841043083900228
 
 if __name__ == "__main__":
     test_same_video()
     test_decalage()
-    test_local()
 
