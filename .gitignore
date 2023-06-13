@@ -1,6 +1,25 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
 
-*.DS_Store
-*.pyc
-.vscode/settings.json
+# Testing tools
+.pytest_cache/
+
+# Distribution / packaging
+./build/
+dist/
+
+# Environments
 .venv
-output/
+.env
+venv/
+
+# IDE specific
+*~
+.vscode/settings.json
+
+# OS specific
+*.DS_Store
+
+# To put some untracked file without bothering Flit
+tmp_flit/
