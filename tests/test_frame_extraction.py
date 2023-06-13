@@ -1,6 +1,7 @@
 import os
 import cv2
-import ntt
+from ntt.frames.frame_extraction import extract_first_frame
+from ntt.frames.n_frame_extraction import extract_n_frame
 
 
 def test_extract_first_frame():
