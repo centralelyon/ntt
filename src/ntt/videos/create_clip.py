@@ -1,12 +1,13 @@
+import os
 from moviepy import editor
 
 
 def cut_video(
-    video_file_in: str = "samples/crop.mp4",
-    video_file_out: str = "output/crop_clip.mp4",
+    video_file_in: str = os.path.join("samples", "crop.mp4"),
+    video_file_out: str = os.path.join("output", "crop_clip.mp4"),
     start: int = 0,
     end: int = 0,
-) -> None:
+) -> str:
     """Cut video during a given time interval in seconds"""
 
     myclip_in = editor.VideoFileClip(video_file_in)
@@ -14,4 +15,5 @@ def cut_video(
     myclip_out.write_videofile(video_file_out)
     myclip_in.close()
     myclip_out.close()
-    return
+
+    return video_file_out
