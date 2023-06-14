@@ -27,7 +27,7 @@ classifiers = [
     "Topic :: Software Development :: Libraries"
 ]
 requires-python = ">=3.9"
-dependencies = ["requests", "opencv-python", "ffmpeg-python", "moviepy", "scipy"]
+dependencies = ["requests", "opencv-python", "ffmpeg-python", "moviepy", "scipy", "python-dotenv"]
 
 [project.urls]
 repository = "https://github.com/centralelyon/ntt/"
