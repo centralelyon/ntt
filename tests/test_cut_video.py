@@ -14,7 +14,6 @@ def test_cut_video():
     video = editor.VideoFileClip(video_out)
     assert video.duration == end - start
     video.close()
-    os.remove(video_out)
 
 
 if __name__ == "__main__":
