@@ -4,37 +4,80 @@
 
 _A modular video processing pipeline_
 
-## Import using pip (editable mode)
+## Modules orchestration
 
-Install ntt in editable mode, with its dependencies and the "dev" dependencies
-(pytest, ...).
+_Example of a pipeline_
 
-> pip install -e .[dev]
+The general idea is to have a pipeline that looks like this:
 
-## Import with a clone
+1. store videos
+2. loaders
+3. pre-processors
+4. analysis(tracking, detection, segmentation, etc.)
+5. post-processors
+6. visualizers
+7. debug/monitoring
 
-Or import the module (assuming you cloned this repository):
+## Quick install from GitHub
+
+```bash
+pip install git+https://github.com/centralelyon/ntt.git@main
+```
+
+## Editable install for development
+
+To develop "ntt" library, make an [editable install](https://setuptools.pypa.io/en/latest/userguide/development_mode.html)
+inside a Python virtual environment using [pip](https://pip.pypa.io/en/stable/) `-e` editable flag.
+
+1. create a virtual environment and activate it
+2. clone this ntt repository
+3. install ntt and its "dev" dependencies
+
+```bash
+pip install -e .[dev]
+```
+
+In case of important changes (e.g repository structure), you may have to
+install the library again.
+
+## Tests
+
+Assuming you have cloned the repository or installed the source package, you
+can run tests with `pytest`:
+
+```bash
+$ pytest tests
+```
+
+## Examples
+
+Look at the `examples` folder to see how to use ntt functions.
+
+Assuming you have a `crop.mp4 ` video in a `samples` folder and an `output`
+folder, here is how to use `extract_first_frame` function.
 
 ```python
-import sys
-
-from frames.frame_extraction import extract_first_frame
+from ntt.frames.frame_extraction import extract_first_frame
 
 if __name__ == "__main__":
-
-    extract_first_frame(video_path_in = "samples/", 
-                    video_name_in = "C0005.MP4",
-                    frame_path_out = "samples/",
-                    frame_name_out = "C0005.jpg" 
-                    )
+    extract_first_frame(
+        video_path_in="samples/",
+        video_name_in="crop.mp4",
+        frame_path_out="output/",
+        frame_name_out="crop-ex.jpg",
+    )
 ```
 
 ## Repository structure
 
 ```bash
 .
-├── README.md
-├── requirements.txt
+├── .circleci : configuration for CircleCI
+│   ├── config.yml
+│   └── ...
+├── examples : simple examples on how to use ntt functions
+│   ├── (files)
+│   └── ...
 ├── samples : sample videos, images and data
 │   ├── (files)
 │   └── ...
@@ -45,11 +88,14 @@ if __name__ == "__main__":
 │   │   └── ...
 │   ├── ...
 │   └── ...
-├── .circleci : configuration for CircleCI
-│   ├── config.yml
+├── tests : pytest files
+│   ├── (files)
 │   └── ...
 ├── .gitignore
 ├── Dockerfile
+├── README.md
+├── pyproject.toml : ntt Python packaging file, contains ntt dependencies
+├── requirements.txt
 └──
 ```
 
@@ -61,39 +107,23 @@ Each module structure is as follows:
 .
 ├── ...
 ├── ntt/
-│   ├── name_of_the_module
-│   ├── README.md
 │   ├── __init__.py
+│   ├── README.md
 │   ├── name_of_the_module/
-│   │   ├── README.md
 │   │   ├── __init__.py
+│   │   ├── README.md
 │   │   ├── name_of_the_function1.py
 │   │   ├── name_of_the_function2.py
-│   │   ├── examples
-│   │   │   ├── __init__.py
-│   │   │   ├── example_name_of_the_function1.py
-│   │   │   └── example_name_of_the_function2.py
-│   │   ├── tests
-│   │   │   ├── __init__.py
-│   │   │   ├── test_name_of_the_function1.py
-│   │   │   └── test_name_of_the_function2.py
 │   │   └── ...
 │   ├── ...
 │   └── ...
 └── ...
 ```
 
-## Tests
-
-Run tests with `pytest`:
-
-```bash
-$ pytest
-```
-
 ## CircleCI
 
-The project is configured to run tests on CircleCI. The configuration file is `.circleci/config.yml`.
+The project is configured to run tests on CircleCI. The configuration file is
+`.circleci/config.yml`.
 
 ## Docker
 
@@ -128,19 +158,4 @@ $ docker build -t ntt .
 - run the image
 
 > docker run -v "$(pwd)":/app ntt python ntt/frames/test/test_frame_extraction.py
-
-
-## Modules orchestration
-
-_Example of a pipeline_
-
-The general idea is to have a pipeline that looks like this:
-
-1. store videos
-2. loaders
-3. pre-processors
-4. analysis(tracking, detection, segmentation, etc.)
-5. post-processors
-6. visualizers
-7. debug/monitoring
 
