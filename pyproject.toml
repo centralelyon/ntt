@@ -26,7 +26,7 @@ classifiers = [
     "Topic :: Scientific/Engineering :: Visualization",
     "Topic :: Software Development :: Libraries"
 ]
-requires-python = ">=3.9"
+requires-python = ">=3.7"
 dependencies = ["requests", "opencv-python", "ffmpeg-python", "moviepy", "scipy", "python-dotenv"]
 
 [project.urls]
