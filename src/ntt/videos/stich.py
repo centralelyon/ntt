@@ -1,18 +1,9 @@
 import os
-from moviepy.editor import VideoFileClip
 import cv2
 import numpy as np
-import json
 
 
-def get_index(list_dict, vid_name):
-    """helper to read the json file."""
-    for i in range(len(list_dict)):
-        if list_dict[i]["name"] == vid_name:
-            return i
-
-
-def stitch(
+def stitch_2_videos(
     video_path_in,
     video_name_in1,
     video_name_in2,
@@ -24,8 +15,7 @@ def stitch(
     src_pts2,
     dest_pts2,
 ):
-    """Stitches video1 and video2 based on the source and destination points
-    Saves the result at save_path"""
+    """stitches video1 and video2 based on the source and destination points"""
 
     video_name1 = os.path.join(video_path_in, video_name_in1)
     video_name2 = os.path.join(video_path_in, video_name_in2)
