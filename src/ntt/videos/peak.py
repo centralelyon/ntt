@@ -6,6 +6,8 @@ import numpy as np
 def detect_peak_video(
     input_path,
     video_name_in,
+    output_path,
+    video_name_out,
     xa,
     xb,
     ya,
@@ -16,6 +18,7 @@ def detect_peak_video(
     afficher_hist=True,
 ):
     video_link = os.path.join(input_path, video_name_in)
+    video_file_out = os.path.join(output_path, video_name_out)
     cap = cv2.VideoCapture(video_link)  # lecture de la video
     rep = []  # (optimisable par préallocation)
     i = 0
@@ -23,7 +26,7 @@ def detect_peak_video(
 
     fourcc = cv2.VideoWriter_fourcc("M", "J", "P", "G")
     out = cv2.VideoWriter(
-        os.path.join(directory_path, "flash.mp4"),
+        video_file_out,
         fourcc,
         50,
         (xb - xa, yb - ya),
