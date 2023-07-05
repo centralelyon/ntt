@@ -4,20 +4,6 @@
 
 _A modular video processing pipeline_
 
-## Modules orchestration
-
-_Example of a pipeline_
-
-The general idea is to have a pipeline that looks like this:
-
-1. store videos
-2. loaders
-3. pre-processors
-4. analysis(tracking, detection, segmentation, etc.)
-5. post-processors
-6. visualizers
-7. debug/monitoring
-
 ## Quick install from GitHub
 
 ```bash
@@ -34,7 +20,7 @@ inside a Python virtual environment using [pip](https://pip.pypa.io/en/stable/) 
 3. install ntt and its "dev" dependencies
 
 ```bash
-pip install -e .[dev]
+pip install -e ".[dev]"
 ```
 
 In case of important changes (e.g repository structure), you may have to
@@ -72,30 +58,30 @@ if __name__ == "__main__":
 
 ```bash
 .
-├── .circleci : configuration for CircleCI
+├── .circleci: configuration for CircleCI
 │   ├── config.yml
 │   └── ...
-├── examples : simple examples on how to use ntt functions
+├── examples: simple examples on how to use ntt functions
 │   ├── (files)
 │   └── ...
-├── samples : sample videos, images and data
+├── samples: sample videos, images and data
 │   ├── (files)
 │   └── ...
-├── src : the package source code
-│   └── ntt : the main module
+├── src: the package source code
+│   └── ntt: the main module
 │       ├── README.md
 │       ├── __init__.py
-│       ├── frames : module for frame extraction
+│       ├── frames: module for frame extraction
 │       │   └── ...
 │       ├── ...
 │       └── ...
-├── tests : pytest files
+├── tests: pytest files
 │   ├── (files)
 │   └── ...
 ├── .gitignore
 ├── Dockerfile
 ├── README.md
-├── pyproject.toml : ntt Python packaging file, contains ntt dependencies
+├── pyproject.toml: ntt Python packaging file, contains ntt dependencies
 ├── requirements.txt
 └──
 ```
