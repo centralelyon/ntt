@@ -41,6 +41,12 @@ def extract_nth_frame(
 
     i = 0
 
+    total_frames = vidcap.get(cv2.CAP_PROP_FRAME_COUNT)
+
+    if nth_frame > total_frames:
+        print("nth_frame is greater than total_frames")
+        return None
+
     while i <= nth_frame and success != False:
         success, image = vidcap.read()
 
