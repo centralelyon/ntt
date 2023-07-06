@@ -32,16 +32,19 @@ def delete_and_create_folder(path):
     return path
 
 
-def copy_file(file_path, file_path_out):
-    print("copy files", file_path, file_path_out)
+def copy_file(
+    file_path_in, file_name_in, file_path_out, file_name_out, overwrite=False
+):
+    source_file = os.path.join(file_path_in, file_name_in)
+    destination_file = os.path.join(file_path_out, file_name_out)
 
-    if os.path.exists(file_path):
-        shutil.copyfile(file_path, file_path_out)
-        print(f"File {file_path} copied successfully.")
-    else:
-        print(f"File {file_path} does not exist.")
+    if os.path.exists(destination_file) and not overwrite:
+        print(f"File '{file_name_out}' already exists.")
+        return
 
-    return file_path_out
+    shutil.copy(source_file, destination_file)
+
+    print(f"File '{file_name_in}' copied to '{file_name_out}' successfully.")
 
 
 def remove_file_if_exists(file_path):
