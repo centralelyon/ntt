@@ -1,7 +1,7 @@
 import os
 from dotenv import load_dotenv
 from ntt.videos.peak import detect_peak_video
-
+from ntt.utils.temporal import calculate_temporal_accuracy
 
 if __name__ == "__main__":
     load_dotenv()
