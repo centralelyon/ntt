@@ -22,7 +22,6 @@ def test_same_video():
     assert res == 0
 
 
-"""
 def test_decalage():
     during = 2
     decal = 1
@@ -35,8 +34,8 @@ def test_decalage():
     os.remove(path1)
     os.remove(path2)
     assert res == decal
-"""
+
 
 if __name__ == "__main__":
     test_same_video()
-    # test_decalage() # missing input file
+    test_decalage()  # missing input file
