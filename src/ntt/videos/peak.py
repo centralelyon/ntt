@@ -1,6 +1,8 @@
 import os
 import cv2
 import numpy as np
+import matplotlib.pyplot as plt
+from ntt.utils.temporal import calculate_temporal_accuracy
 
 
 def detect_peak_video(
@@ -16,32 +18,37 @@ def detect_peak_video(
     nb_frame=-1,
     afficher_anime=True,
     afficher_hist=True,
+    write_video=True,
 ):
     video_link = os.path.join(input_path, video_name_in)
     video_file_out = os.path.join(output_path, video_name_out)
     cap = cv2.VideoCapture(video_link)  # lecture de la video
     rep = []  # (optimisable par préallocation)
+    gray_values = []
     i = 0
     directory_path = os.path.dirname(video_link)
+    fps = cap.get(cv2.CAP_PROP_FPS)
 
     fourcc = cv2.VideoWriter_fourcc("M", "J", "P", "G")
-    out = cv2.VideoWriter(
-        video_file_out,
-        fourcc,
-        50,
-        (xb - xa, yb - ya),
-        isColor=False,
-    )
+
+    if write_video:
+        out = cv2.VideoWriter(
+            video_file_out,
+            fourcc,
+            fps,
+            (xb - xa, yb - ya),
+            isColor=False,
+        )
 
     while cap.isOpened():
         ret, frame = cap.read()
-        # if frame is read correctly ret is True
         if not ret:
             print("Can't receive frame (stream end?). Exiting ...")
             break
 
         gray = cv2.cvtColor(frame[ya:yb, xa:xb], cv2.COLOR_BGR2GRAY)
         rep.append(np.sum(gray > seuil))
+        gray_values.append(np.mean(gray))
 
         if afficher_anime:
             cv2.putText(
@@ -49,7 +56,8 @@ def detect_peak_video(
             )
             cv2.imshow("f", gray)
 
-            out.write(gray)
+            if write_video:
+                out.write(gray)
 
         if cv2.waitKey(1) == ord("q"):
             break
@@ -59,6 +67,25 @@ def detect_peak_video(
 
         i += 1
 
-    out.release()
+    if afficher_hist:
+        plt.figure(figsize=(12, 5))
+        plt.subplot(1, 2, 1)
+        plt.plot(rep)
+        plt.xlabel("Frame")
+        plt.ylabel("Sum")
+        plt.title("Histogram of Sum Values")
+        plt.axvline(np.argmax(rep), color="red", linestyle="--")  # Vertical red line
+
+        plt.subplot(1, 2, 2)
+        plt.plot(gray_values, color="gray")
+        plt.xlabel("Frame")
+        plt.ylabel("Gray Value")
+        plt.title("Gray Value over Frames")
+        plt.axvline(np.argmax(rep), color="red", linestyle="--")  # Vertical red line
+
+        plt.tight_layout()
+        plt.show()
+
+    out.release() if write_video else None
     cap.release()
     return np.argmax(rep)
