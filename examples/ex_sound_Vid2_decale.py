@@ -1,4 +1,4 @@
-from ntt.sounds.Sound_generation import Vid2_decale
+from ntt.sounds.sound_generation import vid2_decale
 
 if __name__ == "__main__":
     # Paramètres de la vidéo
@@ -7,4 +7,4 @@ if __name__ == "__main__":
     name = "video"
 
     # Générer la vidéo avec audio
-    Vid2_decale(t,dt,name)
+    vid2_decale(t,dt,name)

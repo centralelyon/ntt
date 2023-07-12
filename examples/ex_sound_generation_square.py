@@ -1,4 +1,4 @@
-from ntt.sounds.Sound_generation import One_seconde_square_frequencies,Random_to_start
+from ntt.sounds.sound_generation import one_seconde_square_frequencies
 
 if __name__ == "__main__":
     # Paramètres de la vidéo
@@ -8,4 +8,4 @@ if __name__ == "__main__":
     filename = "video"
 
     # Générer la vidéo avec audio
-    One_seconde_square_frequencies(percentage, frequency1, frequency2,filename)
+    one_seconde_square_frequencies(percentage, frequency1, frequency2,filename)

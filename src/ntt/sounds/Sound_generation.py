@@ -3,7 +3,7 @@ from scipy.io.wavfile import write
 import numpy as np
 import tempfile
 
-def One_seconde_square_frequencies(p:float, f1:int, f2:int, filename:str):
+def one_seconde_square_frequencies(p:float, f1:int, f2:int, filename:str):
     """Will generate black video during 1 second, during p off
     this video, the sound is constant at the frequency f1 and during the
     rest is constant at frequency f2.
@@ -59,7 +59,7 @@ def One_seconde_square_frequencies(p:float, f1:int, f2:int, filename:str):
     audio1_file.close()
     audio2_file.close()
 
-def Random_to_start(start_time:float, duration:float, frequency:int, filename:str):
+def random_to_start(start_time:float, duration:float, frequency:int, filename:str):
     """Generate black video whith white sound since start_time and constant frequency sound
     to the rest of the duration.
     return None if erreur
@@ -111,7 +111,7 @@ def Random_to_start(start_time:float, duration:float, frequency:int, filename:st
     audio1_file.close()
     audio2_file.close()
 
-def No_to_start(start_time:float, duration:float, frequency:int, filename:str):
+def no_to_start(start_time:float, duration:float, frequency:int, filename:str):
     """Generate black video whith no sound since start_time and constant frequency sound
     to the rest of the duration.
     return None if erreur
@@ -163,7 +163,7 @@ def No_to_start(start_time:float, duration:float, frequency:int, filename:str):
     audio1_file.close()
     audio2_file.close()
 
-def Vid2_decale(duration:float, decalage:float, filename:str):
+def vid2_decale(duration:float, decalage:float, filename:str):
     """génères 2 signaux aléatoire s1 et s2.
     génére 2 vidéo noirs, la première a la bande sons s1 et la seconde s2 puis s1.
     La première video est nommée filename+".mp4" et la seconde filename+"decale.mp4"
@@ -219,7 +219,7 @@ def Vid2_decale(duration:float, decalage:float, filename:str):
     audio1_file.close()
     audio2_file.close()
 
-def Dirac(duration:float, decalage:float, filename:str):
+def dirac(duration:float, decalage:float, filename:str):
     """prend un signal s1 [1 0 0 0 ... 0] et un s2 [0 ... 0]
     génère 2 vidéos noirs,
     - filename+".mp4" : bande sonore s1

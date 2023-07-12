@@ -1,4 +1,4 @@
-from ntt.sounds.Sound_generation import Random_to_start
+from ntt.sounds.sound_generation import random_to_start
 
 if __name__ == "__main__":
     # Paramètres de la vidéo
@@ -8,4 +8,4 @@ if __name__ == "__main__":
     name = "video"
 
     # Générer la vidéo avec audio
-    Random_to_start(start,t,f,name)
+    random_to_start(start,t,f,name)

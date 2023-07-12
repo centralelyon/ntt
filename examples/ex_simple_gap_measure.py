@@ -2,7 +2,7 @@ import os
 
 from dotenv import load_dotenv
 
-from ntt.sounds.Sound_gap_measure import sound_gap_measure
+from ntt.sounds.sound_gap_measure import sound_gap_measure
 
 if __name__ == "__main__":
     load_dotenv()
