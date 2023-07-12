@@ -22,3 +22,6 @@ venv/
 
 # To put some untracked file without bothering Flit
 tmp_flit/
+
+# Custom
+output/

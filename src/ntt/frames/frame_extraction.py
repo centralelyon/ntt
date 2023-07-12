@@ -1,7 +1,6 @@
 import cv2
 import os
 import numpy as np
-from dotenv import load_dotenv
 
 
 def extract_last_frame(video_path_in, video_name_in, frame_path_out, frame_name_out):
@@ -52,8 +51,7 @@ def extract_nth_frame(
 
         if i == nth_frame and success:
             cv2.imwrite(frame_name, image)
-        else:
-            return None
+            return frame_name
 
         i = i + 1
 
@@ -97,13 +95,3 @@ def compare_frames(video_path, frame_number):
         return False
     diff = cv2.absdiff(frame_opencv, frame_ffmpeg)
     return np.all(diff == 0)
-
-
-if __name__ == "__main__":
-    load_dotenv()
-    extract_first_frame(
-        video_path_in=os.environ.get("VIDEO_PATH_IN"),
-        video_name_in="crop.mp4",
-        frame_path_out=os.environ.get("FRAME_PATH_OUT"),
-        frame_name_out="crop.jpg",
-    )

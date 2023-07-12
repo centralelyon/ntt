@@ -7,6 +7,8 @@ def test_crop():
     frame_name_in = "samples/crop.jpg"
     image = cv2.imread(frame_name_in)
     shape = image.shape
+
+    # no crop just to check if the image is the same
     result = crop(image, 0, 0, shape[0], shape[1])
     assert result.shape == image.shape
     assert (result == image).all()
