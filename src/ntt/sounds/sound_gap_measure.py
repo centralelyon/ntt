@@ -20,8 +20,8 @@ def sound_gap_measure(video1: str, video2: str) -> float:
     samplerate2 = 44100
 
     # extract the audio
-    y1 = list(my_clip1.audio.iter_chunks(fps=samplerate1))
-    y2 = list(my_clip2.audio.iter_chunks(fps=samplerate2))
+    y1 = list(my_clip1.audio.iter_chunks(fps=samplerate1, chunksize=1024))
+    y2 = list(my_clip2.audio.iter_chunks(fps=samplerate2, chunksize=1024))
 
 
     # take only the left channel
