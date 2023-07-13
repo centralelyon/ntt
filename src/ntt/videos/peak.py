@@ -15,6 +15,7 @@ def detect_peak_video(
     ya,
     yb,
     seuil=200,
+    frame_begin=0,
     nb_frame=-1,
     afficher_anime=True,
     afficher_hist=True,
@@ -23,6 +24,7 @@ def detect_peak_video(
     video_link = os.path.join(input_path, video_name_in)
     video_file_out = os.path.join(output_path, video_name_out)
     cap = cv2.VideoCapture(video_link)  # lecture de la video
+    cap.set(cv2.CAP_PROP_POS_FRAMES, int(frame_begin)) # aller frame de depart
     rep = []  # (optimisable par préallocation)
     gray_values = []
     i = 0
