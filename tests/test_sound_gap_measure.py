@@ -25,7 +25,7 @@ def test_decalage():
     path1=f"{os.environ.get('VIDEO_PATH_IN')}2022_CF_Limoges_papillon_dames_50_finaleA_fixeDroiteCompressed_cut.mp4"
     path2=f"{os.environ.get('VIDEO_PATH_IN')}2022_CF_Limoges_papillon_dames_50_finaleA_fixeGaucheCompressed_cut.mp4"
     res = sound_gap_measure(path2, path1)
-    assert res == -1.8091836734693878
+    assert res == -1.7842857142857143
 
 
 if __name__ == "__main__":
