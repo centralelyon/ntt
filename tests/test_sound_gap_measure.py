@@ -30,7 +30,6 @@ def test_decalage():
     res = int(sound_gap_measure(path2, path1))
     os.remove(path1)
     os.remove(path2)
-    print(res)
     assert res == decal
 
 
