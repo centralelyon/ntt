@@ -23,6 +23,7 @@ def sound_gap_measure(video1: str, video2: str) -> float:
     y1 = my_clip1.audio.to_soundarray(fps=samplerate1)
     y2 = my_clip2.audio.to_soundarray(fps=samplerate2)
 
+
     # take only the left channel
     size_analysed = min(len(y1), len(y2))
     y1 = y1[:size_analysed, 0]

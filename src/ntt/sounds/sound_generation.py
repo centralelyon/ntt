@@ -205,8 +205,8 @@ def vid2_decale(duration:float, decalage:float, filename:str):
     write(audio2_filename, sample_rate, audio2_data.astype(np.float32))
 
     # Créer les clips vidéo avec les fichiers audio correspondants
-    clip1 = ColorClip((1, 1), duration=duration, col=(0, 0, 0)).set_audio(AudioFileClip(audio1_filename))
-    clip2 = ColorClip((1, 1), duration=decalage, col=(0, 0, 0)).set_audio(AudioFileClip(audio2_filename))
+    clip1 = ColorClip((1, 1), duration=duration, color=(0, 0, 0)).set_audio(AudioFileClip(audio1_filename))
+    clip2 = ColorClip((1, 1), duration=decalage, color=(0, 0, 0)).set_audio(AudioFileClip(audio2_filename))
 
     # Concaténer les clips pour former la vidéo finale decale
     final_clip1 = clip1.resize((1280, 720))
