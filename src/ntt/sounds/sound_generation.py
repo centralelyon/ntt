@@ -45,8 +45,8 @@ def one_seconde_square_frequencies(p:float, f1:int, f2:int, filename:str):
     write(audio2_filename, sample_rate, audio2_data.astype(np.float32))
 
     # Créer les clips vidéo avec les fichiers audio correspondants
-    clip1 = ColorClip((1, 1), duration=duration * p, col=(0, 0, 0)).set_audio(AudioFileClip(audio1_filename))
-    clip2 = ColorClip((1, 1), duration=(1 - p) * duration, col=(0, 0, 0)).set_audio(AudioFileClip(audio2_filename))
+    clip1 = ColorClip((1, 1), duration=duration * p, color=(0, 0, 0)).set_audio(AudioFileClip(audio1_filename))
+    clip2 = ColorClip((1, 1), duration=(1 - p) * duration, color=(0, 0, 0)).set_audio(AudioFileClip(audio2_filename))
 
     # Concaténer les clips pour former la vidéo finale
     final_clip = concatenate_videoclips([clip1, clip2])
@@ -99,8 +99,8 @@ def random_to_start(start_time:float, duration:float, frequency:int, filename:st
     write(audio2_filename, sample_rate, audio2_data.astype(np.float32))
 
     # Créer les clips vidéo avec les fichiers audio correspondants
-    clip1 = ColorClip((1, 1), duration=start_time, col=(0, 0, 0)).set_audio(AudioFileClip(audio1_filename))
-    clip2 = ColorClip((1, 1), duration=duration-start_time, col=(0, 0, 0)).set_audio(AudioFileClip(audio2_filename))
+    clip1 = ColorClip((1, 1), duration=start_time, color=(0, 0, 0)).set_audio(AudioFileClip(audio1_filename))
+    clip2 = ColorClip((1, 1), duration=duration-start_time, color=(0, 0, 0)).set_audio(AudioFileClip(audio2_filename))
 
     # Concaténer les clips pour former la vidéo finale
     final_clip = concatenate_videoclips([clip1, clip2])
@@ -153,8 +153,8 @@ def no_to_start(start_time:float, duration:float, frequency:int, filename:str):
     write(audio2_filename, sample_rate, audio2_data.astype(np.float32))
 
     # Créer les clips vidéo avec les fichiers audio correspondants
-    clip1 = ColorClip((1, 1), duration=start_time, col=(0, 0, 0)).set_audio(AudioFileClip(audio1_filename))
-    clip2 = ColorClip((1, 1), duration=duration-start_time, col=(0, 0, 0)).set_audio(AudioFileClip(audio2_filename))
+    clip1 = ColorClip((1, 1), duration=start_time, color=(0, 0, 0)).set_audio(AudioFileClip(audio1_filename))
+    clip2 = ColorClip((1, 1), duration=duration-start_time, color=(0, 0, 0)).set_audio(AudioFileClip(audio2_filename))
 
     # Concaténer les clips pour former la vidéo finale
     final_clip = concatenate_videoclips([clip1, clip2])
@@ -265,8 +265,8 @@ def dirac(duration:float, decalage:float, filename:str):
     write(audio2_filename, sample_rate, audio2_data.astype(np.float32))
 
     # Créer les clips vidéo avec les fichiers audio correspondants
-    clip1 = ColorClip((1, 1), duration=duration, col=(0, 0, 0)).set_audio(AudioFileClip(audio1_filename))
-    clip2 = ColorClip((1, 1), duration=decalage, col=(0, 0, 0)).set_audio(AudioFileClip(audio2_filename))
+    clip1 = ColorClip((1, 1), duration=duration, color=(0, 0, 0)).set_audio(AudioFileClip(audio1_filename))
+    clip2 = ColorClip((1, 1), duration=decalage, color=(0, 0, 0)).set_audio(AudioFileClip(audio2_filename))
 
     # Concaténer les clips pour former la vidéo finale decale
     final_clip1 = clip1.resize((1280, 720))

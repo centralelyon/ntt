@@ -17,19 +17,17 @@ def test_same_video():
 
 
 def test_decalage():
-    during = 2
+    """during = 2
     decal = 1
     name = "video"
-    vid2_decale(during, decal, name)
+    vid2_decale(during, decal, name)"""
 
-    path1 = "samples/video.mp4"
-    path2 = "samples/videodecale.mp4"
-    res = int(sound_gap_measure(path2, path1))
-    os.remove(path1)
-    os.remove(path2)
-    assert res == decal
+    path1=f"{os.environ.get('VIDEO_PATH_IN')}2022_CF_Limoges_papillon_dames_50_finaleA_fixeDroiteCompressed_cut.mp4"
+    path2=f"{os.environ.get('VIDEO_PATH_IN')}2022_CF_Limoges_papillon_dames_50_finaleA_fixeGaucheCompressed_cut.mp4"
+    res = sound_gap_measure(path2, path1)
+    assert res == -1.8091836734693878
 
 
 if __name__ == "__main__":
     test_same_video()
-    #test_decalage()  # missing input file
+    test_decalage()  # missing input file

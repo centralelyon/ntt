@@ -20,8 +20,8 @@ def sound_gap_measure(video1: str, video2: str) -> float:
     samplerate2 = 44100
 
     # extract the audio
-    y1 = list(my_clip1.audio.iter_chunks(fps=samplerate1, chunksize=1024))
-    y2 = list(my_clip2.audio.iter_chunks(fps=samplerate2, chunksize=1024))
+    y1 = my_clip1.audio.to_soundarray(fps=samplerate1)
+    y2 = my_clip2.audio.to_soundarray(fps=samplerate2)
 
 
     # take only the left channel
@@ -32,12 +32,12 @@ def sound_gap_measure(video1: str, video2: str) -> float:
     # for noisy data and with a lot of points, we normalize the data
     y1 = y1 - y1.mean()
     y2 = y2 - y2.mean()
-    if y1.std()!=None:
-        y1 = y1 / y1.std()
-    if y2.std()!=None:
-        y2 = y2 / y2.std()
+    y1 = y1 / y1.std()
+    y2 = y2 / y2.std()
+
     # Calculation of the cross-correlation
     corr = signal.correlate(y1, y2)  # , mode="same")
+    
     time = np.arange(1 - size_analysed, size_analysed)
     shift_calculated = time[corr.argmax()] * 1.0 * (1 / samplerate1)
 
