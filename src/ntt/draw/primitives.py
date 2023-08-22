@@ -37,7 +37,17 @@ def draw_line(
     cv2.line(frame, start_point, end_point, color, thickness=2)
 
 
-def draw_bright_circle(image, center, radius, brightness_factor=50):
+def draw_crosshair(
+    frame: np.ndarray, x: int, y: int, size=20, thickness=2, color=(0, 255, 0)
+):
+    """draw a crosshair on the image"""
+    cv2.line(frame, (x, y - size), (x, y + size), color, thickness)
+    cv2.line(frame, (x - size, y), (x + size, y), color, thickness)
+
+
+def draw_bright_circle(
+    image: np.ndarray, center: Tuple, radius: int, brightness_factor=50
+):
     """enhance a given circular region in the image with a brightness factor"""
 
     mask = np.zeros_like(image)  # mask
