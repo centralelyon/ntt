@@ -22,3 +22,23 @@ The project is configured to run tests on CircleCI. The configuration file is `.
 
 The project is configured to run on Docker. The configuration file is `Dockerfile`. 
 
+
+## Pull request
+
+- Include reference to the issue you are solving (if any)
+
+
+## Bug report
+
+You may open an issue:
+
+- Open an [Issue](/issues/new)
+
+
+## Documentation
+
+- The project uses [Sphinx](https://www.sphinx-doc.org/en/master/) for documentation.
+
+Install the [autodocstring](https://marketplace.visualstudio.com/items?itemName=njpwerner.autodocstring) extension for Visual Studio Code.
+
+Use the Google style docstrings.
