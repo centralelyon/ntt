@@ -31,7 +31,7 @@ master_doc = "index"
 
 # -- Options for HTML output -------------------------------------------------
 
-html_theme = "alabaster"
+html_theme = "classic"
 
 # The name of the Pygments (syntax highlighting) style to use.
 pygments_style = "sphinx"
