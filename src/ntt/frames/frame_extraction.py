@@ -1,5 +1,5 @@
 import cv2
-import os,ffmpeg
+import os, ffmpeg
 import numpy as np
 
 
@@ -61,7 +61,7 @@ def extract_nth_frame(
         video_name_in (string): name of the input video
         frame_path_out (string): path to the folder conataining the output frame
         frame_name_out (string): name of the output frame
-        nth_frame (int): the number of the frame to be extracted 
+        nth_frame (int): the number of the frame to be extracted
 
     Returns:
         string: full path of the output frame
