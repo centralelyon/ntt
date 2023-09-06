@@ -1,9 +1,20 @@
 import cv2
-import os
+import os,ffmpeg
 import numpy as np
 
 
 def extract_last_frame(video_path_in, video_name_in, frame_path_out, frame_name_out):
+    """This function extracts the last frame of a given video.
+
+    Args:
+        video_path_in (string): path to the folder conataining the input video
+        video_name_in (string): name of the input video
+        frame_path_out (string): path to the folder conataining the output frame
+        frame_name_out (string): name of the output frame
+
+    Returns:
+        string: full path of the output frame
+    """
     video_name = os.path.join(video_path_in, video_name_in)
     frame_name = os.path.join(frame_path_out, frame_name_out)
 
@@ -24,6 +35,17 @@ def extract_last_frame(video_path_in, video_name_in, frame_path_out, frame_name_
 
 
 def extract_first_frame(video_path_in, video_name_in, frame_path_out, frame_name_out):
+    """This function extracts the first frame of a given video.
+
+    Args:
+        video_path_in (string): path to the folder conataining the input video
+        video_name_in (string): name of the input video
+        frame_path_out (string): path to the folder conataining the output frame
+        frame_name_out (string): name of the output frame
+
+    Returns:
+        string: full path of the output frame
+    """
     return extract_nth_frame(
         video_path_in, video_name_in, frame_path_out, frame_name_out, 0
     )
@@ -32,6 +54,18 @@ def extract_first_frame(video_path_in, video_name_in, frame_path_out, frame_name
 def extract_nth_frame(
     video_path_in, video_name_in, frame_path_out, frame_name_out, nth_frame=0
 ):
+    """This function extracts the nth  frame of a given video.
+
+    Args:
+        video_path_in (string): path to the folder conataining the input video
+        video_name_in (string): name of the input video
+        frame_path_out (string): path to the folder conataining the output frame
+        frame_name_out (string): name of the output frame
+        nth_frame (int): the number of the frame to be extracted 
+
+    Returns:
+        string: full path of the output frame
+    """
     video_name = os.path.join(video_path_in, video_name_in)
     frame_name = os.path.join(frame_path_out, frame_name_out)
 
@@ -59,6 +93,15 @@ def extract_nth_frame(
 
 
 def extract_frame_opencv(video_path, frame_number=1):
+    """This function extracts a frame given its number from a video with opencv
+
+    Args:
+        video_path (string): path to the folder conataining the input video
+        frame_number (int, optional): the number of the frame to extract. Defaults to 1.
+
+    Returns:
+        np.ndarray: the frame with number = frame_number
+    """
     if not os.path.isfile(video_path):
         return None
 
@@ -79,6 +122,15 @@ def extract_frame_opencv(video_path, frame_number=1):
 
 # Extract a frame using FFmpeg
 def extract_frame_ffmpeg(video_path, frame_number):
+    """This function extracts a frame given its number from a video with ffmpeg
+
+    Args:
+        video_path (string): path to the folder conataining the input video
+        frame_number (int): the number of the frame to extract.
+
+    Returns:
+        np.ndarray: the frame with number = frame_number
+    """
     stream = ffmpeg.input(video_path)
     stream = ffmpeg.filter(stream, "select", f"eq(n,{frame_number-1})")
     stream = ffmpeg.output(stream, "pipe:", format="rawvideo", pix_fmt="rgb24")
@@ -89,6 +141,15 @@ def extract_frame_ffmpeg(video_path, frame_number):
 
 # Compare the frames extracted by OpenCV and FFmpeg
 def compare_frames(video_path, frame_number):
+    """This function compares the frames extracted by extract_frame_ffmpeg and extract_frame_opencv
+
+    Args:
+        video_path (string): path to the folder conataining the input video
+        frame_number (int): the number of the frame to extract.
+
+    Returns:
+        Boolean: True if all pixels are alike between frame_opencv and frame_ffmpeg else False
+    """
     frame_opencv = extract_frame_opencv(video_path, frame_number)
     frame_ffmpeg = extract_frame_ffmpeg(video_path, frame_number)
     if frame_opencv is None or frame_ffmpeg is None:
