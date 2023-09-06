@@ -15,11 +15,11 @@ def number_frame(width: int, height: int, number=123) -> np.ndarray:
     return frame
 
 
-def random_frame(width: int, height: int):
+def random_frame(width: int, height: int) -> np.ndarray:
     frame = np.random.rand(width, height, 3) * 255
     return frame.astype(np.uint8)
 
 
-def full_frame(width: int, height: int, color: tuple):
+def full_frame(width: int, height: int, color: tuple) -> np.ndarray:
     frame = np.full((height, width, 3), color, dtype=np.uint8)
     return frame
