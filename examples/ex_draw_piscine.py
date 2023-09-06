@@ -5,7 +5,7 @@ jsonfile = "./samples/2023_CF_Rennes_freestyle_hommes_50_finaleA.json"
 
 
 def extract_piscine(jsonfile):
-    """ This function finds the 4 edges of the swimming pool given the json file of a competition
+    """This function finds the 4 edges of the swimming pool given the json file of a competition
 
     Args:
         jsonfile (json): path to the json file containing the competition annotation
