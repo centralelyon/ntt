@@ -55,9 +55,9 @@ def draw_bright_circle(
     mask_gray = cv2.cvtColor(mask, cv2.COLOR_BGR2GRAY)  # convert the mask to grayscale
     # enhanced_image = image.copy()  # copy the image
     enhanced_image = image
-    
+
     enhanced_image[mask_gray > 0] = cv2.add(
-    enhanced_image[mask_gray > 0],0.7, np.array(brightness_factor, dtype=np.uint8),0.3)
+    enhanced_image[mask_gray > 0], np.array(brightness_factor, dtype=np.uint8))
   # add the brightness factor to the pixels in the circular region
 
     return enhanced_image
