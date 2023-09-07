@@ -18,7 +18,9 @@ def test_copy_file():
         f.write("This is a test file.")
 
     destination_dir = os.path.join(temp_dir, "destination")
-    os.makedirs(destination_dir)
+
+    if not os.path.exists(destination_dir):
+        os.makedirs(destination_dir)
 
     file_name_out = "copied_file.txt"
 
