@@ -56,7 +56,23 @@ def draw_bright_circle(
     # enhanced_image = image.copy()  # copy the image
     enhanced_image = image
 
-    enhanced_image[mask_gray > 0] = cv2.add(enhanced_image[mask_gray > 0], brightness_factor)
-  # add the brightness factor to the pixels in the circular region
+    enhanced_image[mask_gray > 0] = cv2.add(
+        enhanced_image[mask_gray > 0], brightness_factor
+    )
+    # add the brightness factor to the pixels in the circular region
 
     return enhanced_image
+
+
+def draw_grid(frame, rows: int, cols: int):
+    frame_size = (frame.shape[1], frame.shape[0])
+
+    for row in range(rows + 1):
+        y = int(row * frame_size[1] / rows)
+        draw_line(frame, (0, y), (frame_size[0], y))
+
+    for col in range(cols + 1):
+        x = int(col * frame_size[0] / cols)
+        draw_line(frame, (x, 0), (x, frame_size[1]))
+
+    return frame

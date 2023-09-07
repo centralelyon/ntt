@@ -6,7 +6,9 @@ from ntt.draw.primitives import (
     draw_crosshair,
     draw_line,
     draw_bright_circle,
+    draw_grid,
 )
+from ntt.draw.polygone import draw_polygones
 from ntt.frames.frame_generation import random_frame, empty_frame, number_frame
 
 if __name__ == "__main__":
@@ -18,6 +20,8 @@ if __name__ == "__main__":
     draw_crosshair(frame, 50, 50, 10, 2)
     draw_line(frame, (10, 10), (50, 50))
     draw_bright_circle(frame, (100, 100), 50, 50)
+    draw_polygones(frame, ((0, 0), (0, 100), (100, 200), (200, 50), (0, 0)))
+    draw_grid(frame, 10, 10)
     cv2.imshow("draw primitive on image", frame)
     cv2.waitKey(0)
     cv2.destroyAllWindows()
