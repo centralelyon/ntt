@@ -2,7 +2,22 @@ import os
 import shutil
 
 
-def delete_folder(path):
+def delete_folder(path: str):
+    """Deletes a folder and all its contents.
+
+    Args:
+        path (str): path to the folder to be deleted
+
+    Raises:
+        Exception: if the path is not a folder
+
+    Returns:
+        str: path to the deleted folder
+    """
+
+    if not os.path.isdir(path):
+        raise Exception(f"Path '{path}' is not a folder.")
+
     if os.path.isdir(path):
         for root, dirs, files in os.walk(path, topdown=False):
             for file in files:
@@ -14,6 +29,8 @@ def delete_folder(path):
                 os.rmdir(dir_path)
 
         os.rmdir(path)
+
+    return path
 
 
 def create_folder(folder_path):
@@ -64,3 +81,22 @@ def generate_shortcut_url(file_path="file.url", url="https://www.google.com"):
     with open(file_path, "w") as f:
         f.write(file_contents)
     return file_path
+
+
+def touch(file_path):
+    """Create an empty file or update the file's timestamp.
+
+    Args:
+        file_path (_type_): _description_
+
+    Raises:
+
+
+    """
+    # raise an error if the file does not exist
+    try:
+        with open(file_path, "a"):
+            os.utime(file_path, times=None)
+    except FileNotFoundError:
+        print(f"File {file_path} not found")
+        return
