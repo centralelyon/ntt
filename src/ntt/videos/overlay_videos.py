@@ -20,14 +20,14 @@ def video_fusion_image(path_videos,name_video1,name_video2,video_out):
         # Lire une image de la vidéo
         ret1, frame1 = video1.read()
         ret2,frame2=video2.read()
-        overlayed_frame = cv2.addWeighted(frame1, 0.5, frame2, 0.5, 0)
 
         # Write the processed frame to the output video
-        output_video.write(overlayed_frame)
 
         # Vérifier si la lecture de la vidéo est terminée
         if not ret1 or not ret2:
             break
+        overlayed_frame = cv2.addWeighted(frame1, 0.5, frame2, 0.5, 0)
+        output_video.write(overlayed_frame)
 
         # Wait for the 'q' key to quit
     # Libérer les ressources
