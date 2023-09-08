@@ -42,3 +42,7 @@ You may open an issue:
 Install the [autodocstring](https://marketplace.visualstudio.com/items?itemName=njpwerner.autodocstring) extension for Visual Studio Code.
 
 Use the Google style docstrings.
+
+## Environment variables
+
+We use dotenv to manage environment variables. Use the `.env` file in the root of the project (or create one if it doesn't exist).
