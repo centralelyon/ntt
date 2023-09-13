@@ -11,9 +11,9 @@ def extract_piscine(jsonfile):
         x1,y1=map(int,data['videos'][1]['srcPts'][1])
         x2,y2=map(int,data['videos'][1]['srcPts'][2])
         x3,y3=map(int,data['videos'][1]['srcPts'][3])
+        return([[y0,x0],[y1,x1],[y2,x2],[y3,x3]])
     except Exception as e:
         print("Execption",e)
-    return([[y0,x0],[y1,x1],[y2,x2],[y3,x3]])
 
 #dessin piscine avec ntt
 
