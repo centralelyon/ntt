@@ -1,9 +1,11 @@
 from ntt.utils.text_to_json import Texte_to_json
 import json
-
+import os
+from dotenv import load_dotenv
 if __name__=="__main__":
-    text_file="samples/org_ttj.txt"
-    output_file="samples/res_ttj.json"
+    load_dotenv()
+    text_file=f"{os.environ.get('PATH_IN')}org_ttj.txt"
+    output_file=f"{os.environ.get('PATH_OUT')}res_ttj.json"
     # Charger les données JSON depuis le fichier
     with open(text_file, 'r') as file:
         data = file.read()

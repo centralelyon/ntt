@@ -1,7 +1,8 @@
 import os
 from ntt.sounds.sound_generation import one_seconde_square_frequencies
 from ntt.sounds.sound_gap_measure import sound_gap_measure
-
+from dotenv import load_dotenv
+load_dotenv()
 
 def test_same_video():
     frequency1 = 440
@@ -10,7 +11,7 @@ def test_same_video():
     filename = "video"
     one_seconde_square_frequencies(percentage, frequency1, frequency2, filename)
 
-    path = "samples/video.mp4"
+    path = f"{os.environ.get('VIDEO_PATH_IN')}video.mp4"
     res = sound_gap_measure(path, path)
     os.remove(path)
     assert res == 0

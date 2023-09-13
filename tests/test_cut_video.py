@@ -2,11 +2,12 @@ import os
 import cv2
 from moviepy import editor
 from ntt.videos.create_clip import cut_video
-
-
+from dotenv import load_dotenv
+load_dotenv()
 def test_cut_video():
-    video_in = os.path.join("samples", "ping.mp4")
-    video_out = os.path.join("output", "ping_clip.mp4")
+
+    video_in = os.path.join(os.environ.get('VIDEO_PATH_IN'), "ping.mp4")
+    video_out = os.path.join(os.environ.get('PATH_OUT'), "ping_clip.mp4")
     start = 0
     end = 1
 

@@ -1,7 +1,8 @@
 from ntt.draw.polygone import draw_polygones
-import cv2,json
-jsonfile="./samples/2023_CF_Rennes_freestyle_hommes_50_finaleA.json"
-video_name="./samples/2023_CF_Rennes_freestyle_hommes_50_finaleA_fixeDroite.mp4"
+import cv2,json,os
+from dotenv import load_dotenv
+jsonfile=f"{os.environ.get('PATH_IN')}2023_CF_Rennes_freestyle_hommes_50_finaleA.json"
+video_name=f"{os.environ.get('VIDEO_PATH_IN')}2023_CF_Rennes_freestyle_hommes_50_finaleA_fixeDroite.mp4"
 def extract_piscine(jsonfile):
     try :
         with open(jsonfile,'rb') as f:
@@ -32,7 +33,7 @@ def test_draw_piscine():
 
     # Define the codec for the output video
     fourcc = cv2.VideoWriter_fourcc(*'mp4v')
-    output_video = cv2.VideoWriter("./samples/output_piscine.mp4", fourcc, fps, (width, height))
+    output_video = cv2.VideoWriter(f"{os.environ.get('PATH_OUT')}output_piscine.mp4", fourcc, fps, (width, height))
     while True:
         # Lire une image de la vidéo
         ret, frame = video.read()

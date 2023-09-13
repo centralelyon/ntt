@@ -11,9 +11,9 @@ if __name__ == "__main__":
     fps = 30
 
     output = detect_peak_video(
-        "samples/",
+        os.environ.get('VIDEO_PATH_IN'),
         "peak_black_gray_2500ms.mp4",
-        "output",
+        os.environ.get('PATH_OUT'),
         "peak_black_gray_2500ms_gray.mp4",
         0,
         100,

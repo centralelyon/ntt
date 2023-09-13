@@ -1,10 +1,12 @@
 from ntt.videos.overlay_videos import video_fusion_image
 import os,cv2
+from dotenv import load_dotenv
 def test_video_overlay():
-    path_videos="./samples"
+    load_dotenv()
+    path_videos=os.environ.get("VIDEO_PATH_IN")
     name_video1="point_0.mp4"
     name_video2="point_8.mp4"
-    video_out="overlayed_points.mp4"
+    path_video_out=f"{os.environ.get('PATH_OUT')}overlayed_points.mp4"
     path_video1=os.path.join(path_videos,name_video1)
     path_video2=os.path.join(path_videos,name_video2)
     
@@ -21,6 +23,6 @@ def test_video_overlay():
     assert width1==width2 and height1==height2
     assert fps1==fps2
 
-    video_fusion_image(path_videos,name_video1,name_video2,video_out)
+    video_fusion_image(path_videos,name_video1,name_video2,path_video_out)
 if __name__=="__main__":
     test_video_overlay()

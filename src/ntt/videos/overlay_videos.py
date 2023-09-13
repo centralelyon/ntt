@@ -1,9 +1,9 @@
 from moviepy.editor import VideoFileClip, CompositeVideoClip
 import os,cv2
-def video_fusion_image(path_videos,name_video1,name_video2,video_out):
+def video_fusion_image(path_videos,name_video1,name_video2,path_video_out):
     path_video1=os.path.join(path_videos,name_video1)
     path_video2=os.path.join(path_videos,name_video2)
-    path_out=os.path.join(path_videos,video_out)
+    path_out=path_video_out
     
     video1 = cv2.VideoCapture(path_video1)
     video2 = cv2.VideoCapture(path_video2)
