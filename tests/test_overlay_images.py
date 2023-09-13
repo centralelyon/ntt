@@ -38,17 +38,17 @@ def test_custom():
     frame2=empty_frame(width=10,height=10)
     frame3=empty_frame(width=10,height=10)
     
-    cv2.imwrite(f"{os.environ.get('PATH_IN')}image1.jpg",frame1)
-    cv2.imwrite(f"{os.environ.get('PATH_IN')}image2.jpg",frame2)
-    path_output_name1=f"{os.environ.get('FRAME_PATH_OUT')}overlayed1.jpg"
-    path_output_name2=f"{os.environ.get('FRAME_PATH_OUT')}overlayed2.jpg"
-    path_output_name3=f"{os.environ.get('FRAME_PATH_OUT')}res.jpg"
+    cv2.imwrite(f"{os.environ.get('PATH_IN')}image1.png",frame1)
+    cv2.imwrite(f"{os.environ.get('PATH_IN')}image2.png",frame2)
+    path_output_name1=f"{os.environ.get('FRAME_PATH_OUT')}overlayed1.png"
+    path_output_name2=f"{os.environ.get('FRAME_PATH_OUT')}overlayed2.png"
+    path_output_name3=f"{os.environ.get('FRAME_PATH_OUT')}res.png"
     h,w,_=frame3.shape
     frame3[h//4:h//2,w//4:w//2]=np.full((h//2-h//4,w//2-w//4,3),[0,255,0],dtype=np.uint8)
-    cv2.imwrite(f"{os.environ.get('PATH_IN')}image3.jpg",frame3)
-    overlayed_frame1=overlay_two_frames(frames_path_in,"image1.jpg","image3.jpg",[0.5]*2,path_output_name1)
-    overlayed_frame2=overlay_two_frames(frames_path_in,"image2.jpg","image3.jpg",[0.5]*2,path_output_name2)
-    overlayed=overlay_two_frames(f"{os.environ.get('FRAME_PATH_OUT')}","overlayed1.jpg","overlayed2.jpg",[0.5,0.5],path_output_name3)
+    cv2.imwrite(f"{os.environ.get('PATH_IN')}image3.png",frame3)
+    overlayed_frame1=overlay_two_frames(frames_path_in,"image1.png","image3.png",[0.5]*2,path_output_name1)
+    overlayed_frame2=overlay_two_frames(frames_path_in,"image2.png","image3.png",[0.5]*2,path_output_name2)
+    overlayed=overlay_two_frames(f"{os.environ.get('FRAME_PATH_OUT')}","overlayed1.png","overlayed2.png",[1,1],path_output_name3)
     assert(frame3==overlayed).all()
 
 
