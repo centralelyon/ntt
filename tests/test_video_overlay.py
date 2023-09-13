@@ -27,8 +27,8 @@ def test_video_overlay_opencv():
 def test_video_overlay_moviepy():
     list_videos_path=os.listdir(f"{os.environ.get('VIDEO_PATH_IN')}")
     opacities = [0.5 for i in range(len(list_videos_path))]
-    path_video_out=f"{os.environ.get('PATH_OUT')}"
-    test_video_overlay_moviepy(list_videos_path,opacities,path_video_out)
+    path_video_out=f"{os.environ.get('PATH_OUT')}overlayed.mp4"
+    overlay_videos_moviepy(list_videos_path,opacities,path_video_out)
 
 if __name__=="__main__":
     test_video_overlay_opencv()
