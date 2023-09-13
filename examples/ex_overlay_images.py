@@ -1,4 +1,4 @@
-from ntt.frames.overlay_two_images import overlay_images
+from ntt.frames.frame_overlay import overlay_two_images
 import os
 from dotenv import load_dotenv
 if __name__=="__main__":
@@ -7,4 +7,4 @@ if __name__=="__main__":
     name_frame1="frame1.jpg"
     name_frame2="frame2.jpg"
     name_output_frame=f"{os.environ.get('FRAME_PATH_OUT')}overlayed.png"
-    overlay_images(path_frames, name_frame1, name_frame2, name_output_frame)
+    overlay_two_images(path_frames, name_frame1, name_frame2, name_output_frame)

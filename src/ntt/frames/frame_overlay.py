@@ -1,7 +1,7 @@
 import os, cv2
 
 
-def overlay_images(path_frames, name_frame1, name_frame2, path_output_frame):
+def overlay_two_images(path_frames, name_frame1, name_frame2, path_output_frame):
     path_frame1 = os.path.join(path_frames, name_frame1)
     path_frame2 = os.path.join(path_frames, name_frame2)
 
