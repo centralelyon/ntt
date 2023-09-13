@@ -9,6 +9,7 @@ def test_video_overlay_opencv():
     path_video_out=f"{os.environ.get('PATH_OUT')}overlayed_points.mp4"
     path_video1=os.path.join(path_videos,name_video1)
     path_video2=os.path.join(path_videos,name_video2)
+    opacities=[0.5]*2
     
     video1 = cv2.VideoCapture(path_video1)
     video2 = cv2.VideoCapture(path_video2)
@@ -23,11 +24,12 @@ def test_video_overlay_opencv():
     assert width1==width2 and height1==height2
     assert fps1==fps2
 
-    overlay_two_videos_opencv(path_videos,name_video1,name_video2,path_video_out)
+    overlay_two_videos_opencv(path_videos,name_video1,name_video2,opacities,path_video_out)
 def test_video_overlay_moviepy():
-    list_videos_path=os.listdir(f"{os.environ.get('VIDEO_PATH_IN')}")
+    list_videos_path=os.listdir(f"{os.environ.get('VIDEO_PATH_IN')}videos")
     opacities = [0.5 for i in range(len(list_videos_path))]
     path_video_out=f"{os.environ.get('PATH_OUT')}overlayed.mp4"
+    list_videos_path=[f"{os.environ.get('VIDEO_PATH_IN')}videos/"+list_videos_path[i] for i in range(len(list_videos_path))]
     overlay_videos_moviepy(list_videos_path,opacities,path_video_out)
 
 if __name__=="__main__":
