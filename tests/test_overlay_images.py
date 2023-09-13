@@ -1,8 +1,8 @@
-from ntt.frames.frame_overlay import overlay_two_images,overlay_n_frames
+from ntt.frames.frame_overlay import overlay_two_frames,overlay_n_frames
 import os,cv2
 from dotenv import load_dotenv
 load_dotenv()
-def test_overlay_two_images():
+def test_overlay_two_frames():
     frames_path_in=f"{os.environ.get('PATH_IN')}"
     frame1_name="frame1.jpg"
     frame2_name="frame2.jpg"
@@ -13,7 +13,7 @@ def test_overlay_two_images():
     frame2=cv2.imread(path_frame2)
     assert frame1.shape==frame2.shape
     opacities=[0.5]*2
-    overlayed=overlay_two_images(frames_path_in,frame1_name,frame2_name,opacities,path_output_name)
+    overlayed=overlay_two_frames(frames_path_in,frame1_name,frame2_name,opacities,path_output_name)
 def test_overlay_n_images():
     frames_path_in=f"{os.environ.get('PATH_IN')}"
     frame1_name="frame1.jpg"
@@ -33,5 +33,5 @@ def test_overlay_n_images():
 
 
 if __name__=="__main__":
-    test_overlay_two_images()
+    test_overlay_two_frames()
     test_overlay_n_images()
