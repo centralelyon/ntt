@@ -24,7 +24,7 @@ def overlay_n_frames(path_frames, frames,opacities,path_output_frame):
         path_frame=os.path.join(path_frames,frames[i])
         frame=cv2.imread(path_frame)
         alpha=i+1
-        overlayed=cv2.addWeighted(overlayed,1-alpha,frame,alpha)
+        overlayed=cv2.addWeighted(overlayed,1-1/alpha,frame,1/alpha,0)
     cv2.imwrite(path_output_frame,overlayed)
     return(overlayed)
 
