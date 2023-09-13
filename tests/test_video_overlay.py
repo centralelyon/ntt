@@ -1,8 +1,8 @@
-from ntt.videos.overlay_videos import video_fusion_image
+from ntt.videos.video_overlay import overlay_videos_moviepy,overlay_two_videos_opencv
 import os,cv2
 from dotenv import load_dotenv
-def test_video_overlay():
-    load_dotenv()
+load_dotenv()
+def test_video_overlay_opencv():
     path_videos=os.environ.get("VIDEO_PATH_IN")
     name_video1="point_0.mp4"
     name_video2="point_8.mp4"
@@ -23,6 +23,13 @@ def test_video_overlay():
     assert width1==width2 and height1==height2
     assert fps1==fps2
 
-    video_fusion_image(path_videos,name_video1,name_video2,path_video_out)
+    overlay_two_videos_opencv(path_videos,name_video1,name_video2,path_video_out)
+def test_video_overlay_moviepy():
+    list_videos_path=os.listdir(f"{os.environ.get('VIDEO_PATH_IN')}")
+    opacities = [0.5 for i in range(len(list_videos_path))]
+    path_video_out=f"{os.environ.get('PATH_OUT')}"
+    test_video_overlay_moviepy(list_videos_path,opacities,path_video_out)
+
 if __name__=="__main__":
-    test_video_overlay()
+    test_video_overlay_opencv()
+    test_video_overlay_moviepy()
