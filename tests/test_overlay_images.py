@@ -14,7 +14,7 @@ def test_overlay_two_frames():
     assert frame1.shape==frame2.shape
     opacities=[0.5]*2
     overlayed=overlay_two_frames(frames_path_in,frame1_name,frame2_name,opacities,path_output_name)
-def test_overlay_n_images():
+def test_overlay_n_frames():
     frames_path_in=f"{os.environ.get('PATH_IN')}"
     frame1_name="frame1.jpg"
     frame2_name="frame2.jpg"
@@ -26,7 +26,7 @@ def test_overlay_n_images():
     frame1=cv2.imread(path_frame1)
     frame2=cv2.imread(path_frame2)
     frame3=cv2.imread(path_frame3)
-    frames=[frame1,frame2,frame3]
+    frames=[frame1_name,frame2_name,frame3_name]
     assert frame1.shape==frame2.shape and frame1.shape==frame3.shape
     opacities=[0.5]*3
     overlayed=overlay_n_frames(frames_path_in,frames,opacities,path_output_name)
@@ -34,4 +34,4 @@ def test_overlay_n_images():
 
 if __name__=="__main__":
     test_overlay_two_frames()
-    test_overlay_n_images()
+    test_overlay_n_frames()
