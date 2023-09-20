@@ -1,34 +1,18 @@
-import subprocess,os
+import subprocess,os,ffmpeg
 
 def split_video(video_path_in,video_name,n,path_out):
     # Get the duration of the input video
     video=os.path.join(video_path_in,video_name)
-    ffprobe_command = [
-        'ffprobe',
-        '-v', 'error',
-        '-show_entries', 'format=duration',
-        '-of', 'default=noprint_wrappers=1:nokey=1',
-        video
-    ]
-    duration = float(subprocess.check_output(ffprobe_command))
+    # Open the input video
+    input_stream = ffmpeg.input(video)
 
-    # Calculate the duration for each part
-    part_duration = duration / n
+    # Split the video into equal parts
+    split_streams = ffmpeg.split(input_stream, n)
 
-    # Generate the FFmpeg command to split the video
-    ffmpeg_command = [
-        'ffmpeg',
-        '-i', video,
-        '-c', 'copy',
-        '-map', '0',
-        '-segment_time', str(part_duration),
-        '-f', 'segment',
-    ]
+    # Output files
+    output_files = [f"{os.environ.get('PATH_OUT')}/clip{i+1}.mp4" for i in range(num_parts)]
 
-    # Add output file names to the command
-    for i in range(n):
-        output_file = os.path.join(path_out,f'clip{i+1}.mp4')
-        ffmpeg_command.extend(['-reset_timestamps', '1', output_file])
-
-    # Execute the FFmpeg command
-    subprocess.run(ffmpeg_command)
+    # Save each part to a separate file
+    for i, stream in enumerate(split_streams):
+        output_file = output_files[i]
+        ffmpeg.output(stream, output_file).run()

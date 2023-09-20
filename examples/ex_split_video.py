@@ -6,5 +6,5 @@ if __name__=="__main__":
     video_path_in=f"{os.environ.get('VIDEO_PATH_IN')}"
     video_name="2023_CF_Rennes_freestyle_hommes_50_finaleA_fixeDroite.mp4"
     path_out=os.environ.get('PATH_OUT')
-    n=2
+    n=5
     split_video(video_path_in,video_name,n,path_out)
