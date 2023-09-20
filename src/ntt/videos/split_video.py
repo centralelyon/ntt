@@ -9,6 +9,8 @@ def split_video_ffmpeg(video_path_in,video_name,n,path_out):
     # Open the input video
     output_template = os.path.join(path_out,"clip%03d.mp4")
     start_time=0
+    print(duration)
+    print(duration/n)
 
     # FFmpeg command
     command = [
