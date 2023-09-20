@@ -1,18 +1,28 @@
 import subprocess,os,ffmpeg
-
-def split_video(video_path_in,video_name,n,path_out):
+from moviepy.editor import VideoFileClip
+def split_video_ffmpeg(video_path_in,video_name,n,path_out):
     # Get the duration of the input video
     video=os.path.join(video_path_in,video_name)
+    clip = VideoFileClip(video)
+    duration = clip.duration
+    clip.close()
     # Open the input video
-    input_stream = ffmpeg.input(video)
+    output_template = f"{os.path.join(path_out,'clip%d.mp4')}"
+    start_time=0
 
-    # Split the video into equal parts
-    split_streams = ffmpeg.split(input_stream, n)
+    # FFmpeg command
+    command = [
+        'ffmpeg',
+        '-i', video,
+        '-ss', str(start_time),
+        '-f', 'segment',
+        '-segment_time', str(duration/n),
+        '-vcodec', 'copy',
+        '-reset_timestamps', '1',
+        '-map', '0:0',
+        '-an',
+        output_template
+    ]
 
-    # Output files
-    output_files = [f"{os.environ.get('PATH_OUT')}/clip{i+1}.mp4" for i in range(num_parts)]
-
-    # Save each part to a separate file
-    for i, stream in enumerate(split_streams):
-        output_file = output_files[i]
-        ffmpeg.output(stream, output_file).run()
+    # Execute the FFmpeg command
+    subprocess.run(command)
