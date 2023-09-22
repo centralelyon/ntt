@@ -27,7 +27,9 @@ classifiers = [
     "Topic :: Software Development :: Libraries"
 ]
 requires-python = ">=3.7"
-dependencies = ["requests", "opencv-python", "ffmpeg-python", "moviepy", "scipy", "python-dotenv"]
+# eyed3, pydub are used by pyAudioAnalysis, but not installed as dependencies
+dependencies = ["requests", "opencv-python", "ffmpeg-python", "moviepy",
+    "scipy", "python-dotenv", "matplotlib", "pyAudioAnalysis", "eyed3", "pydub"]
 
 [project.urls]
 repository = "https://github.com/centralelyon/ntt/"
@@ -36,5 +38,7 @@ repository = "https://github.com/centralelyon/ntt/"
 dev = [
     "black",
     "pytest",
-    "flit"
+    "flit",
+    "sphinx",
+    "sphinx-rtd-theme"
 ]
