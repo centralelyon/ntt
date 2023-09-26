@@ -2,6 +2,7 @@ from pyAudioAnalysis import MidTermFeatures as aFm
 from pyAudioAnalysis import audioBasicIO as aIO
 import moviepy.editor as mp
 import numpy as np
+from pydub import AudioSegment
 
 
 def detect_sound_ref(
@@ -61,3 +62,49 @@ def detect_sound_ref(
         # Erreur
         start = -1
     return start
+
+
+def count_sound_occurence(video_path, sound_path):
+    # Load the video and extract the audio
+    video_clip = mp.VideoFileClip(video_path)
+    video_audio = video_clip.audio
+
+    # Load the sound file
+    sound = AudioSegment.from_file(sound_path)
+
+    # Convert sound to mono if it's stereo
+    if sound.channels > 1:
+        sound = sound.set_channels(1)
+
+    # Normalize sound
+    sound = sound.apply_gain(-sound.max_dBFS)
+
+    # Convert video audio to numpy array
+    video_audio_array = np.array(video_audio.to_soundarray())
+
+    # Convert sound to numpy array
+    sound_array = np.array(sound.get_array_of_samples())
+
+    # Normalize sound array
+    sound_array = sound_array / np.max(np.abs(sound_array))
+
+    # Compute cross-correlation
+    cross_correlation = np.correlate(
+        video_audio_array[:, 0],
+        sound_array,
+        mode="valid"
+    )
+
+    # Set a threshold to identify matches
+    threshold = 0.7 * np.max(cross_correlation)
+
+    # Find start times where the cross-correlation exceeds the threshold
+    start_time_indices = np.where(cross_correlation > threshold)[0]
+
+    # Filter start times to be spaced at least the length of the sound apart
+    start_times = [start_time_indices[0] / video_audio.fps]
+    for idx in start_time_indices[1:]:
+        if idx / video_audio.fps - start_times[-1] > sound.duration_seconds:
+            start_times.append(idx / video_audio.fps)
+
+    return start_times
