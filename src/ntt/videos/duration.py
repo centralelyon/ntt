@@ -1,10 +1,10 @@
-import subprocess
+import subprocess,os
 from moviepy.editor import VideoFileClip
 from moviepy.video.io.ffmpeg_tools import ffmpeg_extract_subclip
 from moviepy.editor import VideoFileClip
 
 
-def remove_duration(input_file, output_file, start_time):
+def remove_duration_ffmpeg(input_file, output_file, start_time):
     ffmpeg_cmd = [
         "ffmpeg",
         "-i",
@@ -42,3 +42,17 @@ def remove_duration_movieclip(input_file, output_file, duration):
         print(f"Duration {duration} removed successfully.")
     else:
         print("Duration is longer than the video clip.")
+def get_video_duration(video_path_in,video_name):
+    video=os.path.join(video_path_in,video_name)
+    ffprobe_cmd = [
+        'ffprobe',
+        '-v', 'error',
+        '-select_streams', 'v:0',
+        '-show_entries', 'stream=duration',
+        '-of', 'default=noprint_wrappers=1:nokey=1',
+        video
+    ]
+
+    result = subprocess.run(ffprobe_cmd, capture_output=True, text=True)
+    duration = float(result.stdout)
+    return duration
