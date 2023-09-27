@@ -1,9 +1,9 @@
-from ntt.sounds.sound_detection import count_sound_occurence,detect_sound_ref
+from ntt.sounds.sound_detection import simple_peak_count
 from dotenv import load_dotenv
 import os
 
 if __name__=="__main__":
     load_dotenv()
-    video_path=os.path.join(f"{os.environ.get('VIDEO_PATH_IN')}","ALEXIS-LEBRUN_vs_JANG-WOOJIN.mp4")
-    sound_path=os.path.join(f"{os.environ.get('PATH_IN')}","archivo.mp3")
-    print(detect_sound_ref(video_path,sound_path))
+    video_path=f"{os.environ.get('VIDEO_PATH_IN')}"
+    video_name="2_bounces_ping.mp4"
+    print(simple_peak_count(video_path,video_name))

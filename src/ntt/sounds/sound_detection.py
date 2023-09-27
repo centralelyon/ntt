@@ -3,6 +3,8 @@ from pyAudioAnalysis import audioBasicIO as aIO
 import moviepy.editor as mp
 import numpy as np
 from pydub import AudioSegment
+import librosa
+import os
 
 
 def detect_sound_ref(
@@ -63,7 +65,15 @@ def detect_sound_ref(
         start = -1
     return start
 
-
+def simple_peak_count(video_path,video_name):
+        video=os.path.join(video_path,video_name)
+        video = mp.VideoFileClip(video)
+        fps=video.fps
+        audio=os.path.join(video_path,video_name[:len(video_name)-4]+'.mp3')
+        video.audio.write_audiofile(audio)
+        x, sr = librosa.load(audio)
+        onset_frames = librosa.onset.onset_detect(x,sr)
+        return len(onset_frames)
 def count_sound_occurence(video_path, sound_path):
     # Load the video and extract the audio
     video_clip = mp.VideoFileClip(video_path)
@@ -96,7 +106,7 @@ def count_sound_occurence(video_path, sound_path):
     )
 
     # Set a threshold to identify matches
-    threshold = 0.7 * np.max(cross_correlation)
+    threshold = 0 * np.max(cross_correlation)
 
     # Find start times where the cross-correlation exceeds the threshold
     start_time_indices = np.where(cross_correlation > threshold)[0]
