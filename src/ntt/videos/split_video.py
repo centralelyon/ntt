@@ -34,5 +34,3 @@ def split_video_ffmpeg(video_path_in, video_name, output_path, n):
     ]
 
     subprocess.run(command)
-
-    subprocess.run(command)

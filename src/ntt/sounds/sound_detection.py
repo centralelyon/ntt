@@ -65,56 +65,51 @@ def detect_sound_ref(
         start = -1
     return start
 
-def simple_peak_count(video_path,video_name):
-        video=os.path.join(video_path,video_name)
-        video = mp.VideoFileClip(video)
-        fps=video.fps
-        audio=os.path.join(video_path,video_name[:len(video_name)-4]+'.mp3')
-        video.audio.write_audiofile(audio)
-        x, sr = librosa.load(audio)
-        onset_frames = librosa.onset.onset_detect(x,sr)
-        return len(onset_frames)
-def count_sound_occurence(video_path, sound_path):
-    # Load the video and extract the audio
-    video_clip = mp.VideoFileClip(video_path)
-    video_audio = video_clip.audio
 
-    # Load the sound file
-    sound = AudioSegment.from_file(sound_path)
+def simple_peak_count_librosa(video_path, video_name):
+    video = os.path.join(video_path, video_name)
+    video = mp.VideoFileClip(video)
+    fps = video.fps
+    audio = os.path.join(video_path, video_name[: len(video_name) - 4] + ".mp3")
+    video.audio.write_audiofile(audio)
+    x, sr = librosa.load(audio)
+    onset_frames = librosa.onset.onset_detect(x, sr)
+    return len(onset_frames)
 
-    # Convert sound to mono if it's stereo
-    if sound.channels > 1:
-        sound = sound.set_channels(1)
+def detect_sound_ref_librosa(samples_path,video_name,ref_sound_name,path_out):
+    # Step 1: Load the target sound effect and the audio or video file
+    target_sound_file = os.path.join(samples_path,ref_sound_name)
+    audio_or_video_file = os.path.join(samples_path,video_name)
+    # Load the target sound effect
+    target_sound,sr = librosa.load(target_sound_file)
+    target_sound = np.array(target_sound)
+    # Load the audio or video file
+    audio, sr1 = librosa.load(audio_or_video_file)
+    length_video=int(len(audio)*1000/sr1)
 
-    # Normalize sound
-    sound = sound.apply_gain(-sound.max_dBFS)
+    segment_duration = int(len(target_sound) * 1000 / sr)
+    # Step 2: Convert the target sound effect to a spectrogram
+    target_sound_spec = librosa.amplitude_to_db(np.abs(librosa.stft(target_sound, hop_length=512)), ref=np.max)
+    # Step 3: Split the audio into short segments and compare them with the target sound effect  # Convert milliseconds to seconds)
+    segment_length = segment_duration
+    l=[]
+    for i in range(0, length_video - segment_length, segment_length):
+        # Extract a segment from the audio
+        segment = audio[i:i + segment_length]
 
-    # Convert video audio to numpy array
-    video_audio_array = np.array(video_audio.to_soundarray())
+        # Convert the segment to a spectrogram using librosa
+        segment_spec = librosa.amplitude_to_db(np.abs(librosa.stft(segment, hop_length=512)), ref=np.max)
 
-    # Convert sound to numpy array
-    sound_array = np.array(sound.get_array_of_samples())
+        # Compare the spectrograms of the segment and target sound effect
+        resized_target_sound_spec = np.resize(target_sound_spec, segment_spec.shape)
 
-    # Normalize sound array
-    sound_array = sound_array / np.max(np.abs(sound_array))
+        # Compare the spectrograms of the segment and target sound effect
+        similarity = np.mean(np.abs(segment_spec - resized_target_sound_spec))
 
-    # Compute cross-correlation
-    cross_correlation = np.correlate(
-        video_audio_array[:, 0],
-        sound_array,
-        mode="valid"
-    )
+        # Set a threshold to determine if the target sound effect is present
+        threshold = 16  # Adjust this value based on your requirements
 
-    # Set a threshold to identify matches
-    threshold = 0 * np.max(cross_correlation)
+        if similarity < threshold:
+            l.append(i/1000)
+    return(l)
 
-    # Find start times where the cross-correlation exceeds the threshold
-    start_time_indices = np.where(cross_correlation > threshold)[0]
-
-    # Filter start times to be spaced at least the length of the sound apart
-    start_times = [start_time_indices[0] / video_audio.fps]
-    for idx in start_time_indices[1:]:
-        if idx / video_audio.fps - start_times[-1] > sound.duration_seconds:
-            start_times.append(idx / video_audio.fps)
-
-    return start_times
