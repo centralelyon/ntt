@@ -2,6 +2,8 @@
 
 [![CircleCI](https://dl.circleci.com/status-badge/img/gh/centralelyon/ntt/tree/main.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/centralelyon/ntt/tree/main)
 
+[![Documentation Status](https://readthedocs.org/projects/ntt/badge/?version=latest)](https://ntt.readthedocs.io/en/latest/?badge=latest)
+
 _A modular video processing pipeline_
 
 ## Quick install from GitHub
