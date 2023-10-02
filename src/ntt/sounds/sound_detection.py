@@ -76,29 +76,42 @@ def simple_peak_count_librosa(video_path, video_name):
     onset_frames = librosa.onset.onset_detect(x, sr)
     return len(onset_frames)
 
-def detect_sound_ref_librosa(samples_path,video_name,ref_sound_name,path_out):
-    # Step 1: Load the target sound effect and the audio or video file
-    target_sound_file = os.path.join(samples_path,ref_sound_name)
-    audio_or_video_file = os.path.join(samples_path,video_name)
+
+def detect_sound_ref_librosa(samples_path, video_name, ref_sound_name, path_out):
+    """_summary_
+
+    Args:
+        samples_path (_type_): _description_
+        video_name (_type_): _description_
+        ref_sound_name (_type_): _description_
+        path_out (_type_): _description_
+    """
+    # Load the target sound effect and the audio or video file
+    target_sound_file = os.path.join(samples_path, ref_sound_name)
+    audio_or_video_file = os.path.join(samples_path, video_name)
     # Load the target sound effect
-    target_sound,sr = librosa.load(target_sound_file)
+    target_sound, sr = librosa.load(target_sound_file)
     target_sound = np.array(target_sound)
     # Load the audio or video file
     audio, sr1 = librosa.load(audio_or_video_file)
-    length_video=int(len(audio)*1000/sr1)
+    length_video = int(len(audio) * 1000 / sr1)
 
     segment_duration = int(len(target_sound) * 1000 / sr)
-    # Step 2: Convert the target sound effect to a spectrogram
-    target_sound_spec = librosa.amplitude_to_db(np.abs(librosa.stft(target_sound, hop_length=512)), ref=np.max)
-    # Step 3: Split the audio into short segments and compare them with the target sound effect  # Convert milliseconds to seconds)
+    # Convert the target sound effect to a spectrogram
+    target_sound_spec = librosa.amplitude_to_db(
+        np.abs(librosa.stft(target_sound, hop_length=512)), ref=np.max
+    )
+    # Split the audio into short segments and compare them with the target sound effect  # Convert milliseconds to seconds)
     segment_length = segment_duration
-    l=[]
+    l = []
     for i in range(0, length_video - segment_length, segment_length):
         # Extract a segment from the audio
-        segment = audio[i:i + segment_length]
+        segment = audio[i : i + segment_length]
 
         # Convert the segment to a spectrogram using librosa
-        segment_spec = librosa.amplitude_to_db(np.abs(librosa.stft(segment, hop_length=512)), ref=np.max)
+        segment_spec = librosa.amplitude_to_db(
+            np.abs(librosa.stft(segment, hop_length=512)), ref=np.max
+        )
 
         # Compare the spectrograms of the segment and target sound effect
         resized_target_sound_spec = np.resize(target_sound_spec, segment_spec.shape)
@@ -110,6 +123,5 @@ def detect_sound_ref_librosa(samples_path,video_name,ref_sound_name,path_out):
         threshold = 16  # Adjust this value based on your requirements
 
         if similarity < threshold:
-            l.append(i/1000)
-    return(l)
-
+            l.append(i / 1000)
+    return l
