@@ -7,5 +7,5 @@ if __name__ == "__main__":
     video_path_in = os.environ.get("VIDEO_PATH_IN")[:-1]
     video_name = "reference.mp4"
     video_path_out = os.environ.get("PATH_OUT") + "out.mp4"
-    shake_intensity = 5
+    shake_intensity = 10
     shake_video_randomly(video_path_in, video_name, shake_intensity, video_path_out)

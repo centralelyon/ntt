@@ -30,3 +30,6 @@ def shake_video_randomly(video_path_in, video_name, shake_intensity, video_path_
         video_writer.write(frame1)
     video_writer.release()
     video.release()
+def rotate_video(video_path_in, video_name, rotation_increment, video_path_out):
+    pass
+    
