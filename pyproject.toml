@@ -1,13 +1,11 @@
 [build-system]
-requires = [ "flit_core" ]
+requires = [ "flit_core >=3.2,<4" ]
 build-backend = "flit_core.buildapi"
 
 [project]
 name = "ntt"
-version = "0.1.0"
-description = "Library for sport analysis"
+dynamic = [ "version", "description" ]
 readme = "README.md"
-license = {file = "LICENSE"}
 authors = [
     {name = "Romain Vuillemot", email = "romain.vuillemot@ec-lyon.fr"},
 ]
@@ -32,7 +30,10 @@ dependencies = ["requests", "opencv-python", "ffmpeg-python", "moviepy",
     "scipy", "python-dotenv", "matplotlib", "pyAudioAnalysis", "eyed3", "pydub","librosa"]
 
 [project.urls]
-repository = "https://github.com/centralelyon/ntt/"
+GitHub = "https://github.com/centralelyon/ntt/"
+Documentation = "https://ntt.readthedocs.io/"
+Issues = "https://github.com/centralelyon/ntt/issues"
+CI = "https://app.circleci.com/pipelines/github/centralelyon/ntt"
 
 [project.optional-dependencies]
 dev = [
@@ -42,3 +43,6 @@ dev = [
     "sphinx",
     "sphinx-rtd-theme"
 ]
+
+[tool.flit.sdist]
+exclude = [".circleci", ".vscode", ".gitignore", ".readthedocs.yaml"]
