@@ -57,11 +57,11 @@ def detect_sound_ref(
                 temps_possible_non_aberrant.append(temps_possible[i])
 
     if temps_possible_non_aberrant != []:
-        # 0.11s de silence avant le bip dans les sons de références
+        # 0.11s of silence before  bip in reference sounds
         start = np.median(temps_possible_non_aberrant) + 0.11
 
     else:
-        # Erreur
+        # Error
         start = -1
     return start
 
@@ -77,7 +77,9 @@ def simple_peak_count_librosa(video_path, video_name):
     return len(onset_frames)
 
 
-def detect_sound_ref_librosa(samples_path, video_name, ref_sound_name, path_out):
+def detect_sound_ref_librosa(
+    samples_path, video_name, ref_sound_name, path_out, threshold=20
+):
     """_summary_
 
     Args:
@@ -120,7 +122,6 @@ def detect_sound_ref_librosa(samples_path, video_name, ref_sound_name, path_out)
         similarity = np.mean(np.abs(segment_spec - resized_target_sound_spec))
 
         # Set a threshold to determine if the target sound effect is present
-        threshold = 16  # Adjust this value based on your requirements
 
         if similarity < threshold:
             l.append(i / 1000)
