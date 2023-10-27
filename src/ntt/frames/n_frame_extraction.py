@@ -1,5 +1,8 @@
 import cv2
 import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 
 def extract_n_frame(video_path_in, video_name_in, n):
@@ -23,10 +26,10 @@ def extract_n_frame(video_path_in, video_name_in, n):
         success, image = vidcap.read()
 
     if i == n and success:
-        cv2.imwrite(video_path_in + "/" + str(n) + "th_frame" + ".jpg", image)
+        cv2.imwrite(os.path.join(video_path_in, str(n) + "th_frame" + ".jpg"), image)
     else:
         return None
-    frame_path_out = "/samples/" + str(n) + "th_frame"
+    frame_path_out = os.path.join(os.environ.get("PATH_OUT"), str(n) + "th_frame")
 
     return frame_path_out
 

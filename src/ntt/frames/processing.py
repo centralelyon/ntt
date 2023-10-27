@@ -35,14 +35,14 @@ def blur_frame(frame, kernel_size=(5, 5), region=None):
 
     return blurred_frame
 
-def experiment_blur ():
+
+def experiment_blur():
     input_frame = np.random.randint(
         0, 256, size=(480, 640, 3), dtype=np.uint8
     )  # Example random frame
     blurred_frame = blur_frame(
         input_frame, kernel_size=(15, 15), region=(100, 100, 200, 150)
     )
-
 
     # Display the original and blurred images side by side
     plt.figure(figsize=(10, 5))

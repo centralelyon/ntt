@@ -32,8 +32,12 @@ def sound_gap_measure(video1: str, video2: str) -> float:
     n_frames2 = int(duration2 * samplerate2)
 
     # extract the audio frames as a numpy array
-    y1 = np.array([audio1.get_frame(t) for t in np.linspace(0, duration1, num=n_frames1)])
-    y2 = np.array([audio2.get_frame(t) for t in np.linspace(0, duration2, num=n_frames2)])
+    y1 = np.array(
+        [audio1.get_frame(t) for t in np.linspace(0, duration1, num=n_frames1)]
+    )
+    y2 = np.array(
+        [audio2.get_frame(t) for t in np.linspace(0, duration2, num=n_frames2)]
+    )
 
     # take only the left channel
     y1 = y1[:, 0]
@@ -53,5 +57,5 @@ def sound_gap_measure(video1: str, video2: str) -> float:
 
     my_clip1.close()
     my_clip2.close()
-    
+
     return shift_calculated

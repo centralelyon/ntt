@@ -5,8 +5,8 @@ from moviepy.editor import VideoFileClip
 
 
 def remove_duration_ffmpeg(input_file, output_file, start_time):
-    if start_time<10e-3:
-        start_time=0
+    if start_time < 10e-3:
+        start_time = 0
     ffmpeg_cmd = [
         "ffmpeg",
         "-i",

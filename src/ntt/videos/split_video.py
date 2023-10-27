@@ -30,7 +30,7 @@ def split_video_ffmpeg(video_path_in, video_name, output_path, n):
         "expr:gte(t,n_forced*1)",
         "-f",
         "segment",
-        os.path.join(output_path, video_name[:len(video_name)-4]) + "%03d.mp4",
+        os.path.join(output_path, video_name[: len(video_name) - 4]) + "%03d.mp4",
     ]
 
     subprocess.run(command)

@@ -1,6 +1,7 @@
 from ntt.draw.polygone import draw_polygones
-import cv2, json,os
+import cv2, json, os
 from dotenv import load_dotenv
+
 jsonfile = f"{os.environ.get('PATH_IN')}2023_CF_Rennes_freestyle_hommes_50_finaleA.json"
 
 
@@ -21,12 +22,13 @@ def extract_piscine(jsonfile):
     x3, y3 = map(int, data["videos"][1]["srcPts"][3])
     return [[y0, x0], [y1, x1], [y2, x2], [y3, x3]]
 
+
 load_dotenv()
 piscine = extract_piscine(jsonfile)
-# dessin piscine avec ntt
+# draw swimming pool with ntt
 
 
-# Ouvrir la vidéo
+# open video
 video = cv2.VideoCapture(
     f"{os.environ.get('VIDEO_PATH_IN')}2023_CF_Rennes_freestyle_hommes_50_finaleA_fixeDroite.mp4"
 )
@@ -40,18 +42,18 @@ output_video = cv2.VideoWriter(
     f"{os.environ.get('PATH_OUT')}output_piscine.mp4", fourcc, fps, (width, height)
 )
 while True:
-    # Lire une image de la vidéo
+    # read frame from video
     ret, frame = video.read()
     draw_polygones(frame, piscine, couleur=[0, 255, 0], epaisseur=3)
 
     # Write the processed frame to the output video
     output_video.write(frame)
 
-    # Vérifier si la lecture de la vidéo est terminée
+    # verify if reading video is terminated
     if not ret:
         break
 
     # Wait for the 'q' key to quit
-# Libérer les ressources
+# liberate resources
 video.release()
 output_video.release()

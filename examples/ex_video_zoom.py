@@ -1,9 +1,14 @@
 from ntt.videos.zoom import zoom_xy
 from ntt.videos.dimensions import get_video_dimensions
+from dotenv import load_dotenv
+import os
 
 if __name__ == "__main__":
-    input_video_path = "samples/ping_clip.mp4"
-    output_video_path = "output/ping_clip_zoom.mp4"
+    load_dotenv()
+    input_video_path = os.path.join(os.environ.get("VIDEO_PATH_IN"), "ping_clip.mp4")
+    output_video_path = os.path.join(
+        os.environ.get("VIDEO_PATH_IN"), "ping_clip_zoom.mp4"
+    )
 
     width, height = get_video_dimensions(input_video_path)
 
