@@ -2,6 +2,9 @@ from moviepy.editor import *
 from scipy.io.wavfile import write
 import numpy as np
 import tempfile
+from dotenv import load_dotenv
+
+load_dotenv()
 
 
 def one_second_square_frequencies(p: float, f1: int, f2: int, filename: str):
@@ -15,7 +18,7 @@ def one_second_square_frequencies(p: float, f1: int, f2: int, filename: str):
         f2 (int [20:20k]): Frequency in the second part of the video
         filename (str): Name of the video (without the '.mp4' extension)
     """
-    path = "samples/"
+    path = os.path.join("PATH_IN")
 
     # Total duration of the video
     duration = 1.0
@@ -79,7 +82,7 @@ def random_to_start(start_time: float, duration: float, frequency: int, filename
         frequency (int): frequence on constant sound
         filename (str): name of the video (without .mp4)
     """
-    path = "samples/"
+    path = os.path.join("PATH_IN")
 
     # create a temporary audio for the first clip
     audio1_file = tempfile.NamedTemporaryFile(suffix=".wav", delete=False)
@@ -143,7 +146,7 @@ def no_to_start(start_time: float, duration: float, frequency: int, filename: st
         frequency (int): frequence on constant sound
         filename (str): name of the video (without .mp4)
     """
-    path = "samples/"
+    path = os.path.join("PATH_IN")
 
     # Créer un fichier audio temporaire pour le premier clip
     audio1_file = tempfile.NamedTemporaryFile(suffix=".wav", delete=False)
@@ -272,7 +275,7 @@ def dirac(duration: float, decalage: float, filename: str):
         decalage (float): durée du signal s2
         filename (str): nom du fichier en sortie
     """
-    path = "samples/"
+    path = os.path.join("PATH_IN")
 
     # Créer un fichier audio temporaire pour le clip commun
     audio1_file = tempfile.NamedTemporaryFile(suffix=".wav", delete=False)
