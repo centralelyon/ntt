@@ -58,6 +58,14 @@ def experiment_blur():
     plt.show()
 
 
+def rotate(frame, angle):
+    cols, rows, _ = frame.shape
+    rotate_around = (cols // 2, rows // 2)
+    rot_mat = cv2.getRotationMatrix2D(rotate_around, angle, 1.0)
+    result = cv2.warpAffine(frame, rot_mat, frame.shape[1::-1], flags=cv2.INTER_LINEAR)
+    return result
+
+
 def translate_horizontally(frame, translation_rate):
     frame1 = np.zeros_like(frame)
     h, w, _ = frame.shape
