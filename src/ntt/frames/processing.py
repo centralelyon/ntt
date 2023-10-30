@@ -56,3 +56,25 @@ def experiment_blur():
 
     plt.tight_layout()
     plt.show()
+
+
+def translate_horizontally(frame, translation_rate):
+    frame1 = np.zeros_like(frame)
+    h, w, _ = frame.shape
+
+    if translation_rate > 0:
+        frame1[:, translation_rate:w] = frame[:, : w - translation_rate]
+    else:
+        frame1[:, : w - translation_rate] = frame[:, translation_rate:w]
+    return frame1
+
+
+def translate_vertically(frame, translation_rate):
+    frame1 = np.zeros(frame.shape)
+    h, w, _ = frame.shape
+
+    if translation_rate > 0:
+        frame1[translation_rate:h, :] = frame[: h - translation_rate, :]
+    else:
+        frame1[: h - translation_rate, :] = frame[translation_rate:h, :]
+    return frame1
