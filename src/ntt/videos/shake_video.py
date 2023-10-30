@@ -9,6 +9,7 @@ def shake_video_randomly(video_path_in, video_name, shake_intensity, video_path_
     video = os.path.join(video_path_in, video_name)
     video = cv2.VideoCapture(video)
     fourcc = cv2.VideoWriter_fourcc("M", "J", "P", "G")
+    fourcc = cv2.VideoWriter_fourcc("M", "J", "P", "G")
     width = int(video.get(cv2.CAP_PROP_FRAME_WIDTH))
     height = int(video.get(cv2.CAP_PROP_FRAME_HEIGHT))
     fps = video.get(cv2.CAP_PROP_FPS)

@@ -2,6 +2,9 @@ from moviepy.editor import *
 from scipy.io.wavfile import write
 import numpy as np
 import tempfile
+from dotenv import load_dotenv
+
+load_dotenv()
 
 
 def one_second_square_frequencies(p: float, f1: int, f2: int, filename: str):
@@ -15,7 +18,7 @@ def one_second_square_frequencies(p: float, f1: int, f2: int, filename: str):
         f2 (int [20:20k]): Frequency in the second part of the video
         filename (str): Name of the video (without the '.mp4' extension)
     """
-    path = "samples/"
+    path = os.environ.get("PATH_IN")
 
     # Total duration of the video
     duration = 1.0
@@ -79,25 +82,25 @@ def random_to_start(start_time: float, duration: float, frequency: int, filename
         frequency (int): frequence on constant sound
         filename (str): name of the video (without .mp4)
     """
-    path = "samples/"
+    path = os.environ.get("PATH_IN")
 
     # create a temporary audio for the first clip
     audio1_file = tempfile.NamedTemporaryFile(suffix=".wav", delete=False)
     audio1_filename = audio1_file.name
 
-    # Générer les données audio pour le premier clip
+    # generate audio data for the first clip
     sample_rate = 44100
     # t = np.linspace(0, start_time, int(start_time * sample_rate), endpoint=False)
     audio1_data = np.random.random(int(start_time * sample_rate))
 
-    # Enregistrer les données audio dans le fichier temporaire
+    # save audio data in a tomporary file
     write(audio1_filename, sample_rate, audio1_data.astype(np.float32))
 
-    # Créer un fichier audio temporaire pour le deuxième clip
+    # create a temporary audio for the second clip
     audio2_file = tempfile.NamedTemporaryFile(suffix=".wav", delete=False)
     audio2_filename = audio2_file.name
 
-    # Générer les données audio pour le deuxième clip
+    # generate audio data for the second clip
     t = np.linspace(
         0,
         duration - start_time,
@@ -106,10 +109,10 @@ def random_to_start(start_time: float, duration: float, frequency: int, filename
     )
     audio2_data = np.sin(2 * np.pi * frequency * t)
 
-    # Enregistrer les données audio dans le fichier temporaire
+    # save audio data in a tomporary file
     write(audio2_filename, sample_rate, audio2_data.astype(np.float32))
 
-    # Créer les clips vidéo avec les fichiers audio correspondants
+    # create clips with the associated audio files
     clip1 = ColorClip((1, 1), duration=start_time, color=(0, 0, 0)).set_audio(
         AudioFileClip(audio1_filename)
     )
@@ -117,17 +120,17 @@ def random_to_start(start_time: float, duration: float, frequency: int, filename
         (1, 1), duration=duration - start_time, color=(0, 0, 0)
     ).set_audio(AudioFileClip(audio2_filename))
 
-    # Concaténer les clips pour former la vidéo finale
+    # Concatenate clips to form the final clip
     final_clip = concatenate_videoclips([clip1, clip2])
 
     final_clip = final_clip.resize((1280, 720))
 
-    # Enregistrer la vidéo au format .mp4 avec une fréquence d'images de 30
+    # save video with mp4 format and fps 30
     final_clip.write_videofile(
         path + filename + ".mp4", codec="libx264", audio_codec="aac", fps=50
     )
 
-    # Supprimer les fichiers audio temporaires
+    # delete temporary audio files
     audio1_file.close()
     audio2_file.close()
 
@@ -143,25 +146,25 @@ def no_to_start(start_time: float, duration: float, frequency: int, filename: st
         frequency (int): frequence on constant sound
         filename (str): name of the video (without .mp4)
     """
-    path = "samples/"
+    path = os.environ.get("PATH_IN")
 
-    # Créer un fichier audio temporaire pour le premier clip
+    # create a temporary audio for the first clip
     audio1_file = tempfile.NamedTemporaryFile(suffix=".wav", delete=False)
     audio1_filename = audio1_file.name
 
-    # Générer les données audio pour le premier clip
+    # generate audio data for the first clip
     sample_rate = 44100
     # t = np.linspace(0, start_time, int(start_time * sample_rate), endpoint=False)
     audio1_data = np.zeros(int(start_time * sample_rate))
 
-    # Enregistrer les données audio dans le fichier temporaire
+    # save audio data in a tomporary file
     write(audio1_filename, sample_rate, audio1_data.astype(np.float32))
 
-    # Créer un fichier audio temporaire pour le deuxième clip
+    # create a temporary audio for the second clip
     audio2_file = tempfile.NamedTemporaryFile(suffix=".wav", delete=False)
     audio2_filename = audio2_file.name
 
-    # Générer les données audio pour le deuxième clip
+    # generate audio data for the second clip
     t = np.linspace(
         0,
         duration - start_time,
@@ -170,10 +173,10 @@ def no_to_start(start_time: float, duration: float, frequency: int, filename: st
     )
     audio2_data = np.sin(2 * np.pi * frequency * t)
 
-    # Enregistrer les données audio dans le fichier temporaire
+    # save audio data in a tomporary file
     write(audio2_filename, sample_rate, audio2_data.astype(np.float32))
 
-    # Créer les clips vidéo avec les fichiers audio correspondants
+    # create clips with the associated audio files
     clip1 = ColorClip((1, 1), duration=start_time, color=(0, 0, 0)).set_audio(
         AudioFileClip(audio1_filename)
     )
@@ -181,17 +184,17 @@ def no_to_start(start_time: float, duration: float, frequency: int, filename: st
         (1, 1), duration=duration - start_time, color=(0, 0, 0)
     ).set_audio(AudioFileClip(audio2_filename))
 
-    # Concaténer les clips pour former la vidéo finale
+    # Concatenate clips to form the final clip
     final_clip = concatenate_videoclips([clip1, clip2])
 
     final_clip = final_clip.resize((1280, 720))
 
-    # Enregistrer la vidéo au format .mp4 avec une fréquence d'images de 30
+    # save video with mp4 format and fps 30
     final_clip.write_videofile(
         path + filename + ".mp4", codec="libx264", audio_codec="aac", fps=50
     )
 
-    # Supprimer les fichiers audio temporaires
+    # delete temporary audio files
     audio1_file.close()
     audio2_file.close()
 
@@ -206,31 +209,31 @@ def vid2_decale(duration: float, decalage: float, filename: str):
         decalage (float): durée du signal s2
         filename (str): nom du fichier en sortie
     """
-    path = "samples/"
+    path = os.environ.get("PATH_IN")
 
-    # Créer un fichier audio temporaire pour le clip commun
+    # create a temporary audio for the common clip
     audio1_file = tempfile.NamedTemporaryFile(suffix=".wav", delete=False)
     audio1_filename = audio1_file.name
 
-    # Générer les données audio pour le premier clip
+    # generate audio data for the first clip
     sample_rate = 44100
     # t = np.linspace(0, start_time, int(start_time * sample_rate), endpoint=False)
     audio1_data = np.random.random(int(duration * sample_rate))
 
-    # Enregistrer les données audio dans le fichier temporaire
+    # save audio data in temporary file
     write(audio1_filename, sample_rate, audio1_data.astype(np.float32))
 
-    # Créer un fichier audio temporaire pour le decalage
+    # create temporary audio file for shift
     audio2_file = tempfile.NamedTemporaryFile(suffix=".wav", delete=False)
     audio2_filename = audio2_file.name
 
-    # Générer les données audio pour le deuxième clip
+    # generate audio data for the second clip
     audio2_data = np.random.random(int(decalage * sample_rate))
 
-    # Enregistrer les données audio dans le fichier temporaire
+    # save audio data in temporary file
     write(audio2_filename, sample_rate, audio2_data.astype(np.float32))
 
-    # Créer les clips vidéo avec les fichiers audio correspondants
+    # create clips with the associated audio files
     clip1 = ColorClip((1, 1), duration=duration, color=(0, 0, 0)).set_audio(
         AudioFileClip(audio1_filename)
     )
@@ -238,25 +241,25 @@ def vid2_decale(duration: float, decalage: float, filename: str):
         AudioFileClip(audio2_filename)
     )
 
-    # Concaténer les clips pour former la vidéo finale decale
+    # Concatenate clips to form the final shifted clip
     final_clip1 = clip1.resize((1280, 720))
 
-    # Enregistrer la vidéo au format .mp4 avec une fréquence d'images de 30
+    # save video with mp4 format and fps 30
     final_clip1.write_videofile(
         path + filename + ".mp4", codec="libx264", audio_codec="aac", fps=50
     )
 
-    # Concaténer les clips pour former la vidéo finale decale
+    # Concatenate clips to form the final shifted clip
     final_clip2 = concatenate_videoclips([clip2, clip1])
 
     final_clip2 = final_clip2.resize((1280, 720))
 
-    # Enregistrer la vidéo au format .mp4 avec une fréquence d'images de 30
+    # save video with mp4 format and fps 30
     final_clip2.write_videofile(
         path + filename + "decale.mp4", codec="libx264", audio_codec="aac", fps=50
     )
 
-    # Supprimer les fichiers audio temporaires
+    # delete temporary audio file
     audio1_file.close()
     audio2_file.close()
 
@@ -272,32 +275,32 @@ def dirac(duration: float, decalage: float, filename: str):
         decalage (float): durée du signal s2
         filename (str): nom du fichier en sortie
     """
-    path = "samples/"
+    path = os.environ.get("PATH_IN")
 
-    # Créer un fichier audio temporaire pour le clip commun
+    #   create temporary audio file for the common clip
     audio1_file = tempfile.NamedTemporaryFile(suffix=".wav", delete=False)
     audio1_filename = audio1_file.name
 
-    # Générer les données audio pour le premier clip
+    #   generate audio data for the first clip
     sample_rate = 44100
     # t = np.linspace(0, start_time, int(start_time * sample_rate), endpoint=False)
     audio1_data = np.zeros(int(duration * sample_rate))
     audio1_data[0] = 1
 
-    # Enregistrer les données audio dans le fichier temporaire
+    #   save audio data  in temporary file
     write(audio1_filename, sample_rate, audio1_data.astype(np.float32))
 
-    # Créer un fichier audio temporaire pour le decalage
+    #   create temporay audio file for shift
     audio2_file = tempfile.NamedTemporaryFile(suffix=".wav", delete=False)
     audio2_filename = audio2_file.name
 
-    # Générer les données audio pour le deuxième clip
+    #   generate audio data for the second clip
     audio2_data = np.zeros(int(decalage * sample_rate))
 
-    # Enregistrer les données audio dans le fichier temporaire
+    #   save audio data in temporary file
     write(audio2_filename, sample_rate, audio2_data.astype(np.float32))
 
-    # Créer les clips vidéo avec les fichiers audio correspondants
+    #   generate video clips with associated audio files
     clip1 = ColorClip((1, 1), duration=duration, color=(0, 0, 0)).set_audio(
         AudioFileClip(audio1_filename)
     )
@@ -305,24 +308,24 @@ def dirac(duration: float, decalage: float, filename: str):
         AudioFileClip(audio2_filename)
     )
 
-    # Concaténer les clips pour former la vidéo finale decale
+    #   concatenate clips to form the final shifted video
     final_clip1 = clip1.resize((1280, 720))
 
-    # Enregistrer la vidéo au format .mp4 avec une fréquence d'images de 30
+    #   save video in mp4 format and fps 30
     final_clip1.write_videofile(
         path + filename + ".mp4", codec="libx264", audio_codec="aac", fps=50
     )
 
-    # Concaténer les clips pour former la vidéo finale decale
+    #   concatenate clips to form final shifted video
     final_clip2 = concatenate_videoclips([clip2, clip1])
 
     final_clip2 = final_clip2.resize((1280, 720))
 
-    # Enregistrer la vidéo au format .mp4 avec une fréquence d'images de 30
+    #   save video in mp4 format and with fps 30
     final_clip2.write_videofile(
         path + filename + "decale.mp4", codec="libx264", audio_codec="aac", fps=50
     )
 
-    # Supprimer les fichiers audio temporaires
+    #   delete temporary audio files
     audio1_file.close()
     audio2_file.close()
