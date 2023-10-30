@@ -10,7 +10,7 @@ if __name__ == "__main__":
     w, h = 100, 100
     imarray = numpy.random.rand(w, h, 3) * 255
     im = crop(imarray, 20, 20, 30, 30)
-    cv2.imwrite(f"{os.environ.get('FRAME_PATH_OUT')}exemple_crop.jpg", im)
+    cv2.imwrite(os.path.join(os.environ.get("FRAME_PATH_OUT"), "exemple_crop.jpg"), im)
     cv2.imshow("Original Image", imarray)
     cv2.rectangle(im, (20, 20, 20, 20), (30, 30))
     cv2.imshow("Cropped Image", im)

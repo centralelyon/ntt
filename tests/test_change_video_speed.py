@@ -1,21 +1,24 @@
 import os
 from ntt.videos.change_speed import change_video_speed
 from moviepy.editor import VideoFileClip
+from dotenv import load_dotenv
+
+load_dotenv()
 
 
 def test_change_video_speed():
-    video_file_in = os.path.join("samples", "ping.mp4")
-    video_file_out = os.path.join("output", "ping_speed.mp4")
+    video_file_in = os.path.join(os.environ.get("VIDEO_PATH_IN"), "ping.mp4")
+    video_file_out = os.path.join(os.environ.get("PATH_OUT"), "ping_speed.mp4")
 
-    if not os.path.exists("output"):
-        os.makedirs("output")
+    if not os.path.exists(os.environ.get("PATH_OUT")):
+        os.makedirs(os.environ.get("PATH_OUT"))
 
     change_video_speed(video_file_in, video_file_out, 1)
 
     video_in = VideoFileClip(video_file_in)
     video_out = VideoFileClip(video_file_out)
 
-    # info video_in.reader.nframes ne donne pas les mêmes valeurs de nb frames
+    # info video_in.reader.nframes does not give the sama values of nb frames
     nb_frames_video_in = video_in.fps * video_in.duration
     nb_frames_video_out = video_out.fps * video_out.duration
 

@@ -1,10 +1,13 @@
 import os
 from moviepy.editor import VideoFileClip
+from dotenv import load_dotenv
+
+load_dotenv()
 
 
 def change_video_speed(
-    video_file_in: str = os.path.join("samples", "ping.mp4"),
-    video_file_out: str = os.path.join("output", "ping_speed.mp4"),
+    video_file_in: str = os.path.join(os.environ.get("VIDEO_PATH_IN"), "ping.mp4"),
+    video_file_out: str = os.path.join(os.environ.get("PATH_OUT"), "ping_speed.mp4"),
     speed_factor: int = 1,
 ) -> str:
     """change the video speed with a factor > 1 accelerates, <1 slows down"""

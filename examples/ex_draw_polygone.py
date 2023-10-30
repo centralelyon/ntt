@@ -3,7 +3,7 @@ import cv2
 from ntt.draw.polygone import draw_polygones
 
 if __name__ == "__main__":
-    # constructin image initiale
+    # build initial frame
     dimx = 400
     dimy = 600
     image = np.full((dimx, dimy, 3), (0, 0, 0), dtype=np.uint8)
@@ -15,7 +15,7 @@ if __name__ == "__main__":
         [3 * dimx / 4, 3 * dimy / 4],
         [dimx / 4, 3 * dimy / 4],
     ]
-    couleur = [255, 0, 0]  # bleu
+    couleur = [255, 0, 0]  # blue
     draw_polygones(image, points=points, couleur=couleur, epaisseur=3)
 
     # draw n-points d'un polygone regulier

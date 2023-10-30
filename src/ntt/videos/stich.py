@@ -44,7 +44,7 @@ def stitch_2_videos(
     time_shift = round(time_difference * fps)
 
     # output video
-    fourcc = cv2.VideoWriter_fourcc("m", "p", "4", "v")
+    fourcc = cv2.VideoWriter_fourcc("M", "J", "P", "G")
 
     out = cv2.VideoWriter(
         video_out, fourcc, fps, (shape_output_img[0], shape_output_img[1])

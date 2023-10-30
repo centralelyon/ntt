@@ -16,7 +16,7 @@ def overlay_two_videos_opencv(
     fps = video1.get(cv2.CAP_PROP_FPS)
 
     # Define the codec for the output video
-    fourcc = cv2.VideoWriter_fourcc(*"mp4v")
+    fourcc = cv2.VideoWriter_fourcc("M", "J", "P", "G")
     output_video = cv2.VideoWriter(path_out, fourcc, fps, (width, height))
     while True:
         # Lire une image de la vidéo
