@@ -56,3 +56,11 @@ def experiment_blur():
 
     plt.tight_layout()
     plt.show()
+
+
+def rotate(frame, angle):
+    cols, rows, _ = frame.shape
+    rotate_around = (cols // 2, rows // 2)
+    rot_mat = cv2.getRotationMatrix2D(rotate_around, angle, 1.0)
+    result = cv2.warpAffine(frame, rot_mat, frame.shape[1::-1], flags=cv2.INTER_LINEAR)
+    return result
