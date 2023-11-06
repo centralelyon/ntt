@@ -3,6 +3,7 @@ import cv2, json
 from dotenv import load_dotenv
 import os
 
+load_dotenv()
 jsonfile = os.path.join(
     os.environ.get("PATH_IN"), "2023_CF_Rennes_freestyle_hommes_50_finaleA.json"
 )

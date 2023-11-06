@@ -2,6 +2,8 @@ from ntt.draw.polygone import draw_polygones
 import cv2, json, os
 from dotenv import load_dotenv
 
+load_dotenv()
+
 
 def extract_piscine(jsonfile):
     try:
@@ -27,7 +29,7 @@ def test_draw_piscine():
         os.environ.get("VIDEO_PATH_IN"),
         "2023_CF_Rennes_freestyle_hommes_50_finaleA_fixeDroite.mp4",
     )
-    # Ouvrir la vidéo
+    # open video
     piscine = extract_piscine(jsonfile)
     try:
         video = cv2.VideoCapture(video_name)
