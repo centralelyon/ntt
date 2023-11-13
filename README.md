@@ -1,7 +1,6 @@
 # ntt
 
 [![CircleCI](https://dl.circleci.com/status-badge/img/gh/centralelyon/ntt/tree/main.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/centralelyon/ntt/tree/main)
-
 [![Documentation Status](https://readthedocs.org/projects/ntt/badge/?version=latest)](https://ntt.readthedocs.io/en/latest/?badge=latest)
 
 _A modular video processing pipeline_
@@ -148,3 +147,6 @@ $ docker build -t ntt .
 
 > docker run -v "$(pwd)":/app ntt python ntt/frames/test/test_frame_extraction.py
 
+## Acknowledgments
+
+<img src="https://liris.cnrs.fr/sites/default/files/logo_liris_160_0.png" style="height:100px">&nbsp;&nbsp;&nbsp;<img src="https://www.ec-lyon.fr/sites/default/files/styles/large/public/legacy-files/logo_ecl_rectangle_quadri_print.jpg" style="height:100px">&nbsp;&nbsp;&nbsp;<img src="https://www.natation-handisport.org/wp-content/uploads/2021/10/logo_NePTUNE_color-768x204.png" style="height:100px">
