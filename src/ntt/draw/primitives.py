@@ -8,10 +8,10 @@ def write_text(
     text: str = "Text",
     posXY: Tuple[int, int] = (10, 50),
     color: Tuple[int, int, int] = (0, 0, 255),
+    thickness : int =2
 ) -> None:
     """write some text at a given position"""
     font = cv2.FONT_HERSHEY_SIMPLEX
-    thickness = 1
     cv2.putText(frame, text, posXY, font, 1, color, thickness, cv2.LINE_4)
     return frame
 
