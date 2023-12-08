@@ -37,6 +37,11 @@ jobs:
           name: Run tests
           # This assumes pytest is installed via the install-package step above
           command: pytest
+      - run:
+          name: Clone samples
+          # This assumes pytest is installed via the install-package step above
+          command: https://github.com/centralelyon/ntt-samples.git
+
 
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
