@@ -1,10 +1,13 @@
 import cv2
-import os, ffmpeg
+import os
+import ffmpeg
 import numpy as np
 
 
-def extract_last_frame(video_path_in, video_name_in, frame_path_out, frame_name_out):
-    """This function extracts the last frame of a given video.
+def extract_last_frame(
+    video_path_in: str, video_name_in: str, frame_path_out: str, frame_name_out: str
+) -> str:
+    """Extracts the last frame of a given video.
 
     Args:
         video_path_in (string): path to the folder conataining the input video
@@ -93,7 +96,7 @@ def extract_nth_frame(
 
 
 def extract_frame_opencv(video_path, frame_number=1):
-    """This function extracts a frame given its number from a video with opencv
+    """Extracts a frame given its number from a video with opencv
 
     Args:
         video_path (string): path to the folder conataining the input video
@@ -120,9 +123,8 @@ def extract_frame_opencv(video_path, frame_number=1):
         return None
 
 
-# Extract a frame using FFmpeg
 def extract_frame_ffmpeg(video_path, frame_number):
-    """This function extracts a frame given its number from a video with ffmpeg
+    """Extracts a frame given its number from a video with ffmpeg
 
     Args:
         video_path (string): path to the folder conataining the input video
@@ -139,7 +141,6 @@ def extract_frame_ffmpeg(video_path, frame_number):
     return frame
 
 
-# Compare the frames extracted by OpenCV and FFmpeg
 def compare_frames(video_path, frame_number):
     """This function compares the frames extracted by extract_frame_ffmpeg and extract_frame_opencv
 
