@@ -2,7 +2,7 @@ import numpy as np
 
 
 def crop(image: np.ndarray, x1: int, y1: int, x2: int, y2: int) -> np.ndarray:
-    """Crops an image given 2 points
+    """Crops an image given 2 points (top left and bottom right)
 
     Args:
         image (np.ndarray): the image to crop

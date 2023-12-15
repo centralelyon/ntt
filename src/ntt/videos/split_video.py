@@ -1,9 +1,30 @@
-import subprocess, os, ffmpeg
-from moviepy.editor import VideoFileClip
+import subprocess, os
+
 from ntt.videos.duration import get_video_duration
 
 
-def split_video_ffmpeg(video_path_in, video_name, output_path, n):
+def split_video_ffmpeg(
+    video_path_in: str, video_name: str, output_path: str, n: int
+) -> None:
+    """This function splits a video into n segments of equal duration using ffmpeg.
+
+    Args:
+        video_path_in (string): path to the folder conataining the input video
+        video_name (string): name of the input video
+        output_path (string): path to the folder conataining the output segments
+        n (int): number of segments
+
+    Raises:
+        ValueError: if n is negative
+        Exception: if the video is not found
+
+    Returns:
+        None
+    """
+
+    if n < 0:
+        raise ValueError("Number of segments (n) must be greater than zero.")
+
     video = os.path.join(video_path_in, video_name)
     duration = get_video_duration(video_path_in, video_name)
     segment_duration = duration / n
@@ -32,5 +53,7 @@ def split_video_ffmpeg(video_path_in, video_name, output_path, n):
         "segment",
         os.path.join(output_path, video_name[: len(video_name) - 4]) + "%03d.mp4",
     ]
-
-    subprocess.run(command)
+    try:
+        subprocess.run(command)
+    except Exception as e:
+        print(e)
