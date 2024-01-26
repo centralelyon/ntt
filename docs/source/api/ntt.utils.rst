@@ -1,5 +1,10 @@
-ntt.utils package
-=================
+API reference
+=============
+
+.. automodule:: ntt.utils
+   :members:
+   :undoc-members:
+   :show-inheritance:
 
 Submodules
 ----------
@@ -44,6 +49,14 @@ ntt.utils.json\_to\_text module
    :undoc-members:
    :show-inheritance:
 
+ntt.utils.random module
+-----------------------
+
+.. automodule:: ntt.utils.random
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 ntt.utils.strings module
 ------------------------
 
@@ -64,14 +77,6 @@ ntt.utils.text\_to\_json module
 -------------------------------
 
 .. automodule:: ntt.utils.text_to_json
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-Module contents
----------------
-
-.. automodule:: ntt.utils
    :members:
    :undoc-members:
    :show-inheritance:

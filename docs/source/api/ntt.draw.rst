@@ -1,5 +1,10 @@
-ntt.draw package
-================
+API reference
+=============
+
+.. automodule:: ntt.draw
+   :members:
+   :undoc-members:
+   :show-inheritance:
 
 Submodules
 ----------
@@ -16,14 +21,6 @@ ntt.draw.primitives module
 --------------------------
 
 .. automodule:: ntt.draw.primitives
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-Module contents
----------------
-
-.. automodule:: ntt.draw
    :members:
    :undoc-members:
    :show-inheritance:

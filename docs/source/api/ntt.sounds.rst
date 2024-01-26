@@ -1,5 +1,10 @@
-ntt.sounds package
-==================
+API reference
+=============
+
+.. automodule:: ntt.sounds
+   :members:
+   :undoc-members:
+   :show-inheritance:
 
 Submodules
 ----------
@@ -24,14 +29,6 @@ ntt.sounds.sound\_generation module
 -----------------------------------
 
 .. automodule:: ntt.sounds.sound_generation
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-Module contents
----------------
-
-.. automodule:: ntt.sounds
    :members:
    :undoc-members:
    :show-inheritance:

@@ -1,5 +1,10 @@
-ntt.frames package
-==================
+API reference
+=============
+
+.. automodule:: ntt.frames
+   :members:
+   :undoc-members:
+   :show-inheritance:
 
 Submodules
 ----------
@@ -56,14 +61,6 @@ ntt.frames.processing module
 ----------------------------
 
 .. automodule:: ntt.frames.processing
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-Module contents
----------------
-
-.. automodule:: ntt.frames
    :members:
    :undoc-members:
    :show-inheritance:

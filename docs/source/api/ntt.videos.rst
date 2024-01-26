@@ -1,5 +1,10 @@
-ntt.videos package
-==================
+API reference
+=============
+
+.. automodule:: ntt.videos
+   :members:
+   :undoc-members:
+   :show-inheritance:
 
 Submodules
 ----------
@@ -44,10 +49,42 @@ ntt.videos.duration module
    :undoc-members:
    :show-inheritance:
 
+ntt.videos.get\_fourcc module
+-----------------------------
+
+.. automodule:: ntt.videos.get_fourcc
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 ntt.videos.peak module
 ----------------------
 
 .. automodule:: ntt.videos.peak
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+ntt.videos.shake\_video module
+------------------------------
+
+.. automodule:: ntt.videos.shake_video
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+ntt.videos.show module
+----------------------
+
+.. automodule:: ntt.videos.show
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+ntt.videos.split\_video module
+------------------------------
+
+.. automodule:: ntt.videos.split_video
    :members:
    :undoc-members:
    :show-inheritance:
@@ -80,14 +117,6 @@ ntt.videos.zoom module
 ----------------------
 
 .. automodule:: ntt.videos.zoom
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-Module contents
----------------
-
-.. automodule:: ntt.videos
    :members:
    :undoc-members:
    :show-inheritance:
