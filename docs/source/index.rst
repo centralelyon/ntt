@@ -5,8 +5,7 @@ A modular video processing pipeline
 
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
 
    getting-started
-   api/ntt
+   API Reference <api/ntt>
    credits
