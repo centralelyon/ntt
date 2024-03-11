@@ -31,9 +31,11 @@ sphinx:
 #    - epub
 
 # To install the project itself as a Python package using pip
-# https://docs.readthedocs.io/en/stable/config-file/index.html#adjust-python-configuration
+# https://docs.readthedocs.io/en/stable/config-file/v2.html#packages
 python:
-   install:
-   - method: pip
-     path: .[dev]
+  install:
+    - method: pip
+      path: .
+      extra_requirements:
+        - [dev]
 
