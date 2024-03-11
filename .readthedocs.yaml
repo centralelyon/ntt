@@ -37,5 +37,5 @@ python:
     - method: pip
       path: .
       extra_requirements:
-        - [dev]
+        - dev
 
