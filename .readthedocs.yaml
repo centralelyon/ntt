@@ -21,6 +21,8 @@ build:
       - sphinx-apidoc -f -T -d 2 -M -o docs/source/api src/ntt
       - git clone git@github.com:centralelyon/ntt-notebooks.git notebooks
 
+    post_build:
+      - cp -r notebooks/experiments $READTHEDOCS_OUTPUT/html/notebooks
 
 # Build documentation in the "docs/" directory with Sphinx
 sphinx:
