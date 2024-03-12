@@ -7,5 +7,10 @@ A modular video processing pipeline
    :maxdepth: 2
 
    getting-started
+
    API Reference <api/ntt>
+
+   notebooks
+
    credits
+   

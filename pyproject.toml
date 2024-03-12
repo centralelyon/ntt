@@ -41,7 +41,9 @@ dev = [
     "pytest",
     "flit",
     "sphinx",
-    "sphinx-rtd-theme"
+    "sphinx-rtd-theme",
+    "nbsphinx",
+    "nbsphinx-link"
 ]
 
 [tool.flit.sdist]
