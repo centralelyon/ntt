@@ -42,8 +42,11 @@ dev = [
     "flit",
     "sphinx",
     "sphinx-rtd-theme",
+    "pydata-sphinx-theme",
+    "sphinx-design",
     "nbsphinx",
-    "nbsphinx-link"
+    "nbsphinx-link",
+    "ipywidgets"
 ]
 
 [tool.flit.sdist]

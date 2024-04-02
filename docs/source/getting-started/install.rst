@@ -10,11 +10,20 @@ It is highly recommended to work inside a `virtual environment`_.
 Quick install from GitHub
 =========================
 
-You can install ``ntt`` using ``pip`` :
+.. tab-set::
 
-.. code-block:: bash
+    .. tab-item:: pip
 
-    $ pip install git+https://github.com/centralelyon/ntt.git@maininstall ntt
+        You can install ``ntt`` using :program:`pip` :
+
+        .. code-block:: bash
+
+            $ pip install git+https://github.com/centralelyon/ntt.git@maininstall ntt
+
+    .. tab-item:: conda
+
+        You can install ``ntt`` using :program:`conda` if / when it will be
+        packaged for this tool.
 
 Editable install for development
 ================================
