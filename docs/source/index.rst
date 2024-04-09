@@ -44,6 +44,7 @@ ntt
    :hidden:
 
    getting-started
+   ntt-workflows
 
    API Reference <api/ntt>
 
