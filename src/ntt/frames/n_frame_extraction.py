@@ -1,6 +1,5 @@
 import cv2
 from pathlib import Path
-# import os
 
 import dotenv
 
@@ -16,7 +15,7 @@ def extract_n_frame(video_path_in, video_name_in, n):
     Returns:
         string: full path of the output frame
     """
-    # Should not be in the library but in the calling script
+    # TODO : Should not be in the library but in the calling script
     # The function should have a video_path_out parameter
     env_vars = dotenv.dotenv_values()
 
@@ -34,8 +33,8 @@ def extract_n_frame(video_path_in, video_name_in, n):
     else:
         return None
     
-    # Should the function return a pathlib Path (i think this should be the
-    # choice) or a string ?
+    # TODO : Should the function return a pathlib Path (i think this should
+    # be the choice) or a string ?
     frame_path_out = str(Path(env_vars.get('PATH_OUT')) / str(n) / "th_frame")
 
     return frame_path_out
