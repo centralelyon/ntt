@@ -1,10 +1,9 @@
-from moviepy.editor import *
-from scipy.io.wavfile import write
-import numpy as np
+from pathlib import Path
 import tempfile
-from dotenv import load_dotenv
-
-load_dotenv()
+import dotenv
+from moviepy.editor import *
+import numpy as np
+from scipy.io.wavfile import write
 
 
 def one_second_square_frequencies(p: float, f1: int, f2: int, filename: str):
@@ -18,7 +17,11 @@ def one_second_square_frequencies(p: float, f1: int, f2: int, filename: str):
         f2 (int [20:20k]): Frequency in the second part of the video
         filename (str): Name of the video (without the '.mp4' extension)
     """
-    path = os.environ.get("PATH_IN")
+    # TODO : Loading the environment variables should be done in the calling
+    # script, not in the ntt library
+    env_vars = dotenv.dotenv_values()
+
+    path = Path(env_vars.get('PATH_IN'))
 
     # Total duration of the video
     duration = 1.0
@@ -63,7 +66,7 @@ def one_second_square_frequencies(p: float, f1: int, f2: int, filename: str):
 
     # Save the video in .mp4 format with a frame rate of 30
     final_clip.write_videofile(
-        path + filename + ".mp4", codec="libx264", audio_codec="aac", fps=50
+        str(path / f"{filename}.mp4"), codec="libx264", audio_codec="aac", fps=50
     )
 
     # Close the temporary audio files
@@ -82,7 +85,11 @@ def random_to_start(start_time: float, duration: float, frequency: int, filename
         frequency (int): frequence on constant sound
         filename (str): name of the video (without .mp4)
     """
-    path = os.environ.get("PATH_IN")
+    # TODO : Loading the environment variables should be done in the calling
+    # script, not in the ntt library
+    env_vars = dotenv.dotenv_values()
+
+    path = Path(env_vars.get('PATH_IN'))
 
     # create a temporary audio for the first clip
     audio1_file = tempfile.NamedTemporaryFile(suffix=".wav", delete=False)
@@ -127,7 +134,7 @@ def random_to_start(start_time: float, duration: float, frequency: int, filename
 
     # save video with mp4 format and fps 30
     final_clip.write_videofile(
-        path + filename + ".mp4", codec="libx264", audio_codec="aac", fps=50
+        str(path / f"{filename}.mp4"), codec="libx264", audio_codec="aac", fps=50
     )
 
     # delete temporary audio files
@@ -146,7 +153,11 @@ def no_to_start(start_time: float, duration: float, frequency: int, filename: st
         frequency (int): frequence on constant sound
         filename (str): name of the video (without .mp4)
     """
-    path = os.environ.get("PATH_IN")
+    # TODO : Loading the environment variables should be done in the calling
+    # script, not in the ntt library
+    env_vars = dotenv.dotenv_values()
+
+    path = Path(env_vars.get('PATH_IN'))
 
     # create a temporary audio for the first clip
     audio1_file = tempfile.NamedTemporaryFile(suffix=".wav", delete=False)
@@ -191,7 +202,7 @@ def no_to_start(start_time: float, duration: float, frequency: int, filename: st
 
     # save video with mp4 format and fps 30
     final_clip.write_videofile(
-        path + filename + ".mp4", codec="libx264", audio_codec="aac", fps=50
+        str(path / f"{filename}.mp4"), codec="libx264", audio_codec="aac", fps=50
     )
 
     # delete temporary audio files
@@ -209,7 +220,11 @@ def vid2_decale(duration: float, decalage: float, filename: str):
         decalage (float): durée du signal s2
         filename (str): nom du fichier en sortie
     """
-    path = os.environ.get("PATH_IN")
+    # TODO : Loading the environment variables should be done in the calling
+    # script, not in the ntt library
+    env_vars = dotenv.dotenv_values()
+
+    path = Path(env_vars.get('PATH_IN'))
 
     # create a temporary audio for the common clip
     audio1_file = tempfile.NamedTemporaryFile(suffix=".wav", delete=False)
@@ -246,7 +261,7 @@ def vid2_decale(duration: float, decalage: float, filename: str):
 
     # save video with mp4 format and fps 30
     final_clip1.write_videofile(
-        path + filename + ".mp4", codec="libx264", audio_codec="aac", fps=50
+        str(path / f"{filename}.mp4"), codec="libx264", audio_codec="aac", fps=50
     )
 
     # Concatenate clips to form the final shifted clip
@@ -256,7 +271,7 @@ def vid2_decale(duration: float, decalage: float, filename: str):
 
     # save video with mp4 format and fps 30
     final_clip2.write_videofile(
-        path + filename + "decale.mp4", codec="libx264", audio_codec="aac", fps=50
+        str(path / f"{filename}decale.mp4"), codec="libx264", audio_codec="aac", fps=50
     )
 
     # delete temporary audio file
@@ -275,7 +290,11 @@ def dirac(duration: float, decalage: float, filename: str):
         decalage (float): durée du signal s2
         filename (str): nom du fichier en sortie
     """
-    path = os.environ.get("PATH_IN")
+    # TODO : Loading the environment variables should be done in the calling
+    # script, not in the ntt library
+    env_vars = dotenv.dotenv_values()
+
+    path = Path(env_vars.get('PATH_IN'))
 
     #   create temporary audio file for the common clip
     audio1_file = tempfile.NamedTemporaryFile(suffix=".wav", delete=False)
@@ -313,7 +332,7 @@ def dirac(duration: float, decalage: float, filename: str):
 
     #   save video in mp4 format and fps 30
     final_clip1.write_videofile(
-        path + filename + ".mp4", codec="libx264", audio_codec="aac", fps=50
+        str(path / f"{filename}.mp4"), codec="libx264", audio_codec="aac", fps=50
     )
 
     #   concatenate clips to form final shifted video
@@ -323,7 +342,7 @@ def dirac(duration: float, decalage: float, filename: str):
 
     #   save video in mp4 format and with fps 30
     final_clip2.write_videofile(
-        path + filename + "decale.mp4", codec="libx264", audio_codec="aac", fps=50
+        str(path / f"{filename}decale.mp4"), codec="libx264", audio_codec="aac", fps=50
     )
 
     #   delete temporary audio files
