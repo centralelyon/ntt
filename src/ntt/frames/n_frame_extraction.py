@@ -1,8 +1,8 @@
 import cv2
-import os
-from dotenv import load_dotenv
+from pathlib import Path
+# import os
 
-load_dotenv()
+import dotenv
 
 
 def extract_n_frame(video_path_in, video_name_in, n):
@@ -16,9 +16,13 @@ def extract_n_frame(video_path_in, video_name_in, n):
     Returns:
         string: full path of the output frame
     """
-    video_name = os.path.join(video_path_in, video_name_in)
+    # Should not be in the library but in the calling script
+    # The function should have a video_path_out parameter
+    env_vars = dotenv.dotenv_values()
 
-    vidcap = cv2.VideoCapture(video_name)
+    video_path = Path(video_path_in) / video_name_in
+
+    vidcap = cv2.VideoCapture(video_path)
     success, image = vidcap.read()
     i = 0
     while i < n and success != False:
@@ -26,10 +30,13 @@ def extract_n_frame(video_path_in, video_name_in, n):
         success, image = vidcap.read()
 
     if i == n and success:
-        cv2.imwrite(os.path.join(video_path_in, str(n) + "th_frame" + ".jpg"), image)
+        cv2.imwrite(Path(video_path_in)) / "th_frame.jpg", image)
     else:
         return None
-    frame_path_out = os.path.join(os.environ.get("PATH_OUT"), str(n) + "th_frame")
+    
+    # Should the function return a pathlib Path (i think this should be the
+    # choice) or a string ?
+    frame_path_out = str(Path(env_vars.get('PATH_OUT')) / str(n) / "th_frame")
 
     return frame_path_out
 
@@ -38,13 +45,14 @@ def extract_frame_opencv(video_path, frame_number):
     """This function extracts a frame given its number from a video with opencv
 
     Args:
-        video_path (string): path to the folder conataining the input video
+        video_path (string): path to the folder containing the input video
         frame_number (int, optional): the number of the frame to extract. Defaults to 1.
 
     Returns:
         np.ndarray: the frame with number = frame_number
     """
-    if not os.path.isfile(video_path):
+    # Path(video_path) is not a problem if video_path is already a path
+    if not Path.is_file(Path(video_path)):
         return None
 
     cap = cv2.VideoCapture(video_path)
