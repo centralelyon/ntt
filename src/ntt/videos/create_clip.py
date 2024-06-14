@@ -1,18 +1,33 @@
 import os
-from moviepy import editor
+from pathlib import Path
+
+import dotenv
 import cv2 as cv
-from dotenv import load_dotenv
-
-load_dotenv()
+from moviepy import editor
 
 
-def cut_video(
-    video_file_in: str = os.path.join(os.environ.get("VIDEO_PATH_IN"), "crop.mp4"),
-    video_file_out: str = os.path.join(os.environ.get("PATH_OUT"), "crop_clip.mp4"),
-    start: int = 0,
-    end: int = 0,
-) -> str:
-    """Cut video during a given time interval in seconds"""
+def cut_video(video_file_in: str, video_file_out: str, start: int = 0, end: int = 0) -> str:
+    """Cut video during a given time interval in seconds.
+    TODO : Describe parameters and returned value
+
+    Args:
+        video_file_in (str): _description_
+        video_file_out (str): _description_
+        start (int, optional): _description_. Defaults to 0.
+        end (int, optional): _description_. Defaults to 0.
+
+    Returns:
+        str: _description_
+    """
+    # TODO : Loading the environment variables should be done in the calling
+    # script, not in the ntt library
+    env_vars = dotenv.dotenv_values()
+
+    if video_file_in is None:
+        video_file_in = Path(env_vars.get('VIDEO_PATH_IN')) / "crop.mp4"
+
+    if video_file_out is None:
+        video_file_out = Path(env_vars.get('PATH_OUT')) / "crop_clip.mp4"
 
     myclip_in = editor.VideoFileClip(video_file_in)
     myclip_out = myclip_in.subclip(start, end)
@@ -23,13 +38,28 @@ def cut_video(
     return video_file_out
 
 
-def cut_video_opencv(
-    video_file_in: str = os.path.join(os.environ.get("VIDEO_PATH_IN"), "crop.mp4"),
-    video_file_out: str = os.path.join(os.environ.get("PATH_OUT"), "crop_clip.mp4"),
-    start: int = 0,
-    end: int = 10,
-) -> str:
-    """Cut video during a given time interval in frame"""
+def cut_video_opencv(video_file_in: str, video_file_out: str, start: int = 0, end: int = 10) -> str:
+    """Cut video during a given time interval in frame.
+    TODO : Describe parameters and returned value
+
+    Args:
+        video_file_in (str): _description_
+        video_file_out (str): _description_
+        start (int, optional): _description_. Defaults to 0.
+        end (int, optional): _description_. Defaults to 10.
+
+    Returns:
+        str: _description_
+    """
+    # TODO : Loading the environment variables should be done in the calling
+    # script, not in the ntt library
+    env_vars = dotenv.dotenv_values()
+
+    if video_file_in is None:
+        video_file_in = Path(env_vars.get('VIDEO_PATH_IN')) / "crop.mp4"
+
+    if video_file_out is None:
+        video_file_out = Path(env_vars.get('PATH_OUT')) / "crop_clip.mp4"
 
     if start < 0:
         print("Error: negativ start")
@@ -40,7 +70,7 @@ def cut_video_opencv(
         print("Error: start >= end")
         return 0
 
-    if not os.path.isfile(video_file_in):
+    if not Path.is_file(video_file_in):
         print("Wrong video path")
         return 0
     cap = cv.VideoCapture(video_file_in)
