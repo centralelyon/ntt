@@ -1,8 +1,11 @@
-from pathlib import Path
+"""TODO : sound_generation module provides ...
+"""
 import tempfile
+from pathlib import Path
+
 import dotenv
-from moviepy.editor import *
 import numpy as np
+from moviepy.editor import AudioFileClip, ColorClip, concatenate_videoclips
 from scipy.io.wavfile import write
 
 
@@ -21,7 +24,7 @@ def one_second_square_frequencies(p: float, f1: int, f2: int, filename: str):
     # script, not in the ntt library
     env_vars = dotenv.dotenv_values()
 
-    path = Path(env_vars.get('PATH_IN'))
+    path = Path(env_vars.get("PATH_IN"))
 
     # Total duration of the video
     duration = 1.0
@@ -52,12 +55,12 @@ def one_second_square_frequencies(p: float, f1: int, f2: int, filename: str):
     write(audio2_filename, sample_rate, audio2_data.astype(np.float32))
 
     # Create video clips with the corresponding audio files
-    clip1 = ColorClip((1, 1), duration=duration * p, color=(0, 0, 0)).set_audio(
-        AudioFileClip(audio1_filename)
-    )
-    clip2 = ColorClip((1, 1), duration=(1 - p) * duration, color=(0, 0, 0)).set_audio(
-        AudioFileClip(audio2_filename)
-    )
+    clip1 = ColorClip(
+        (1, 1), duration=duration * p, color=(0, 0, 0)
+    ).set_audio(AudioFileClip(audio1_filename))
+    clip2 = ColorClip(
+        (1, 1), duration=(1 - p) * duration, color=(0, 0, 0)
+    ).set_audio(AudioFileClip(audio2_filename))
 
     # Concatenate the clips to form the final video
     final_clip = concatenate_videoclips([clip1, clip2])
@@ -75,21 +78,22 @@ def one_second_square_frequencies(p: float, f1: int, f2: int, filename: str):
 
 
 def random_to_start(start_time: float, duration: float, frequency: int, filename: str):
-    """Generate black video whith white sound since start_time and constant frequency sound
-    to the rest of the duration.
-    return None if erreur
+    """Generate black video whith white sound since start_time and constant
+    frequency sound to the rest of the duration.
 
     Args:
         start_time (float): start of constant sound
         duration (float(>start_time)): duration of the video
         frequency (int): frequence on constant sound
         filename (str): name of the video (without .mp4)
+    Returns:
+        None if erreur
     """
     # TODO : Loading the environment variables should be done in the calling
     # script, not in the ntt library
     env_vars = dotenv.dotenv_values()
 
-    path = Path(env_vars.get('PATH_IN'))
+    path = Path(env_vars.get("PATH_IN"))
 
     # create a temporary audio for the first clip
     audio1_file = tempfile.NamedTemporaryFile(suffix=".wav", delete=False)
@@ -120,9 +124,9 @@ def random_to_start(start_time: float, duration: float, frequency: int, filename
     write(audio2_filename, sample_rate, audio2_data.astype(np.float32))
 
     # create clips with the associated audio files
-    clip1 = ColorClip((1, 1), duration=start_time, color=(0, 0, 0)).set_audio(
-        AudioFileClip(audio1_filename)
-    )
+    clip1 = ColorClip(
+        (1, 1), duration=start_time, color=(0, 0, 0)
+    ).set_audio(AudioFileClip(audio1_filename))
     clip2 = ColorClip(
         (1, 1), duration=duration - start_time, color=(0, 0, 0)
     ).set_audio(AudioFileClip(audio2_filename))
@@ -157,7 +161,7 @@ def no_to_start(start_time: float, duration: float, frequency: int, filename: st
     # script, not in the ntt library
     env_vars = dotenv.dotenv_values()
 
-    path = Path(env_vars.get('PATH_IN'))
+    path = Path(env_vars.get("PATH_IN"))
 
     # create a temporary audio for the first clip
     audio1_file = tempfile.NamedTemporaryFile(suffix=".wav", delete=False)
@@ -188,9 +192,9 @@ def no_to_start(start_time: float, duration: float, frequency: int, filename: st
     write(audio2_filename, sample_rate, audio2_data.astype(np.float32))
 
     # create clips with the associated audio files
-    clip1 = ColorClip((1, 1), duration=start_time, color=(0, 0, 0)).set_audio(
-        AudioFileClip(audio1_filename)
-    )
+    clip1 = ColorClip(
+        (1, 1), duration=start_time, color=(0, 0, 0)
+    ).set_audio(AudioFileClip(audio1_filename))
     clip2 = ColorClip(
         (1, 1), duration=duration - start_time, color=(0, 0, 0)
     ).set_audio(AudioFileClip(audio2_filename))
@@ -224,7 +228,7 @@ def vid2_decale(duration: float, decalage: float, filename: str):
     # script, not in the ntt library
     env_vars = dotenv.dotenv_values()
 
-    path = Path(env_vars.get('PATH_IN'))
+    path = Path(env_vars.get("PATH_IN"))
 
     # create a temporary audio for the common clip
     audio1_file = tempfile.NamedTemporaryFile(suffix=".wav", delete=False)
@@ -249,12 +253,12 @@ def vid2_decale(duration: float, decalage: float, filename: str):
     write(audio2_filename, sample_rate, audio2_data.astype(np.float32))
 
     # create clips with the associated audio files
-    clip1 = ColorClip((1, 1), duration=duration, color=(0, 0, 0)).set_audio(
-        AudioFileClip(audio1_filename)
-    )
-    clip2 = ColorClip((1, 1), duration=decalage, color=(0, 0, 0)).set_audio(
-        AudioFileClip(audio2_filename)
-    )
+    clip1 = ColorClip(
+        (1, 1), duration=duration, color=(0, 0, 0)
+    ).set_audio(AudioFileClip(audio1_filename))
+    clip2 = ColorClip(
+        (1, 1), duration=decalage, color=(0, 0, 0)
+    ).set_audio(AudioFileClip(audio2_filename))
 
     # Concatenate clips to form the final shifted clip
     final_clip1 = clip1.resize((1280, 720))
@@ -294,7 +298,7 @@ def dirac(duration: float, decalage: float, filename: str):
     # script, not in the ntt library
     env_vars = dotenv.dotenv_values()
 
-    path = Path(env_vars.get('PATH_IN'))
+    path = Path(env_vars.get("PATH_IN"))
 
     #   create temporary audio file for the common clip
     audio1_file = tempfile.NamedTemporaryFile(suffix=".wav", delete=False)
@@ -320,12 +324,12 @@ def dirac(duration: float, decalage: float, filename: str):
     write(audio2_filename, sample_rate, audio2_data.astype(np.float32))
 
     #   generate video clips with associated audio files
-    clip1 = ColorClip((1, 1), duration=duration, color=(0, 0, 0)).set_audio(
-        AudioFileClip(audio1_filename)
-    )
-    clip2 = ColorClip((1, 1), duration=decalage, color=(0, 0, 0)).set_audio(
-        AudioFileClip(audio2_filename)
-    )
+    clip1 = ColorClip(
+        (1, 1), duration=duration, color=(0, 0, 0)
+    ).set_audio(AudioFileClip(audio1_filename))
+    clip2 = ColorClip(
+        (1, 1), duration=decalage, color=(0, 0, 0)
+    ).set_audio(AudioFileClip(audio2_filename))
 
     #   concatenate clips to form the final shifted video
     final_clip1 = clip1.resize((1280, 720))

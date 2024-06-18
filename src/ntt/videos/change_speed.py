@@ -1,10 +1,13 @@
-import os
+"""TODO : change_speed module provides ...
+"""
 from pathlib import Path
-from moviepy.editor import VideoFileClip
+
 import dotenv
+from moviepy.editor import VideoFileClip
 
 
-def change_video_speed(video_file_in: str, video_file_out: str, speed_factor: int = 1) -> str:
+def change_video_speed(video_file_in: str, video_file_out: str,
+                       speed_factor: int = 1) -> str:
     """Change the video speed with a factor > 1 accelerates, <1 slows down.
     TODO : Describe parameters
 

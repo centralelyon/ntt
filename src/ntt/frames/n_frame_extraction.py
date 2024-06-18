@@ -1,6 +1,8 @@
-import cv2
+"""TODO : n_frame_extraction module provides ...
+"""
 from pathlib import Path
 
+import cv2
 import dotenv
 
 
@@ -24,18 +26,18 @@ def extract_n_frame(video_path_in, video_name_in, n):
     vidcap = cv2.VideoCapture(video_path)
     success, image = vidcap.read()
     i = 0
-    while i < n and success != False:
+    while (i < n) and (not success):
         i = i + 1
         success, image = vidcap.read()
 
     if i == n and success:
-        cv2.imwrite(Path(video_path_in)) / "th_frame.jpg", image)
+        cv2.imwrite(Path(video_path_in) / f"{n}th_frame.jpg", image)
     else:
         return None
-    
+
     # TODO : Should the function return a pathlib Path (i think this should
     # be the choice) or a string ?
-    frame_path_out = str(Path(env_vars.get('PATH_OUT')) / str(n) / "th_frame")
+    frame_path_out = str(Path(env_vars.get("PATH_OUT")) / str(n) / "th_frame")
 
     return frame_path_out
 
@@ -45,7 +47,8 @@ def extract_frame_opencv(video_path, frame_number):
 
     Args:
         video_path (string): path to the folder containing the input video
-        frame_number (int, optional): the number of the frame to extract. Defaults to 1.
+        frame_number (int, optional): the number of the frame to extract.
+        Defaults to 1.
 
     Returns:
         np.ndarray: the frame with number = frame_number

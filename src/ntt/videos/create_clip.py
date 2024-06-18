@@ -1,12 +1,14 @@
-import os
+"""TODO : create_clip module provides ...
+"""
 from pathlib import Path
 
+import cv2
 import dotenv
-import cv2 as cv
-from moviepy import editor
+from moviepy.editor import VideoFileClip
 
 
-def cut_video(video_file_in: str, video_file_out: str, start: int = 0, end: int = 0) -> str:
+def cut_video(video_file_in: str, video_file_out: str, start: int = 0,
+              end: int = 0) -> str:
     """Cut video during a given time interval in seconds.
     TODO : Describe parameters and returned value
 
@@ -29,7 +31,7 @@ def cut_video(video_file_in: str, video_file_out: str, start: int = 0, end: int 
     if video_file_out is None:
         video_file_out = Path(env_vars.get('PATH_OUT')) / "crop_clip.mp4"
 
-    myclip_in = editor.VideoFileClip(video_file_in)
+    myclip_in = VideoFileClip(video_file_in)
     myclip_out = myclip_in.subclip(start, end)
     myclip_out.write_videofile(video_file_out)
     myclip_in.close()
@@ -38,7 +40,8 @@ def cut_video(video_file_in: str, video_file_out: str, start: int = 0, end: int 
     return video_file_out
 
 
-def cut_video_opencv(video_file_in: str, video_file_out: str, start: int = 0, end: int = 10) -> str:
+def cut_video_opencv(video_file_in: str, video_file_out: str, start: int = 0,
+                     end: int = 10) -> str:
     """Cut video during a given time interval in frame.
     TODO : Describe parameters and returned value
 
@@ -73,11 +76,11 @@ def cut_video_opencv(video_file_in: str, video_file_out: str, start: int = 0, en
     if not Path.is_file(video_file_in):
         print("Wrong video path")
         return 0
-    cap = cv.VideoCapture(video_file_in)
-    length = int(cap.get(cv.CAP_PROP_FRAME_COUNT))
+    cap = cv2.VideoCapture(video_file_in)
+    length = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
 
     ret, frame = cap.read()
-    fps = cap.get(cv.CAP_PROP_FPS)
+    fps = cap.get(cv2.CAP_PROP_FPS)
     if start > length:
         print("Error: start > video length")
         return 0
@@ -85,13 +88,13 @@ def cut_video_opencv(video_file_in: str, video_file_out: str, start: int = 0, en
         print("Error: end > video length")
         return 0
 
-    cap.set(cv.CAP_PROP_POS_FRAMES, int(start))
+    cap.set(cv2.CAP_PROP_POS_FRAMES, int(start))
 
     height, width, layers = frame.shape
-    frameSize = (width, height)
-    fourcc = cv.VideoWriter_fourcc("M", "J", "P", "G")
-    out = cv.VideoWriter(video_file_out, fourcc, fps, frameSize)
-    for i in range(end - start):
+    frame_size = (width, height)
+    fourcc = cv2.VideoWriter_fourcc("M", "J", "P", "G")
+    out = cv2.VideoWriter(video_file_out, fourcc, fps, frame_size)
+    for _ in range(end - start):
         ret, frame = cap.read()
         out.write(frame)
     out.release()
