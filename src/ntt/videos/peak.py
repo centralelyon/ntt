@@ -1,8 +1,11 @@
+"""TODO : peak module provides ...
+"""
+
 import os
+
 import cv2
-import numpy as np
 import matplotlib.pyplot as plt
-from ntt.utils.temporal import calculate_temporal_accuracy
+import numpy as np
 
 
 def detect_peak_video(
@@ -21,6 +24,27 @@ def detect_peak_video(
     afficher_hist=True,
     write_video=True,
 ):
+    """_summary_
+
+    Args:
+        input_path (_type_): _description_
+        video_name_in (_type_): _description_
+        output_path (_type_): _description_
+        video_name_out (_type_): _description_
+        xa (_type_): _description_
+        xb (_type_): _description_
+        ya (_type_): _description_
+        yb (_type_): _description_
+        seuil (int, optional): _description_. Defaults to 200.
+        frame_begin (int, optional): _description_. Defaults to 0.
+        nb_frame (int, optional): _description_. Defaults to -1.
+        afficher_anime (bool, optional): _description_. Defaults to True.
+        afficher_hist (bool, optional): _description_. Defaults to True.
+        write_video (bool, optional): _description_. Defaults to True.
+
+    Returns:
+        _type_: _description_
+    """
     video_link = os.path.join(input_path, video_name_in)
     video_file_out = os.path.join(output_path, video_name_out)
     cap = cv2.VideoCapture(video_link)  # read video
@@ -28,7 +52,7 @@ def detect_peak_video(
     rep = []  # optimizable by preallocation
     gray_values = []
     i = 0
-    directory_path = os.path.dirname(video_link)
+    # directory_path = os.path.dirname(video_link)
     fps = cap.get(cv2.CAP_PROP_FPS)
 
     fourcc = cv2.VideoWriter_fourcc("M", "J", "P", "G")
@@ -92,6 +116,8 @@ def detect_peak_video(
         plt.tight_layout()
         plt.show()
 
-    out.release() if write_video else None
+    if write_video:
+        out.release()
+
     cap.release()
     return np.argmax(rep) + frame_begin

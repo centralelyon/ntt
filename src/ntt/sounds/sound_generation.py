@@ -1,5 +1,6 @@
 """TODO : sound_generation module provides ...
 """
+
 import tempfile
 from pathlib import Path
 
@@ -55,12 +56,12 @@ def one_second_square_frequencies(p: float, f1: int, f2: int, filename: str):
     write(audio2_filename, sample_rate, audio2_data.astype(np.float32))
 
     # Create video clips with the corresponding audio files
-    clip1 = ColorClip(
-        (1, 1), duration=duration * p, color=(0, 0, 0)
-    ).set_audio(AudioFileClip(audio1_filename))
-    clip2 = ColorClip(
-        (1, 1), duration=(1 - p) * duration, color=(0, 0, 0)
-    ).set_audio(AudioFileClip(audio2_filename))
+    clip1 = ColorClip((1, 1), duration=duration * p, color=(0, 0, 0)).set_audio(
+        AudioFileClip(audio1_filename)
+    )
+    clip2 = ColorClip((1, 1), duration=(1 - p) * duration, color=(0, 0, 0)).set_audio(
+        AudioFileClip(audio2_filename)
+    )
 
     # Concatenate the clips to form the final video
     final_clip = concatenate_videoclips([clip1, clip2])
@@ -124,9 +125,9 @@ def random_to_start(start_time: float, duration: float, frequency: int, filename
     write(audio2_filename, sample_rate, audio2_data.astype(np.float32))
 
     # create clips with the associated audio files
-    clip1 = ColorClip(
-        (1, 1), duration=start_time, color=(0, 0, 0)
-    ).set_audio(AudioFileClip(audio1_filename))
+    clip1 = ColorClip((1, 1), duration=start_time, color=(0, 0, 0)).set_audio(
+        AudioFileClip(audio1_filename)
+    )
     clip2 = ColorClip(
         (1, 1), duration=duration - start_time, color=(0, 0, 0)
     ).set_audio(AudioFileClip(audio2_filename))
@@ -192,9 +193,9 @@ def no_to_start(start_time: float, duration: float, frequency: int, filename: st
     write(audio2_filename, sample_rate, audio2_data.astype(np.float32))
 
     # create clips with the associated audio files
-    clip1 = ColorClip(
-        (1, 1), duration=start_time, color=(0, 0, 0)
-    ).set_audio(AudioFileClip(audio1_filename))
+    clip1 = ColorClip((1, 1), duration=start_time, color=(0, 0, 0)).set_audio(
+        AudioFileClip(audio1_filename)
+    )
     clip2 = ColorClip(
         (1, 1), duration=duration - start_time, color=(0, 0, 0)
     ).set_audio(AudioFileClip(audio2_filename))
@@ -253,12 +254,12 @@ def vid2_decale(duration: float, decalage: float, filename: str):
     write(audio2_filename, sample_rate, audio2_data.astype(np.float32))
 
     # create clips with the associated audio files
-    clip1 = ColorClip(
-        (1, 1), duration=duration, color=(0, 0, 0)
-    ).set_audio(AudioFileClip(audio1_filename))
-    clip2 = ColorClip(
-        (1, 1), duration=decalage, color=(0, 0, 0)
-    ).set_audio(AudioFileClip(audio2_filename))
+    clip1 = ColorClip((1, 1), duration=duration, color=(0, 0, 0)).set_audio(
+        AudioFileClip(audio1_filename)
+    )
+    clip2 = ColorClip((1, 1), duration=decalage, color=(0, 0, 0)).set_audio(
+        AudioFileClip(audio2_filename)
+    )
 
     # Concatenate clips to form the final shifted clip
     final_clip1 = clip1.resize((1280, 720))
@@ -324,12 +325,12 @@ def dirac(duration: float, decalage: float, filename: str):
     write(audio2_filename, sample_rate, audio2_data.astype(np.float32))
 
     #   generate video clips with associated audio files
-    clip1 = ColorClip(
-        (1, 1), duration=duration, color=(0, 0, 0)
-    ).set_audio(AudioFileClip(audio1_filename))
-    clip2 = ColorClip(
-        (1, 1), duration=decalage, color=(0, 0, 0)
-    ).set_audio(AudioFileClip(audio2_filename))
+    clip1 = ColorClip((1, 1), duration=duration, color=(0, 0, 0)).set_audio(
+        AudioFileClip(audio1_filename)
+    )
+    clip2 = ColorClip((1, 1), duration=decalage, color=(0, 0, 0)).set_audio(
+        AudioFileClip(audio2_filename)
+    )
 
     #   concatenate clips to form the final shifted video
     final_clip1 = clip1.resize((1280, 720))

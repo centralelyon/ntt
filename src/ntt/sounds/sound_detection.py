@@ -1,10 +1,13 @@
+"""TODO : sound_detection module provides ...
+"""
+
+import os
+
+import librosa
+import numpy as np
+from moviepy.editor import VideoFileClip
 from pyAudioAnalysis import MidTermFeatures as aFm
 from pyAudioAnalysis import audioBasicIO as aIO
-import moviepy.editor as mp
-import numpy as np
-from pydub import AudioSegment
-import librosa
-import os
 
 
 def detect_sound_ref(
@@ -12,6 +15,18 @@ def detect_sound_ref(
     bip_ref_path="ref_bip_isolated.wav",
     references_path="ref_features_bip.npy",
 ):
+    """_summary_
+
+    Args:
+        video_path (_type_): _description_
+        bip_ref_path (str, optional): _description_.
+            Defaults to "ref_bip_isolated.wav".
+        references_path (str, optional): _description_.
+            Defaults to "ref_features_bip.npy".
+
+    Returns:
+        _type_: _description_
+    """
     mt = np.load(references_path)
     fs, s_ref = aIO.read_audio_file(bip_ref_path)
     duration = len(s_ref) / float(fs)
@@ -19,7 +34,7 @@ def detect_sound_ref(
     win_mid, step_mid = duration, 0.5
 
     # extraction on the long signal
-    my_clip1 = mp.VideoFileClip(video_path)
+    my_clip1 = VideoFileClip(video_path)
     fs = 44100
     s_long = my_clip1.audio.to_soundarray(fps=fs)
     s_long = s_long[:, 0]
@@ -56,7 +71,8 @@ def detect_sound_ref(
             if temps_possible[i] <= median_time + aberration:
                 temps_possible_non_aberrant.append(temps_possible[i])
 
-    if temps_possible_non_aberrant != []:
+    # An empty sequence is falsey
+    if temps_possible_non_aberrant:
         # 0.11s of silence before  bip in reference sounds
         start = np.median(temps_possible_non_aberrant) + 0.11
 
@@ -67,13 +83,22 @@ def detect_sound_ref(
 
 
 def simple_peak_count_librosa(video_path, video_name):
+    """_summary_
+
+    Args:
+        video_path (_type_): _description_
+        video_name (_type_): _description_
+
+    Returns:
+        _type_: _description_
+    """
     video = os.path.join(video_path, video_name)
-    video = mp.VideoFileClip(video)
-    fps = video.fps
+    video = VideoFileClip(video)
+    # fps = video.fps
     audio = os.path.join(video_path, video_name[: len(video_name) - 4] + ".mp3")
     video.audio.write_audiofile(audio)
     x, sr = librosa.load(audio)
-    onset_frames = librosa.onset.onset_detect(x, sr)
+    onset_frames = librosa.onset.onset_detect(y=x, sr=sr)
     return len(onset_frames)
 
 
@@ -87,6 +112,10 @@ def detect_sound_ref_librosa(
         video_name (_type_): _description_
         ref_sound_name (_type_): _description_
         path_out (_type_): _description_
+        threshold (int, optional): _description_. Defaults to 20.
+
+    Returns:
+        _type_: _description_
     """
     # Load the target sound effect and the audio or video file
     target_sound_file = os.path.join(samples_path, ref_sound_name)
@@ -103,12 +132,17 @@ def detect_sound_ref_librosa(
     target_sound_spec = librosa.amplitude_to_db(
         np.abs(librosa.stft(target_sound, hop_length=512)), ref=np.max
     )
-    # Split the audio into short segments and compare them with the target sound effect  # Convert milliseconds to seconds)
+
+    # Split the audio into short segments and compare them with the target sound effect
+    # Convert milliseconds to seconds)
     segment_length = segment_duration
+
+    # TODO : Replace "l" with meaningfull name (l_threshold)
     l = []
+
     for i in range(0, length_video - segment_length, segment_length):
         # Extract a segment from the audio
-        segment = audio[i : i + segment_length]
+        segment = audio[i: i + segment_length]
 
         # Convert the segment to a spectrogram using librosa
         segment_spec = librosa.amplitude_to_db(
@@ -122,7 +156,7 @@ def detect_sound_ref_librosa(
         similarity = np.mean(np.abs(segment_spec - resized_target_sound_spec))
 
         # Set a threshold to determine if the target sound effect is present
-
         if similarity < threshold:
             l.append(i / 1000)
+
     return l

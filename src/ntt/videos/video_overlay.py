@@ -1,10 +1,24 @@
-from moviepy.editor import VideoFileClip, CompositeVideoClip
-import os, cv2
+"""TODO : video_overlay module provides ...
+"""
+
+import os
+
+import cv2
+from moviepy.editor import CompositeVideoClip, VideoFileClip
 
 
 def overlay_two_videos_opencv(
     path_videos, name_video1, name_video2, opacities, path_video_out
 ):
+    """_summary_
+
+    Args:
+        path_videos (_type_): _description_
+        name_video1 (_type_): _description_
+        name_video2 (_type_): _description_
+        opacities (_type_): _description_
+        path_video_out (_type_): _description_
+    """
     path_video1 = os.path.join(path_videos, name_video1)
     path_video2 = os.path.join(path_videos, name_video2)
     path_out = path_video_out
@@ -39,6 +53,13 @@ def overlay_two_videos_opencv(
 
 
 def overlay_videos_moviepy(list_videos_path, opacities, path_video_out):
+    """_summary_
+
+    Args:
+        list_videos_path (_type_): _description_
+        opacities (_type_): _description_
+        path_video_out (_type_): _description_
+    """
     video_clips = [VideoFileClip(path) for path in list_videos_path]
     opacities = [
         0.5 for i in range(len(list_videos_path))

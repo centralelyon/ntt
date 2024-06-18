@@ -1,9 +1,22 @@
-from moviepy.editor import *
+"""TODO : zoom module provides ...
+"""
+
+from moviepy.editor import CompositeVideoClip, VideoFileClip
 
 
 def zoom_xy(
     input_video, output_video, zoom_x, zoom_y, zoom_duration=1.0, screensize=(640, 360)
 ):
+    """_summary_
+
+    Args:
+        input_video (_type_): _description_
+        output_video (_type_): _description_
+        zoom_x (_type_): _description_
+        zoom_y (_type_): _description_
+        zoom_duration (float, optional): _description_. Defaults to 1.0.
+        screensize (tuple, optional): _description_. Defaults to (640, 360).
+    """
     clip = VideoFileClip(input_video)
 
     zoom_function = lambda t: 1 + zoom_duration * t

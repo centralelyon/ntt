@@ -1,13 +1,15 @@
 """TODO : change_speed module provides ...
 """
+
 from pathlib import Path
 
 import dotenv
 from moviepy.editor import VideoFileClip
 
 
-def change_video_speed(video_file_in: str, video_file_out: str,
-                       speed_factor: int = 1) -> str:
+def change_video_speed(
+    video_file_in: str, video_file_out: str, speed_factor: int = 1
+) -> str:
     """Change the video speed with a factor > 1 accelerates, <1 slows down.
     TODO : Describe parameters
 
@@ -24,10 +26,10 @@ def change_video_speed(video_file_in: str, video_file_out: str,
     env_vars = dotenv.dotenv_values()
 
     if video_file_in is None:
-        video_file_in = Path(env_vars.get('VIDEO_PATH_IN')) / "ping.mp4"
+        video_file_in = Path(env_vars.get("VIDEO_PATH_IN")) / "ping.mp4"
 
     if video_file_out is None:
-        video_file_out = Path(env_vars.get('PATH_OUT')) / "ping_speed.mp4"
+        video_file_out = Path(env_vars.get("PATH_OUT")) / "ping_speed.mp4"
 
     video_in = VideoFileClip(video_file_in)
     video_out = video_in.fx(VideoFileClip.speedx, speed_factor)

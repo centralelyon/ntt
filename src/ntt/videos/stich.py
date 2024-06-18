@@ -1,4 +1,8 @@
+"""TODO : stich module provides ...
+"""
+
 import os
+
 import cv2
 import numpy as np
 
@@ -15,7 +19,20 @@ def stitch_2_videos(
     src_pts2,
     dest_pts2,
 ):
-    """stitches video1 and video2 based on the source and destination points"""
+    """Stitches video1 and video2 based on the source and destination points.
+
+    Args:
+        video_path_in (_type_): _description_
+        video_name_in1 (_type_): _description_
+        video_name_in2 (_type_): _description_
+        video_path_out (_type_): _description_
+        video_name_out (_type_): _description_
+        time_difference (_type_): _description_
+        src_pts1 (_type_): _description_
+        dest_pts1 (_type_): _description_
+        src_pts2 (_type_): _description_
+        dest_pts2 (_type_): _description_
+    """
 
     video_name1 = os.path.join(video_path_in, video_name_in1)
     video_name2 = os.path.join(video_path_in, video_name_in2)
@@ -27,7 +44,8 @@ def stitch_2_videos(
     # size of the final image
     shape_output_img = (1920, 1080)
 
-    # we need to convert the points of the calibration to make them correspond the destination image size
+    # we need to convert the points of the calibration to make them correspond
+    # the destination image size
     dest_pts1[:, 0] = dest_pts1[:, 0] * shape_output_img[0] / size_image_ref[0]
     dest_pts1[:, 1] = dest_pts1[:, 1] * shape_output_img[1] / size_image_ref[1]
     dest_pts2[:, 0] = dest_pts2[:, 0] * shape_output_img[0] / size_image_ref[0]
@@ -50,9 +68,9 @@ def stitch_2_videos(
         video_out, fourcc, fps, (shape_output_img[0], shape_output_img[1])
     )
 
-    if cap1.isOpened() == False:
+    if not cap1.isOpened():
         print("Error opening video 1 stream or file")
-    if cap2.isOpened() == False:
+    if not cap2.isOpened():
         print("Error opening video 2 stream or file")
 
     # we read frames until synchronised

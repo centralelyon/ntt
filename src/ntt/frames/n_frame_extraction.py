@@ -1,5 +1,6 @@
 """TODO : n_frame_extraction module provides ...
 """
+
 from pathlib import Path
 
 import cv2

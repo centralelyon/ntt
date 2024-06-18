@@ -1,3 +1,6 @@
+"""TODO : crop_image module provides ...
+"""
+
 import numpy as np
 
 

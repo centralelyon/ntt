@@ -1,5 +1,9 @@
-import cv2
+"""TODO : frame_extraction module provides ...
+"""
+
 import os
+
+import cv2
 import ffmpeg
 import numpy as np
 
@@ -83,7 +87,7 @@ def extract_nth_frame(
         print("nth_frame is greater than total_frames")
         return None
 
-    while i <= nth_frame and success != False:
+    while i <= nth_frame and success is not False:
         success, image = vidcap.read()
 
         if i == nth_frame and success:
@@ -142,14 +146,16 @@ def extract_frame_ffmpeg(video_path, frame_number):
 
 
 def compare_frames(video_path, frame_number):
-    """This function compares the frames extracted by extract_frame_ffmpeg and extract_frame_opencv
+    """This function compares the frames extracted by extract_frame_ffmpeg
+    and extract_frame_opencv.
 
     Args:
         video_path (string): path to the folder conataining the input video
         frame_number (int): the number of the frame to extract.
 
     Returns:
-        Boolean: True if all pixels are alike between frame_opencv and frame_ffmpeg else False
+        Boolean: True if all pixels are alike between frame_opencv and frame_ffmpeg
+                 else False
     """
     frame_opencv = extract_frame_opencv(video_path, frame_number)
     frame_ffmpeg = extract_frame_ffmpeg(video_path, frame_number)

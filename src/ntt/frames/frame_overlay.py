@@ -1,10 +1,27 @@
-import os, cv2
+"""TODO : frame_overlay module provides ...
+"""
+
+import os
+
+import cv2
 import numpy as np
 
 
 def overlay_two_frames(
     path_frames, name_frame1, name_frame2, opacities, path_output_frame
 ):
+    """_summary_
+
+    Args:
+        path_frames (_type_): _description_
+        name_frame1 (_type_): _description_
+        name_frame2 (_type_): _description_
+        opacities (_type_): _description_
+        path_output_frame (_type_): _description_
+
+    Returns:
+        _type_: _description_
+    """
     path_frame1 = os.path.join(path_frames, name_frame1)
     path_frame2 = os.path.join(path_frames, name_frame2)
 
@@ -19,6 +36,17 @@ def overlay_two_frames(
 
 
 def overlay_n_frames(path_frames, frames, opacities, path_output_frame):
+    """_summary_
+
+    Args:
+        path_frames (_type_): _description_
+        frames (_type_): _description_
+        opacities (_type_): _description_
+        path_output_frame (_type_): _description_
+
+    Returns:
+        _type_: _description_
+    """
     n = len(frames)
     path_frame0 = os.path.join(path_frames, frames[0])
     path_frame1 = os.path.join(path_frames, frames[1])

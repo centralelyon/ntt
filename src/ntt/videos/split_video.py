@@ -1,4 +1,8 @@
-import subprocess, os
+"""TODO : split_video module provides ...
+"""
+
+import os
+import subprocess
 
 from ntt.videos.duration import get_video_duration
 

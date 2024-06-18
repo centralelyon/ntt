@@ -1,4 +1,4 @@
-from ntt.utils.text_to_json import Texte_to_json
+from ntt.utils.text_to_json import text_to_json
 import json
 import os
 from dotenv import load_dotenv
@@ -11,7 +11,7 @@ if __name__ == "__main__":
     with open(text_file, "r") as file:
         data = file.read()
 
-    json_data = Texte_to_json(data)
+    json_data = text_to_json(data)
 
     # write formatted data in text file
     with open(output_file, "w") as file:

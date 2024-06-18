@@ -1,11 +1,24 @@
-import os, cv2
+"""TODO : shake_video module provides ...
+"""
+
+import os
+
+import cv2
 import numpy as np
-from moviepy.editor import VideoClip
+
+from ntt.frames.processing import rotate, translate_horizontally, translate_vertically
 from ntt.utils.random import random_translate_direction
-from ntt.frames.processing import *
 
 
 def shake_video_randomly(video_path_in, video_name, shake_intensity, video_path_out):
+    """_summary_
+
+    Args:
+        video_path_in (_type_): _description_
+        video_name (_type_): _description_
+        shake_intensity (_type_): _description_
+        video_path_out (_type_): _description_
+    """
     video = os.path.join(video_path_in, video_name)
     video = cv2.VideoCapture(video)
     fourcc = cv2.VideoWriter_fourcc("M", "J", "P", "G")
@@ -34,6 +47,14 @@ def shake_video_randomly(video_path_in, video_name, shake_intensity, video_path_
 
 
 def rotate_video(video_path_in, video_name, rotation_increment, video_path_out):
+    """_summary_
+
+    Args:
+        video_path_in (_type_): _description_
+        video_name (_type_): _description_
+        rotation_increment (_type_): _description_
+        video_path_out (_type_): _description_
+    """
     video = os.path.join(video_path_in, video_name)
     video = cv2.VideoCapture(video)
     fourcc = cv2.VideoWriter_fourcc("M", "J", "P", "G")
@@ -56,6 +77,14 @@ def rotate_video(video_path_in, video_name, rotation_increment, video_path_out):
 def translate_video_horizontally(
     video_path_in, video_name, translation_rate, video_path_out
 ):
+    """_summary_
+
+    Args:
+        video_path_in (_type_): _description_
+        video_name (_type_): _description_
+        translation_rate (_type_): _description_
+        video_path_out (_type_): _description_
+    """
     video = os.path.join(video_path_in, video_name)
 
     video = cv2.VideoCapture(video)
@@ -78,6 +107,14 @@ def translate_video_horizontally(
 def translate_video_vertically(
     video_path_in, video_name, translation_rate, video_path_out
 ):
+    """_summary_
+
+    Args:
+        video_path_in (_type_): _description_
+        video_name (_type_): _description_
+        translation_rate (_type_): _description_
+        video_path_out (_type_): _description_
+    """
     video = os.path.join(video_path_in, video_name)
 
     video = cv2.VideoCapture(video)

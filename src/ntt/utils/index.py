@@ -1,5 +1,8 @@
-import os
+"""TODO : index module provides ...
+"""
+
 import json
+import os
 
 
 def generate_index(folder_path, index_filename="index.json", max_depth=None):
@@ -17,7 +20,7 @@ def generate_index(folder_path, index_filename="index.json", max_depth=None):
 
     for root, _, files in os.walk(folder_path):
         if max_depth is not None:
-            depth = root[len(folder_path) :].count(os.sep)
+            depth = root[len(folder_path):].count(os.sep)
             if depth > max_depth:
                 continue
 
@@ -27,7 +30,7 @@ def generate_index(folder_path, index_filename="index.json", max_depth=None):
 
     for root, _, dirs in os.walk(folder_path):
         if max_depth is not None:
-            depth = root[len(folder_path) :].count(os.sep)
+            depth = root[len(folder_path):].count(os.sep)
             if depth > max_depth:
                 continue
 

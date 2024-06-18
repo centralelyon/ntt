@@ -1,16 +1,20 @@
-import numpy as np
+"""TODO : processing module provides ...
+"""
+
 import cv2
 import matplotlib.pyplot as plt
+import numpy as np
 
 
 def blur_frame(frame, kernel_size=(5, 5), region=None):
     """
     Apply Gaussian blur to a frame (NumPy array).
 
-    Parameters:
+    Args:
         frame (numpy.ndarray): Input frame as a NumPy array.
         kernel_size (tuple): Size of the Gaussian kernel for blurring.
-        region (tuple): Region of interest (x, y, width, height) to blur. If None, the entire frame will be blurred.
+        region (tuple): Region of interest (x, y, width, height) to blur.
+        If None, the entire frame will be blurred.
 
     Returns:
         numpy.ndarray: Blurred frame as a NumPy array.
@@ -27,9 +31,9 @@ def blur_frame(frame, kernel_size=(5, 5), region=None):
         if x < 0 or y < 0 or x + width > frame.shape[1] or y + height > frame.shape[0]:
             raise ValueError("Specified region is out of frame bounds.")
 
-        region_of_interest = blurred_frame[y : y + height, x : x + width]
+        region_of_interest = blurred_frame[y: y + height, x: x + width]
         blurred_region = cv2.GaussianBlur(region_of_interest, kernel_size, 0)
-        blurred_frame[y : y + height, x : x + width] = blurred_region
+        blurred_frame[y: y + height, x: x + width] = blurred_region
     else:
         blurred_frame = cv2.GaussianBlur(blurred_frame, kernel_size, 0)
 
@@ -37,6 +41,8 @@ def blur_frame(frame, kernel_size=(5, 5), region=None):
 
 
 def experiment_blur():
+    """_summary_
+    """
     input_frame = np.random.randint(
         0, 256, size=(480, 640, 3), dtype=np.uint8
     )  # Example random frame
@@ -59,6 +65,15 @@ def experiment_blur():
 
 
 def rotate(frame, angle):
+    """_summary_
+
+    Args:
+        frame (_type_): _description_
+        angle (_type_): _description_
+
+    Returns:
+        _type_: _description_
+    """
     cols, rows, _ = frame.shape
     rotate_around = (cols // 2, rows // 2)
     rot_mat = cv2.getRotationMatrix2D(rotate_around, angle, 1.0)
@@ -67,6 +82,15 @@ def rotate(frame, angle):
 
 
 def translate_horizontally(frame, translation_rate):
+    """_summary_
+
+    Args:
+        frame (_type_): _description_
+        translation_rate (_type_): _description_
+
+    Returns:
+        _type_: _description_
+    """
     frame1 = np.zeros_like(frame)
     h, w, _ = frame.shape
 
@@ -78,6 +102,15 @@ def translate_horizontally(frame, translation_rate):
 
 
 def translate_vertically(frame, translation_rate):
+    """_summary_
+
+    Args:
+        frame (_type_): _description_
+        translation_rate (_type_): _description_
+
+    Returns:
+        _type_: _description_
+    """
     frame1 = np.zeros(frame.shape)
     h, w, _ = frame.shape
 

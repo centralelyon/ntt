@@ -1,3 +1,6 @@
+"""TODO : files module provides ...
+"""
+
 import os
 import shutil
 
@@ -24,8 +27,8 @@ def delete_folder(path: str):
                 file_path = os.path.join(root, file)
                 os.remove(file_path)
 
-            for dir in dirs:
-                dir_path = os.path.join(root, dir)
+            for directory in dirs:
+                dir_path = os.path.join(root, directory)
                 os.rmdir(dir_path)
 
         os.rmdir(path)
@@ -34,6 +37,11 @@ def delete_folder(path: str):
 
 
 def create_folder(folder_path):
+    """_summary_
+
+    Args:
+        folder_path (_type_): _description_
+    """
     try:
         os.mkdir(folder_path)
         print(f"Folder created successfully: {folder_path}")
@@ -44,6 +52,14 @@ def create_folder(folder_path):
 
 
 def delete_and_create_folder(path):
+    """_summary_
+
+    Args:
+        path (_type_): _description_
+
+    Returns:
+        _type_: _description_
+    """
     delete_folder(path)
     create_folder(path)
     return path
@@ -52,6 +68,15 @@ def delete_and_create_folder(path):
 def copy_file(
     file_path_in, file_name_in, file_path_out, file_name_out, overwrite=False
 ):
+    """_summary_
+
+    Args:
+        file_path_in (_type_): _description_
+        file_name_in (_type_): _description_
+        file_path_out (_type_): _description_
+        file_name_out (_type_): _description_
+        overwrite (bool, optional): _description_. Defaults to False.
+    """
     source_file = os.path.join(file_path_in, file_name_in)
     destination_file = os.path.join(file_path_out, file_name_out)
 
@@ -65,6 +90,14 @@ def copy_file(
 
 
 def remove_file_if_exists(file_path):
+    """_summary_
+
+    Args:
+        file_path (_type_): _description_
+
+    Returns:
+        _type_: _description_
+    """
     if os.path.exists(file_path):
         os.remove(file_path)
         print(f"File {file_path} removed successfully.")
@@ -75,9 +108,18 @@ def remove_file_if_exists(file_path):
 
 
 def generate_shortcut_url(file_path="file.url", url="https://www.google.com"):
+    """_summary_
+
+    Args:
+        file_path (str, optional): _description_. Defaults to "file.url".
+        url (str, optional): _description_. Defaults to "https://www.google.com".
+
+    Returns:
+        _type_: _description_
+    """
     file_contents = "[{000214A0-0000-0000-C000-000000000046}]\n"
     file_contents += "Prop3=19,2\n[InternetShortcut]\n"
-    file_contents += "URL={}\nIDList=\nHotKey=0\n".format(url)
+    file_contents += f"URL={url}\nIDList=\nHotKey=0\n"
     with open(file_path, "w") as f:
         f.write(file_contents)
     return file_path
@@ -90,7 +132,6 @@ def touch(file_path):
         file_path (_type_): _description_
 
     Raises:
-
 
     """
     # raise an error if the file does not exist

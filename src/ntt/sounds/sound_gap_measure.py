@@ -1,6 +1,9 @@
-from scipy import signal
+"""TODO : sound_gap_measure module provides ...
+"""
+
 import numpy as np
-import moviepy.editor as mp
+from moviepy.editor import VideoFileClip
+from scipy import signal
 
 
 def sound_gap_measure(video1: str, video2: str) -> float:
@@ -12,8 +15,8 @@ def sound_gap_measure(video1: str, video2: str) -> float:
     Returns:
         float: gap (ms) between video1 and video2
     """
-    my_clip1 = mp.VideoFileClip(video1)
-    my_clip2 = mp.VideoFileClip(video2)
+    my_clip1 = VideoFileClip(video1)
+    my_clip2 = VideoFileClip(video2)
 
     # hard coded sample rate
     samplerate1 = 44100

@@ -1,5 +1,6 @@
 """TODO : create_clip module provides ...
 """
+
 from pathlib import Path
 
 import cv2
@@ -7,8 +8,9 @@ import dotenv
 from moviepy.editor import VideoFileClip
 
 
-def cut_video(video_file_in: str, video_file_out: str, start: int = 0,
-              end: int = 0) -> str:
+def cut_video(
+    video_file_in: str, video_file_out: str, start: int = 0, end: int = 0
+) -> str:
     """Cut video during a given time interval in seconds.
     TODO : Describe parameters and returned value
 
@@ -26,10 +28,10 @@ def cut_video(video_file_in: str, video_file_out: str, start: int = 0,
     env_vars = dotenv.dotenv_values()
 
     if video_file_in is None:
-        video_file_in = Path(env_vars.get('VIDEO_PATH_IN')) / "crop.mp4"
+        video_file_in = Path(env_vars.get("VIDEO_PATH_IN")) / "crop.mp4"
 
     if video_file_out is None:
-        video_file_out = Path(env_vars.get('PATH_OUT')) / "crop_clip.mp4"
+        video_file_out = Path(env_vars.get("PATH_OUT")) / "crop_clip.mp4"
 
     myclip_in = VideoFileClip(video_file_in)
     myclip_out = myclip_in.subclip(start, end)
@@ -40,8 +42,9 @@ def cut_video(video_file_in: str, video_file_out: str, start: int = 0,
     return video_file_out
 
 
-def cut_video_opencv(video_file_in: str, video_file_out: str, start: int = 0,
-                     end: int = 10) -> str:
+def cut_video_opencv(
+    video_file_in: str, video_file_out: str, start: int = 0, end: int = 10
+) -> str:
     """Cut video during a given time interval in frame.
     TODO : Describe parameters and returned value
 
@@ -59,10 +62,10 @@ def cut_video_opencv(video_file_in: str, video_file_out: str, start: int = 0,
     env_vars = dotenv.dotenv_values()
 
     if video_file_in is None:
-        video_file_in = Path(env_vars.get('VIDEO_PATH_IN')) / "crop.mp4"
+        video_file_in = Path(env_vars.get("VIDEO_PATH_IN")) / "crop.mp4"
 
     if video_file_out is None:
-        video_file_out = Path(env_vars.get('PATH_OUT')) / "crop_clip.mp4"
+        video_file_out = Path(env_vars.get("PATH_OUT")) / "crop_clip.mp4"
 
     if start < 0:
         print("Error: negativ start")

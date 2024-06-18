@@ -1,4 +1,4 @@
-from ntt.utils.json_to_text import Recursive_json
+from ntt.utils.json_to_text import recursive_json
 import json
 from dotenv import load_dotenv
 import os
@@ -11,7 +11,7 @@ if __name__ == "__main__":
     with open(json_file, "r") as file:
         data = json.load(file)
 
-    text_data = Recursive_json(data)
+    text_data = recursive_json(data)
 
     # write formatted data in text file
     with open(output_file, "w") as file:
