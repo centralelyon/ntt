@@ -1,4 +1,8 @@
+"""TODO : test_frame_extraction ...
+"""
+
 import os
+
 import cv2
 from dotenv import load_dotenv
 from ntt.frames.frame_extraction import (
@@ -9,6 +13,8 @@ from ntt.frames.frame_extraction import (
 
 
 def test_extract_first_frame():
+    """_summary_
+    """
     load_dotenv()
     video_path_in = os.environ.get("VIDEO_PATH_IN")
     video_name_in = "crop.mp4"
@@ -30,6 +36,8 @@ def test_extract_first_frame():
 
 
 def test_extract_last_frame():
+    """_summary_
+    """
     load_dotenv()
     video_path_in = os.environ.get("VIDEO_PATH_IN")
     video_name_in = "crop.mp4"
@@ -39,7 +47,7 @@ def test_extract_last_frame():
     frame_path = os.path.join(frame_path_in, frame_name_in)
     image = cv2.imread(frame_path)
 
-    # test
+    # TODO: result not used
     result = extract_last_frame(
         video_path_in, video_name_in, os.environ.get("VIDEO_PATH_IN"), "crop-test.jpg"
     )
@@ -50,6 +58,8 @@ def test_extract_last_frame():
 
 
 def test_extract_nth_frame():
+    """_summary_
+    """
     load_dotenv()
     video_path_in = os.environ.get("VIDEO_PATH_IN")
     video_name_in = "crop.mp4"
@@ -68,10 +78,11 @@ def test_extract_nth_frame():
         nth_frame=total_frames + 1,
     )
 
-    assert res == None
+    assert res is None
 
 
 if __name__ == "__main__":
+    # TODO : Remove this block
     test_extract_first_frame()
     test_extract_last_frame()
     test_extract_nth_frame()

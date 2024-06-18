@@ -1,9 +1,15 @@
+"""TODO : test_delete_and_create_folder ...
+"""
+
 import os
+
 from dotenv import load_dotenv
 from ntt.utils.files import delete_and_create_folder
 
 
 def test_delete_and_create_folder():
+    """_summary_
+    """
     load_dotenv()
     test_path_in = os.environ.get("VIDEO_PATH_IN")
     test_folder = os.path.join(test_path_in, "test_folder")
@@ -23,4 +29,5 @@ def test_delete_and_create_folder():
 
 
 if __name__ == "__main__":
+    # TODO : Remove this block
     test_delete_and_create_folder()

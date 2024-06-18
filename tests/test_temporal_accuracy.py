@@ -1,7 +1,12 @@
+"""TODO : test_temporal_accuracy ...
+"""
+
 from ntt.utils.temporal import calculate_temporal_accuracy
 
 
 def test_temporal_accuracy():
+    """_summary_
+    """
     actual = 10
     predicted = 10
     expected_accuracy = 1.0
@@ -28,4 +33,5 @@ def test_temporal_accuracy():
 
 
 if __name__ == "__main__":
+    # TODO : Remove this block
     test_temporal_accuracy()

@@ -1,10 +1,16 @@
+"""TODO : test_copy_file ...
+"""
+
 import os
+import shutil
+
 from dotenv import load_dotenv
 from ntt.utils.files import copy_file
-import shutil
 
 
 def test_copy_file():
+    """_summary_
+    """
     load_dotenv()
     temp_dir = os.path.join(str(os.environ.get("FRAME_PATH_OUT")), "temp_dir_copy_file")
 
@@ -42,4 +48,5 @@ def test_copy_file():
 
 
 if __name__ == "__main__":
+    # TODO : Remove this block
     test_copy_file()

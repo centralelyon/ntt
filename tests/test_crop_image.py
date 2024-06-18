@@ -1,12 +1,18 @@
+"""TODO : test_crop_image ...
+"""
+
 import os
+
 import cv2
-import pytest
 import numpy as np
-from ntt.frames.crop_image import crop
+import pytest
 from dotenv import load_dotenv
+from ntt.frames.crop_image import crop
 
 
 def test_crop():
+    """_summary_
+    """
     load_dotenv()
     frame_name_in = os.path.join(os.environ.get("VIDEO_PATH_IN"), "crop.jpg")
     image = cv2.imread(frame_name_in)
@@ -38,4 +44,5 @@ def test_crop():
 
 
 if __name__ == "__main__":
+    # TODO : Remove this block
     test_crop()

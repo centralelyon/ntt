@@ -1,11 +1,25 @@
-from ntt.draw.polygone import draw_polygones
-import cv2, json, os
+"""TODO : test_draw_piscine ...
+"""
+
+import json
+import os
+
+import cv2
 from dotenv import load_dotenv
+from ntt.draw.polygone import draw_polygones
 
 load_dotenv()
 
 
 def extract_piscine(jsonfile):
+    """_summary_
+
+    Args:
+        jsonfile (_type_): _description_
+
+    Returns:
+        _type_: _description_
+    """
     try:
         with open(jsonfile, "rb") as f:
             data = json.load(f)
@@ -14,14 +28,13 @@ def extract_piscine(jsonfile):
         x2, y2 = map(int, data["videos"][1]["srcPts"][2])
         x3, y3 = map(int, data["videos"][1]["srcPts"][3])
         return [[y0, x0], [y1, x1], [y2, x2], [y3, x3]]
+
     except Exception as e:
         print("Execption", e)
 
 
-# draw swimming pool with ntt
-
-
 def test_draw_piscine():
+    """draw swimming pool with ntt"""
     jsonfile = os.path.join(
         os.environ.get("PATH_IN"), "2023_CF_Rennes_freestyle_hommes_50_finaleA.json"
     )
@@ -36,8 +49,14 @@ def test_draw_piscine():
         width = int(video.get(cv2.CAP_PROP_FRAME_WIDTH))
         height = int(video.get(cv2.CAP_PROP_FRAME_HEIGHT))
         fps = video.get(cv2.CAP_PROP_FPS)
-        for l in piscine:
-            assert l[0] >= 0 and l[0] < height and l[1] >= 0 and l[1] < width
+        for coords in piscine:
+            assert (
+                coords[0] >= 0
+                and coords[0] < height
+                and coords[1] >= 0
+                and coords[1] < width
+            )
+
     except Exception as e:
         print("Exception", e)
 
@@ -68,4 +87,5 @@ def test_draw_piscine():
 
 
 if __name__ == "__main__":
+    # TODO : Remove this block
     test_draw_piscine()

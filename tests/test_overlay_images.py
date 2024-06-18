@@ -1,13 +1,20 @@
-from ntt.frames.frame_overlay import overlay_two_frames, overlay_n_frames
-from ntt.frames.frame_generation import empty_frame
-import os, cv2
+"""TODO : test_overlay_images ...
+"""
+
+import os
+
+import cv2
 import numpy as np
 from dotenv import load_dotenv
+from ntt.frames.frame_generation import empty_frame
+from ntt.frames.frame_overlay import overlay_n_frames, overlay_two_frames
 
 load_dotenv()
 
 
 def test_overlay_two_frames():
+    """_summary_
+    """
     frames_path_in = f"{os.environ.get('PATH_IN')}"
     frame1_name = "frame1.jpg"
     frame2_name = "frame2.jpg"
@@ -24,6 +31,8 @@ def test_overlay_two_frames():
 
 
 def test_overlay_n_frames():
+    """_summary_
+    """
     frames_path_in = f"{os.environ.get('PATH_IN')}"
     frame1_name = "frame1.jpg"
     frame2_name = "frame2.jpg"
@@ -42,6 +51,8 @@ def test_overlay_n_frames():
 
 
 def test_custom():
+    """_summary_
+    """
     frames_path_in = f"{os.environ.get('PATH_IN')}"
     frame1 = empty_frame(width=10, height=10)
     frame2 = empty_frame(width=10, height=10)
@@ -53,7 +64,7 @@ def test_custom():
     path_output_name2 = os.path.join(os.environ.get("FRAME_PATH_OUT"), "overlayed2.png")
     path_output_name3 = os.path.join(os.environ.get("FRAME_PATH_OUT"), "res.png")
     h, w, _ = frame3.shape
-    frame3[h // 4 : h // 2, w // 4 : w // 2] = np.full(
+    frame3[h // 4:h // 2, w // 4:w // 2] = np.full(
         (h // 2 - h // 4, w // 2 - w // 4, 3), [0, 255, 0], dtype=np.uint8
     )
     cv2.imwrite(os.path.join(os.environ.get("PATH_IN"), "image3.png"), frame3)
@@ -74,6 +85,7 @@ def test_custom():
 
 
 if __name__ == "__main__":
+    # TODO : Remove this block
     test_overlay_two_frames()
     test_overlay_n_frames()
     test_custom()

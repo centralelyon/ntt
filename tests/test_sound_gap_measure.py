@@ -1,12 +1,18 @@
+"""TODO : test_sound_gap_measure ...
+"""
+
 import os
-from ntt.sounds.sound_generation import one_second_square_frequencies
-from ntt.sounds.sound_gap_measure import sound_gap_measure
+
 from dotenv import load_dotenv
+from ntt.sounds.sound_gap_measure import sound_gap_measure
+from ntt.sounds.sound_generation import one_second_square_frequencies
 
 load_dotenv()
 
 
 def test_same_video():
+    """_summary_
+    """
     frequency1 = 440
     frequency2 = 680
     percentage = 0.5
@@ -20,6 +26,8 @@ def test_same_video():
 
 
 def test_decalage():
+    """_summary_
+    """
     path1 = os.path.join(
         os.environ.get("VIDEO_PATH_IN"),
         "2022_CF_Limoges_papillon_dames_50_finaleA_fixeDroiteCompressed_cut.mp4",
@@ -33,5 +41,6 @@ def test_decalage():
 
 
 if __name__ == "__main__":
+    # TODO : Remove this block
     test_same_video()
     test_decalage()  # missing input file

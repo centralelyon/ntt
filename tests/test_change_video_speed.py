@@ -1,12 +1,18 @@
+"""TODO : test_change_video_speed ...
+"""
+
 import os
-from ntt.videos.change_speed import change_video_speed
-from moviepy.editor import VideoFileClip
+
 from dotenv import load_dotenv
+from moviepy.editor import VideoFileClip
+from ntt.videos.change_speed import change_video_speed
 
 load_dotenv()
 
 
 def test_change_video_speed():
+    """_summary_
+    """
     video_file_in = os.path.join(os.environ.get("VIDEO_PATH_IN"), "ping.mp4")
     video_file_out = os.path.join(os.environ.get("PATH_OUT"), "ping_speed.mp4")
 
@@ -47,4 +53,5 @@ def test_change_video_speed():
 
 
 if __name__ == "__main__":
+    # TODO : Remove this block
     test_change_video_speed()

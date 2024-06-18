@@ -1,12 +1,18 @@
-from ntt.videos.split_video import split_video_ffmpeg
+"""TODO : test_split_video ...
+"""
+
 import os
-from dotenv import load_dotenv
+
 import pytest
+from dotenv import load_dotenv
+from ntt.videos.split_video import split_video_ffmpeg
 
 load_dotenv()
 
 
 def test_split_video_negative_n():
+    """_summary_
+    """
     video_path_in = os.environ.get("NTT_SAMPLES_PATH_IN")
     video_name = "swimming_start_small.mp4"
     output_path = os.environ.get("PATH_OUT")
@@ -19,4 +25,5 @@ def test_split_video_negative_n():
 
 
 if __name__ == "__main__":
+    # TODO : Remove this block
     test_split_video_negative_n()
