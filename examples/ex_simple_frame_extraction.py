@@ -1,4 +1,7 @@
+# pylint: disable=C0114
+
 import os
+
 from dotenv import load_dotenv
 from ntt.frames.frame_extraction import extract_first_frame
 
@@ -12,6 +15,7 @@ if __name__ == "__main__":
         frame_name_out="crop-ex.jpg",
     )
 
-    print(f"Frame successfully extracted at {output}") if output is not None else print(
-        "Frame extraction failed"
-    )
+    if output is None:
+        print("Frame extraction failed")
+    else:
+        print(f"Frame successfully extracted at {output}")

@@ -1,7 +1,10 @@
-from ntt.utils.text_to_json import text_to_json
+# pylint: disable=C0114
+
 import json
 import os
+
 from dotenv import load_dotenv
+from ntt.utils.text_to_json import text_to_json
 
 if __name__ == "__main__":
     load_dotenv()

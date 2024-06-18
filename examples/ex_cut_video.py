@@ -1,6 +1,10 @@
-from ntt.videos.create_clip import cut_video
-from dotenv import load_dotenv
+# pylint: disable=C0114,C0103
+# TODO : start and end are constants or not ?
+
 import os
+
+from dotenv import load_dotenv
+from ntt.videos.create_clip import cut_video
 
 if __name__ == "__main__":
     load_dotenv()

@@ -1,18 +1,28 @@
-from moviepy.editor import VideoFileClip, TextClip
-import cv2, os
+# pylint: disable=C0114
+
+import os
+
+import cv2
 from dotenv import load_dotenv
+
 from ntt.sounds.sound_detection import detect_sound_ref_librosa
+
+# https://peps.python.org/pep-0008/#constants
+VIDEO_NAME = "AMIGO-ROBOT_COTE.mp4"
+REF_SOUND_NAME = "ping.wav"
+FONT_SCALE = 1
+TEXT_THICKNESS = 2
+OUTPUT_FILE = "out.mp4"
+
 
 if __name__ == "__main__":
     load_dotenv()
     samples_path = os.environ.get("PATH_IN")
-    video_name = "AMIGO-ROBOT_COTE.mp4"
-    ref_sound_name = "ping.wav"
     path_out = os.environ.get("PATH_OUT")
-    video = os.path.join(samples_path, video_name)
+    video = os.path.join(samples_path, VIDEO_NAME)
 
     target_sound_start_times = detect_sound_ref_librosa(
-        samples_path, video_name, ref_sound_name, path_out
+        samples_path, VIDEO_NAME, REF_SOUND_NAME, path_out
     )
     video = cv2.VideoCapture(video)
     ret, frame = video.read()
@@ -23,13 +33,11 @@ if __name__ == "__main__":
     i = 0
     j = 0
     font = cv2.FONT_HERSHEY_SIMPLEX
-    font_scale = 1
     text_color = (255, 255, 255)  # White color
-    text_thickness = 2
     text_position = (10, 30)  # Left top corner position
-    output_file = "out.mp4"
     fourcc = cv2.VideoWriter_fourcc(*"mp4v")
-    video_writer = cv2.VideoWriter(output_file, fourcc, fps, (width, height))
+    video_writer = cv2.VideoWriter(OUTPUT_FILE, fourcc, fps, (width, height))
+
     while True:
         i += 1
         ret, frame = video.read()
@@ -43,9 +51,9 @@ if __name__ == "__main__":
         ):
             j = j + 1
         height, width, _ = frame.shape
-        text = str(j)
+
         cv2.putText(
-            frame, text, text_position, font, font_scale, text_color, text_thickness
+            frame, str(j), text_position, font, FONT_SCALE, text_color, TEXT_THICKNESS
         )
         video_writer.write(frame)
 

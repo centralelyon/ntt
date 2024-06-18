@@ -1,7 +1,10 @@
-from ntt.utils.json_to_text import recursive_json
+# pylint: disable=C0114
+
 import json
-from dotenv import load_dotenv
 import os
+
+from dotenv import load_dotenv
+from ntt.utils.json_to_text import recursive_json
 
 if __name__ == "__main__":
     load_dotenv()

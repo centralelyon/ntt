@@ -1,14 +1,17 @@
+# pylint: disable=C0114
+
 import os
+
 from dotenv import load_dotenv
-from ntt.videos.peak import detect_peak_video
 from ntt.utils.temporal import calculate_temporal_accuracy
+from ntt.videos.peak import detect_peak_video
+
+WIDTH = 640
+HEIGHT = 480
+FPS = 30
 
 if __name__ == "__main__":
     load_dotenv()
-
-    width = 640
-    height = 480
-    fps = 30
 
     output = detect_peak_video(
         os.environ.get("VIDEO_PATH_IN"),
@@ -26,7 +29,7 @@ if __name__ == "__main__":
         write_video=True,
     )
 
-    print(f"peak detection done at {output} frame or {output / fps} seconds")
+    print(f"peak detection done at {output} frame or {output / FPS} seconds")
 
-    accuracy = calculate_temporal_accuracy(2500, output / fps)
-    print(accuracy, "or {:.2%}".format(accuracy))
+    accuracy = calculate_temporal_accuracy(2500, output / FPS)
+    print(f"{accuracy} or {accuracy:.2%}")

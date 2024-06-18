@@ -1,6 +1,9 @@
-from ntt.videos.show import show_video
+# pylint: disable=C0114
+
 import os
+
 from dotenv import load_dotenv
+from ntt.videos.show import show_video
 
 if __name__ == "__main__":
     load_dotenv()

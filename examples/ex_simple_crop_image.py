@@ -1,8 +1,10 @@
-import os
-import cv2
-from dotenv import load_dotenv
-import numpy
+# pylint: disable=C0114
 
+import os
+
+import cv2
+import numpy
+from dotenv import load_dotenv
 from ntt.frames.crop_image import crop
 
 if __name__ == "__main__":

@@ -1,15 +1,17 @@
-import cv2
+# pylint: disable=C0114
 
+import cv2
+from ntt.draw.polygone import draw_polygones
 from ntt.draw.primitives import (
+    draw_bright_circle,
+    draw_crosshair,
+    draw_grid,
+    draw_line,
     draw_rectangle,
     write_text,
-    draw_crosshair,
-    draw_line,
-    draw_bright_circle,
-    draw_grid,
 )
-from ntt.draw.polygone import draw_polygones
-from ntt.frames.frame_generation import random_frame, empty_frame, number_frame
+from ntt.frames.frame_generation import empty_frame
+
 
 if __name__ == "__main__":
     w, h = 500, 500

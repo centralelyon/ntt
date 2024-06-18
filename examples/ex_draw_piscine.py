@@ -1,22 +1,24 @@
-from ntt.draw.polygone import draw_polygones
-import cv2, json, os
+# pylint: disable=C0114
+
+import json
+import os
+
+import cv2
 from dotenv import load_dotenv
-
-jsonfile = os.path.join(
-    os.environ.get("PATH_IN"), "2023_CF_Rennes_freestyle_hommes_50_finaleA.json"
-)
+from ntt.draw.polygone import draw_polygones
 
 
-def extract_piscine(jsonfile):
-    """This function finds the 4 edges of the swimming pool given the json file of a competition
+def extract_piscine(json_file):
+    """This function finds the 4 edges of the swimming pool given the json
+    file of a competition.
 
     Args:
-        jsonfile (json): path to the json file containing the competition annotation
+        json_file (json): path to the json file containing the competition annotation
 
     Returns:
         list[list]: list of the pixel coordinates of the four edges od the swimming pool
     """
-    with open(jsonfile, "rb") as f:
+    with open(json_file, "rb") as f:
         data = json.load(f)
     x0, y0 = map(int, data["videos"][1]["srcPts"][0])
     x1, y1 = map(int, data["videos"][1]["srcPts"][1])
@@ -25,43 +27,47 @@ def extract_piscine(jsonfile):
     return [[y0, x0], [y1, x1], [y2, x2], [y3, x3]]
 
 
-load_dotenv()
-piscine = extract_piscine(jsonfile)
-# draw swimming pool with ntt
-
-
-# open video
-video = cv2.VideoCapture(
-    os.path.join(
-        os.environ.get("VIDEO_PATH_IN"),
-        "2023_CF_Rennes_freestyle_hommes_50_finaleA_fixeDroite.mp4",
+if __name__ == "__main__":
+    load_dotenv()
+    jsonfile = os.path.join(
+        os.environ.get("PATH_IN"), "2023_CF_Rennes_freestyle_hommes_50_finaleA.json"
     )
-)
-width = int(video.get(cv2.CAP_PROP_FRAME_WIDTH))
-height = int(video.get(cv2.CAP_PROP_FRAME_HEIGHT))
-fps = video.get(cv2.CAP_PROP_FPS)
 
-# Define the codec for the output video
-fourcc = cv2.VideoWriter_fourcc(*"mp4v")
-output_video = cv2.VideoWriter(
-    os.path.join(os.environ.get("PATH_OUT"), "output_piscine.mp4"),
-    fourcc,
-    fps,
-    (width, height),
-)
-while True:
-    # read frame from video
-    ret, frame = video.read()
-    draw_polygones(frame, piscine, couleur=[0, 255, 0], epaisseur=3)
+    piscine = extract_piscine(jsonfile)
+    # draw swimming pool with ntt
 
-    # Write the processed frame to the output video
-    output_video.write(frame)
+    # open video
+    video = cv2.VideoCapture(
+        os.path.join(
+            os.environ.get("VIDEO_PATH_IN"),
+            "2023_CF_Rennes_freestyle_hommes_50_finaleA_fixeDroite.mp4",
+        )
+    )
+    width = int(video.get(cv2.CAP_PROP_FRAME_WIDTH))
+    height = int(video.get(cv2.CAP_PROP_FRAME_HEIGHT))
+    fps = video.get(cv2.CAP_PROP_FPS)
 
-    # verify if reading video is terminated
-    if not ret:
-        break
+    # Define the codec for the output video
+    fourcc = cv2.VideoWriter_fourcc(*"mp4v")
+    output_video = cv2.VideoWriter(
+        os.path.join(os.environ.get("PATH_OUT"), "output_piscine.mp4"),
+        fourcc,
+        fps,
+        (width, height),
+    )
+    while True:
+        # read frame from video
+        ret, frame = video.read()
+        draw_polygones(frame, piscine, couleur=[0, 255, 0], epaisseur=3)
 
-    # Wait for the 'q' key to quit
-# liberate resources
-video.release()
-output_video.release()
+        # Write the processed frame to the output video
+        output_video.write(frame)
+
+        # verify if reading video is terminated
+        if not ret:
+            break
+
+        # Wait for the 'q' key to quit
+    # liberate resources
+    video.release()
+    output_video.release()
