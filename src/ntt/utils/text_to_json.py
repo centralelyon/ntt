@@ -20,6 +20,7 @@ def text_to_json(text):
 
 def recursive_liste_json(liste, degre=0):
     """_summary_
+    TODO : explain the algorithm or at list the aim and the limits
 
     Args:
         liste (_type_): _description_
@@ -46,11 +47,13 @@ def recursive_liste_json(liste, degre=0):
     elif len(liste) > 1:
 
         res = [[], []]
-        for indexe in range(len(liste)):
-            t = liste[indexe].split("\t")
+        # TODO : NEEDS A REVIEW AND TESTS
+        for i, v in enumerate(liste):
+            t = v.split("\t")
             if len(t) < degre + 2:
-                res[0].append(indexe)
+                res[0].append(i)
                 res[1].append(t[-1])
+
         if res[1][0] == "0":
             donne = []
 
