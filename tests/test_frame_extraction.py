@@ -49,10 +49,7 @@ def test_extract_last_frame():
     frame_path = os.path.join(frame_path_in, frame_name_in)
     image = cv2.imread(frame_path)
 
-    # TODO: result not used
-    result = extract_last_frame(
-        video_path_in, video_name_in, frame_path_out, frame_name_out
-    )
+    _ = extract_last_frame(video_path_in, video_name_in, frame_path_out, frame_name_out)
 
     saved_image = cv2.imread(frame_path)
     assert saved_image.shape == image.shape
