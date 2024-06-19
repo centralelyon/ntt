@@ -82,7 +82,7 @@ def cut_video_opencv(
     cap = cv2.VideoCapture(video_file_in)
     length = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
 
-    ret, frame = cap.read()
+    _, frame = cap.read()
     fps = cap.get(cv2.CAP_PROP_FPS)
     if start > length:
         print("Error: start > video length")
@@ -93,12 +93,12 @@ def cut_video_opencv(
 
     cap.set(cv2.CAP_PROP_POS_FRAMES, int(start))
 
-    height, width, layers = frame.shape
+    height, width, _ = frame.shape
     frame_size = (width, height)
     fourcc = cv2.VideoWriter_fourcc("M", "J", "P", "G")
     out = cv2.VideoWriter(video_file_out, fourcc, fps, frame_size)
     for _ in range(end - start):
-        ret, frame = cap.read()
+        _, frame = cap.read()
         out.write(frame)
     out.release()
 
