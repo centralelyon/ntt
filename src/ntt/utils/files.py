@@ -19,7 +19,7 @@ def delete_folder(path: str):
     """
 
     if not os.path.isdir(path):
-        raise Exception(f"Path '{path}' is not a folder.")
+        raise IsADirectoryError(f"Path '{path}' is not a folder")
 
     if os.path.isdir(path):
         for root, dirs, files in os.walk(path, topdown=False):
