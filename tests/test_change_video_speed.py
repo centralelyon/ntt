@@ -1,23 +1,19 @@
 """TODO : test_change_video_speed ...
 """
 
-import os
-
-from dotenv import load_dotenv
 from moviepy.editor import VideoFileClip
 from ntt.videos.change_speed import change_video_speed
 
-load_dotenv()
 
+def test_change_video_speed(sample_path_in, sample_path_out):
+    """Test change_video_speed funtion.
 
-def test_change_video_speed():
-    """_summary_
+    Args:
+        sample_path_in (Path): input path
+        sample_path_out (Path): output path
     """
-    video_file_in = os.path.join(os.environ.get("VIDEO_PATH_IN"), "ping.mp4")
-    video_file_out = os.path.join(os.environ.get("PATH_OUT"), "ping_speed.mp4")
-
-    if not os.path.exists(os.environ.get("PATH_OUT")):
-        os.makedirs(os.environ.get("PATH_OUT"))
+    video_file_in = str(sample_path_in / "ping.mp4")
+    video_file_out = str(sample_path_out / "ping_speed.mp4")
 
     change_video_speed(video_file_in, video_file_out, 1)
 
@@ -50,8 +46,3 @@ def test_change_video_speed():
 
     # change of speed .5x has more frames
     assert nb_frames_video_in < nb_frames_video_out
-
-
-if __name__ == "__main__":
-    # TODO : Remove this block
-    test_change_video_speed()

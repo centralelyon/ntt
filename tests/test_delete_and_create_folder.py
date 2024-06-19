@@ -1,33 +1,27 @@
 """TODO : test_delete_and_create_folder ...
 """
 
-import os
-
-from dotenv import load_dotenv
 from ntt.utils.files import delete_and_create_folder
 
 
-def test_delete_and_create_folder():
-    """_summary_
-    """
-    load_dotenv()
-    test_path_in = os.environ.get("VIDEO_PATH_IN")
-    test_folder = os.path.join(test_path_in, "test_folder")
-    if not os.path.exists(test_folder):
-        os.mkdir(test_folder)
+def test_delete_and_create_folder(sample_path_in):
+    """Test delete_and_create_folder function.
 
-    test_file = os.path.join(test_folder, "test_file.txt")
-    with open(test_file, "w") as file:
-        file.write("Test")
+    Args:
+        sample_path_in (Path): input path
+    """
+    test_folder = sample_path_in / "test_folder"
+
+    if not test_folder.exists():
+        test_folder.mkdir()
+
+    test_file = test_folder / "test_file.txt"
+    with open(test_file, "w", encoding="utf-8") as f:
+        f.write("Test")
 
     new_folder = delete_and_create_folder(test_folder)
 
-    assert os.path.exists(new_folder)
-    assert not os.listdir(new_folder)
+    assert new_folder.exists()
+    assert not [x for x in new_folder.iterdir()]
 
-    os.rmdir(new_folder)
-
-
-if __name__ == "__main__":
-    # TODO : Remove this block
-    test_delete_and_create_folder()
+    new_folder.rmdir()
