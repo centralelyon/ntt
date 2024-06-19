@@ -42,6 +42,8 @@ def get_index(list_dict, key, value):
     Returns:
         _type_: _description_
     """
-    for i in range(len(list_dict)):
-        if list_dict[i][key] == value:
+    for i, d in enumerate(list_dict):
+        if d.get(key) == value:
             return i
+
+    return None
