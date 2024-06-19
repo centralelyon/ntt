@@ -43,33 +43,37 @@ def detect_sound_ref(
     # extract short-term features using a 50msec non-overlapping windows
     win, step = 0.05, 0.05
     win_mid, step_mid = 0.4, 0.05
-    mt_long, st_long, mt_n_long = aFm.mid_feature_extraction(
+    mt_long, _, _ = aFm.mid_feature_extraction(
         s_long, fs, win_mid * fs, step_mid * fs, win * fs, step * fs
     )
 
     # normalization
     mt_long = mt_long.T
-    for i in range(len(mt_long)):
-        mt_long[i] = mt_long[i] / np.linalg.norm(mt_long[i])
+    # TODO : Find a better name for val
+    for i, val in enumerate(mt_long):
+        mt_long[i] = val / np.linalg.norm(val)
 
     temps_possible = []
 
-    for i in range(len(mt)):
+    # TODO : Find better names for t_val and long_val
+    for i, t_val in enumerate(mt):
         arg_min_dist = 0
         min_dist = 1000
-        for j in range(len(mt_long)):
-            if np.linalg.norm(mt[i] - mt_long[j]) < min_dist:
+        for j, long_val in enumerate(mt_long):
+            distance = np.linalg.norm(t_val - long_val)
+            if distance < min_dist:
                 arg_min_dist = j
-                min_dist = np.linalg.norm(mt[i] - mt_long[j])
+                min_dist = distance
         temps_possible.append(arg_min_dist * duration_long / mt_long.shape[0])
 
     median_time = np.median(temps_possible)
     temps_possible_non_aberrant = []
     aberration = 0.5
-    for i in range(len(temps_possible)):
-        if median_time - aberration <= temps_possible[i]:
-            if temps_possible[i] <= median_time + aberration:
-                temps_possible_non_aberrant.append(temps_possible[i])
+
+    for temps in temps_possible:
+        if median_time - aberration <= temps:
+            if temps <= median_time + aberration:
+                temps_possible_non_aberrant.append(temps)
 
     # An empty sequence is falsey
     if temps_possible_non_aberrant:
@@ -102,9 +106,7 @@ def simple_peak_count_librosa(video_path, video_name):
     return len(onset_frames)
 
 
-def detect_sound_ref_librosa(
-    samples_path, video_name, ref_sound_name, path_out, threshold=20
-):
+def detect_sound_ref_librosa(samples_path, video_name, ref_sound_name, threshold=20):
     """_summary_
 
     Args:
@@ -137,12 +139,13 @@ def detect_sound_ref_librosa(
     # Convert milliseconds to seconds)
     segment_length = segment_duration
 
-    # TODO : Replace "l" with meaningfull name (l_threshold)
-    l = []
+    # TODO : "l" replaced by "l_target_sound_effect" : is this an appropriate
+    # name for this list ?
+    l_target_sound_effect = []
 
     for i in range(0, length_video - segment_length, segment_length):
         # Extract a segment from the audio
-        segment = audio[i: i + segment_length]
+        segment = audio[i:i + segment_length]
 
         # Convert the segment to a spectrogram using librosa
         segment_spec = librosa.amplitude_to_db(
@@ -157,6 +160,6 @@ def detect_sound_ref_librosa(
 
         # Set a threshold to determine if the target sound effect is present
         if similarity < threshold:
-            l.append(i / 1000)
+            l_target_sound_effect.append(i / 1000)
 
-    return l
+    return l_target_sound_effect

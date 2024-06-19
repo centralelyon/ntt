@@ -18,11 +18,10 @@ OUTPUT_FILE = "out.mp4"
 if __name__ == "__main__":
     load_dotenv()
     samples_path = os.environ.get("PATH_IN")
-    path_out = os.environ.get("PATH_OUT")
     video = os.path.join(samples_path, VIDEO_NAME)
 
     target_sound_start_times = detect_sound_ref_librosa(
-        samples_path, VIDEO_NAME, REF_SOUND_NAME, path_out
+        samples_path, VIDEO_NAME, REF_SOUND_NAME
     )
     video = cv2.VideoCapture(video)
     ret, frame = video.read()
