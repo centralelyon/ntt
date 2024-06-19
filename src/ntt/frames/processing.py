@@ -92,7 +92,7 @@ def translate_horizontally(frame, translation_rate):
         _type_: _description_
     """
     frame1 = np.zeros_like(frame)
-    h, w, _ = frame.shape
+    _, w, _ = frame.shape
 
     if translation_rate > 0:
         frame1[:, translation_rate:w] = frame[:, : w - translation_rate]
@@ -112,7 +112,7 @@ def translate_vertically(frame, translation_rate):
         _type_: _description_
     """
     frame1 = np.zeros(frame.shape)
-    h, w, _ = frame.shape
+    h, _, _ = frame.shape
 
     if translation_rate > 0:
         frame1[translation_rate:h, :] = frame[: h - translation_rate, :]
