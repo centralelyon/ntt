@@ -2,7 +2,7 @@
 """
 
 
-def recursive_json(data, degre=0, texte_out=""):
+def recursive_json(data, degre=0):
     """_summary_
 
     Args:
@@ -32,12 +32,13 @@ def recursive_json(data, degre=0, texte_out=""):
 
     elif isinstance(data, list):
         texte_part = ""
-        for i in range(len(data)):
+        # TODO : Find a better name for val
+        for i, val in enumerate(data):
             texte_part = (
                 texte_part
                 + "\t" * degre
                 + str(i)
                 + "\n"
-                + recursive_json(data[i], degre=degre + 1)
+                + recursive_json(val, degre=degre + 1)
             )
         return texte_part
