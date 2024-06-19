@@ -13,8 +13,7 @@ load_dotenv()
 
 
 def test_overlay_two_frames():
-    """_summary_
-    """
+    """_summary_"""
     frames_path_in = f"{os.environ.get('PATH_IN')}"
     frame1_name = "frame1.jpg"
     frame2_name = "frame2.jpg"
@@ -25,14 +24,13 @@ def test_overlay_two_frames():
     frame2 = cv2.imread(path_frame2)
     assert frame1.shape == frame2.shape
     opacities = [0.5] * 2
-    overlayed = overlay_two_frames(
+    _ = overlay_two_frames(
         frames_path_in, frame1_name, frame2_name, opacities, path_output_name
     )
 
 
 def test_overlay_n_frames():
-    """_summary_
-    """
+    """_summary_"""
     frames_path_in = f"{os.environ.get('PATH_IN')}"
     frame1_name = "frame1.jpg"
     frame2_name = "frame2.jpg"
@@ -47,12 +45,11 @@ def test_overlay_n_frames():
     frames = [frame1_name, frame2_name, frame3_name]
     assert frame1.shape == frame2.shape and frame1.shape == frame3.shape
     opacities = [0.5] * 3
-    overlayed = overlay_n_frames(frames_path_in, frames, opacities, path_output_name)
+    _ = overlay_n_frames(frames_path_in, frames, opacities, path_output_name)
 
 
 def test_custom():
-    """_summary_
-    """
+    """_summary_"""
     frames_path_in = f"{os.environ.get('PATH_IN')}"
     frame1 = empty_frame(width=10, height=10)
     frame2 = empty_frame(width=10, height=10)
@@ -68,10 +65,10 @@ def test_custom():
         (h // 2 - h // 4, w // 2 - w // 4, 3), [0, 255, 0], dtype=np.uint8
     )
     cv2.imwrite(os.path.join(os.environ.get("PATH_IN"), "image3.png"), frame3)
-    overlayed_frame1 = overlay_two_frames(
+    _ = overlay_two_frames(
         frames_path_in, "image1.png", "image3.png", [0.5] * 2, path_output_name1
     )
-    overlayed_frame2 = overlay_two_frames(
+    _ = overlay_two_frames(
         frames_path_in, "image2.png", "image3.png", [0.5] * 2, path_output_name2
     )
     overlayed = overlay_two_frames(

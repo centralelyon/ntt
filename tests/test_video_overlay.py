@@ -11,8 +11,7 @@ load_dotenv()
 
 
 def test_video_overlay_opencv():
-    """_summary_
-    """
+    """_summary_"""
     path_videos = os.environ.get("VIDEO_PATH_IN")
     name_video1 = "point_0.mp4"
     name_video2 = "point_8.mp4"
@@ -29,8 +28,8 @@ def test_video_overlay_opencv():
     width2 = int(video2.get(cv2.CAP_PROP_FRAME_WIDTH))
     height2 = int(video2.get(cv2.CAP_PROP_FRAME_HEIGHT))
     fps2 = video2.get(cv2.CAP_PROP_FPS)
-    total_no_frames1 = video1.get(cv2.CAP_PROP_FRAME_COUNT)
-    total_no_frames2 = video2.get(cv2.CAP_PROP_FRAME_COUNT)
+    _ = video1.get(cv2.CAP_PROP_FRAME_COUNT)
+    _ = video2.get(cv2.CAP_PROP_FRAME_COUNT)
     assert width1 == width2 and height1 == height2
     assert fps1 == fps2
 
@@ -40,8 +39,7 @@ def test_video_overlay_opencv():
 
 
 def test_video_overlay_moviepy():
-    """_summary_
-    """
+    """_summary_"""
     list_videos_path = os.listdir(
         os.path.join(os.environ.get("VIDEO_PATH_IN"), "videos")
     )
