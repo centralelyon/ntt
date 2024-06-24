@@ -1,21 +1,20 @@
 """TODO : test_crop_image ...
 """
 
-import os
-
 import cv2
 import numpy as np
 import pytest
-from dotenv import load_dotenv
 from ntt.frames.crop_image import crop
 
 
-def test_crop():
-    """_summary_
+def test_crop(sample_path_in):
+    """Test ntt crop function.
+
+    Args:
+        sample_path_in (Path): input path
     """
-    load_dotenv()
-    frame_name_in = os.path.join(os.environ.get("VIDEO_PATH_IN"), "crop.jpg")
-    image = cv2.imread(frame_name_in)
+    frame_file_in = str(sample_path_in / "crop.jpg")
+    image = cv2.imread(frame_file_in)
     shape = image.shape
 
     # no crop just to check if the image is the same
@@ -41,8 +40,3 @@ def test_crop():
 
     with pytest.raises(ValueError):
         crop(image, x1, y1, x2, y2)
-
-
-if __name__ == "__main__":
-    # TODO : Remove this block
-    test_crop()
