@@ -52,7 +52,7 @@ def test_draw_swimming_pool(sample_path_in, sample_path_out):
         width = int(video.get(cv2.CAP_PROP_FRAME_WIDTH))
         height = int(video.get(cv2.CAP_PROP_FRAME_HEIGHT))
         fps = video.get(cv2.CAP_PROP_FPS)
-        
+
         for coords in piscine:
             assert (
                 coords[0] >= 0
