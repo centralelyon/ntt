@@ -20,7 +20,7 @@ def test_copy_file():
     file_name_in = "original_file.txt"
     original_file = os.path.join(temp_dir, file_name_in)
 
-    with open(original_file, "w") as f:
+    with open(original_file, "w", encoding="utf-8") as f:
         f.write("This is a test file.")
 
     destination_dir = os.path.join(temp_dir, "destination")
@@ -35,7 +35,7 @@ def test_copy_file():
     destination_file = os.path.join(destination_dir, file_name_out)
     assert os.path.exists(destination_file)
 
-    with open(destination_file, "r") as f:
+    with open(destination_file, "r", encoding="utf-8") as f:
         assert f.read() == "This is a test file."
 
     os.remove(original_file)
@@ -45,8 +45,3 @@ def test_copy_file():
     assert not os.path.exists(destination_file)
 
     shutil.rmtree(temp_dir, ignore_errors=True)
-
-
-if __name__ == "__main__":
-    # TODO : Remove this block
-    test_copy_file()
