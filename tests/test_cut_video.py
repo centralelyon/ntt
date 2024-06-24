@@ -1,35 +1,26 @@
 """TODO : test_cut_video ...
-
 """
 
-import os
-
-from dotenv import load_dotenv
-from moviepy import editor
+from moviepy.editor import VideoFileClip
 from ntt.videos.create_clip import cut_video
 
-load_dotenv()
 
+def test_cut_video(sample_path_in, sample_path_out):
+    """Test ntt cut_video function.
 
-def test_cut_video():
-    """_summary_
+    Args:
+        sample_path_in (Path): input path
+        sample_path_out (Path): output path
     """
-    video_in = os.path.join(os.environ.get("VIDEO_PATH_IN"), "ping.mp4")
-    video_out = os.path.join(os.environ.get("PATH_OUT"), "ping_clip.mp4")
+    # Conversion to str need for ffmpeg underlying functions
+    video_path_in = str(sample_path_in / "ping.mp4")
+    video_path_out = str(sample_path_out / "ping_clip.mp4")
     start = 0
     end = 1
 
-    if not os.path.exists(os.environ.get("PATH_OUT")):
-        os.makedirs(os.environ.get("PATH_OUT"))
-
     # appel de la fonction de creation de cut
-    cut_video(video_in, video_out, 0, 1)
+    cut_video(video_path_in, video_path_out, 0, 1)
 
-    video = editor.VideoFileClip(video_out)
+    video = VideoFileClip(video_path_out)
     assert video.duration == end - start
     video.close()
-
-
-if __name__ == "__main__":
-    # TODO : Remove this block
-    test_cut_video()
