@@ -23,9 +23,3 @@ def test_generate_random_uuid():
     generated_uuid = generate_uuid4()
     split = generated_uuid.split("-")
     assert len(split) == 5
-
-
-if __name__ == "__main__":
-    # TODO : Remove this block
-    test_generate_random_string()
-    test_generate_random_uuid()
