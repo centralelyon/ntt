@@ -84,7 +84,7 @@ def copy_file(
 
     shutil.copyfile(source_file, destination_file)
 
-    print(f"File '{file_name_in}' copied to '{destination_file}' successfully.")
+    print(f"File '{source_file}' copied to '{destination_file}' successfully.")
 
 
 def remove_file_if_exists(path):
