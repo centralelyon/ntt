@@ -1,22 +1,24 @@
 """TODO : sound_gap_measure module provides ...
 """
 
+import os
+
 import numpy as np
 from moviepy.editor import VideoFileClip
 from scipy import signal
 
 
-def sound_gap_measure(video1: str, video2: str) -> float:
+def sound_gap_measure(video1: str | os.PathLike, video2: str | os.PathLike) -> float:
     """
     Args:
-        video1 (str): Path of the reference video
-        video2 (str): Path of the comparison video
+        video1 (Path or str): Path of the reference video
+        video2 (Path or str): Path of the comparison video
 
     Returns:
         float: gap (ms) between video1 and video2
     """
-    my_clip1 = VideoFileClip(video1)
-    my_clip2 = VideoFileClip(video2)
+    my_clip1 = VideoFileClip(str(video1))
+    my_clip2 = VideoFileClip(str(video2))
 
     # hard coded sample rate
     samplerate1 = 44100

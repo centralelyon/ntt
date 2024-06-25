@@ -4,13 +4,13 @@ import os
 from pathlib import Path
 
 import dotenv
-from ntt.sounds.sound_generation import random_to_start
+from ntt.sounds.sound_generation import video2_shifted
 
-# Video parameters
 # https://peps.python.org/pep-0008/#constants
-START_TIME = 0.1
-DURATION = 5.0
-FREQUENCY = 440
+# Video params
+DURATION = 3
+DECALAGE = 1.5
+VIDEO_NAME = "video"
 
 if __name__ == "__main__":
     ev_path = Path(dotenv.find_dotenv())
@@ -22,7 +22,5 @@ if __name__ == "__main__":
     if not path_out.exists():
         path_out.mkdir()
 
-    video_path = path_out / "video.mp4"
-
     # generate video with audio
-    random_to_start(START_TIME, DURATION, FREQUENCY, video_path)
+    video2_shifted(DURATION, DECALAGE, path_out, VIDEO_NAME)
