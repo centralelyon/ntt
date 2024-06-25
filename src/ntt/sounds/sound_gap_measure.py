@@ -1,5 +1,12 @@
 """TODO : sound_gap_measure module provides ...
+
+from __future__ import annotations
+
+For the support of Union type in Python 3.9
+https://typing.readthedocs.io/en/latest/spec/concepts.html#union-types
 """
+
+from __future__ import annotations
 
 import os
 
