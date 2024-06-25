@@ -30,8 +30,3 @@ def test_temporal_accuracy():
     assert (
         accuracy == expected_accuracy
     ), f"expected accuracy: {expected_accuracy} ({accuracy})"
-
-
-if __name__ == "__main__":
-    # TODO : Remove this block
-    test_temporal_accuracy()
