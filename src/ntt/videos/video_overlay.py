@@ -60,17 +60,22 @@ def overlay_videos_moviepy(list_videos_path, opacities, path_video_out):
         opacities (_type_): _description_
         path_video_out (_type_): _description_
     """
-    video_clips = [VideoFileClip(path) for path in list_videos_path]
-    opacities = [
-        0.5 for i in range(len(list_videos_path))
-    ]  # Opacity values for each video
+    video_clips = []
     overlayed_clips = []
 
-    for clip, opacity in zip(video_clips, opacities):
+    if opacities is None:
+        opacities = [0.5] * len(list_videos_path)
+
+    for path, opacity in zip(list_videos_path, opacities):
+        clip = VideoFileClip(str(path))
+        video_clips.append(clip)
+
         overlayed_clip = clip.copy().set_opacity(opacity)
         overlayed_clips.append(overlayed_clip)
 
     final_clip = CompositeVideoClip(overlayed_clips)
-    final_clip.write_videofile(path_video_out, codec="libx264")
+
+    final_clip.write_videofile(str(path_video_out), codec="libx264")
+
     for clip in video_clips:
         clip.close()
