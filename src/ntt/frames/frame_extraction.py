@@ -106,7 +106,7 @@ def extract_frame_opencv(video_path, frame_number=1):
     """Extracts a frame given its number from a video with opencv.
 
     Args:
-        video_path (Path or str): Path to the the input video
+        video_path (Path or str): Path to the input video
         frame_number (int, optional): The number of the frame to extract.
         Defaults to 1.
 
@@ -138,7 +138,7 @@ def extract_frame_ffmpeg(video_path, frame_number):
     """Extracts a frame given its number from a video with ffmpeg
 
     Args:
-        video_path (Path or str): Path to the the input video
+        video_path (Path or str): Path to the input video
         frame_number (int): The number of the frame to extract.
 
     Returns:
@@ -159,7 +159,7 @@ def compare_frames(video_path, frame_number):
     and extract_frame_opencv.
 
     Args:
-        video_path (Path or str): Path to the the input video
+        video_path (Path or str): Path to the input video
         frame_number (int): the number of the frame to extract.
 
     Returns:
