@@ -1,7 +1,7 @@
 """TODO : sound_detection module provides ...
 """
 
-import os
+from pathlib import Path
 
 import librosa
 import numpy as np
@@ -86,21 +86,28 @@ def detect_sound_ref(
     return start
 
 
-def simple_peak_count_librosa(video_path, video_name):
+def simple_peak_count_librosa(video_path, video_name, output_path):
     """_summary_
 
     Args:
-        video_path (_type_): _description_
-        video_name (_type_): _description_
+        video_path (Path or str): Path to the folder containing the video
+        video_name (string): Name of the video
+        output_path (Path or str): Path to the folder to write to
 
     Returns:
         _type_: _description_
     """
-    video = os.path.join(video_path, video_name)
-    video = VideoFileClip(video)
+    video = Path(video_path) / video_name
+
+    video = VideoFileClip(str(video))
     # fps = video.fps
-    audio = os.path.join(video_path, video_name[: len(video_name) - 4] + ".mp3")
-    video.audio.write_audiofile(audio)
+
+    # codec required, use codec specified by write_audiofile header
+    # and write a wav file instead of mp3
+    audio = Path(output_path / f"{Path(video_name).stem}.wav")
+
+    video.audio.write_audiofile(audio, codec="pcm_s32le")
+
     x, sr = librosa.load(audio)
     onset_frames = librosa.onset.onset_detect(y=x, sr=sr)
     return len(onset_frames)
@@ -110,21 +117,22 @@ def detect_sound_ref_librosa(samples_path, video_name, ref_sound_name, threshold
     """_summary_
 
     Args:
-        samples_path (_type_): _description_
-        video_name (_type_): _description_
-        ref_sound_name (_type_): _description_
-        path_out (_type_): _description_
+        samples_path (Path or str): Path to the folder containing the input material
+        video_name (string): Name of the video
+        ref_sound_name (string): _description_
         threshold (int, optional): _description_. Defaults to 20.
 
     Returns:
         _type_: _description_
     """
     # Load the target sound effect and the audio or video file
-    target_sound_file = os.path.join(samples_path, ref_sound_name)
-    audio_or_video_file = os.path.join(samples_path, video_name)
+    target_sound_file = Path(samples_path) / ref_sound_name
+    audio_or_video_file = Path(samples_path) / video_name
+
     # Load the target sound effect
     target_sound, sr = librosa.load(target_sound_file)
     target_sound = np.array(target_sound)
+
     # Load the audio or video file
     audio, sr1 = librosa.load(audio_or_video_file)
     length_video = int(len(audio) * 1000 / sr1)
