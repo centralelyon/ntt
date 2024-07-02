@@ -47,4 +47,4 @@ def test_cut_video_opencv(sample_path_in, sample_path_out):
 
     assert video_path_out.exists()
 
-    # TODO : add a test for that the video was really cutted
+    # TODO : add a test that the video was really cutted

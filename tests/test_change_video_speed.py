@@ -29,7 +29,7 @@ def test_change_video_speed(sample_path_in, sample_path_out):
     assert nb_frames_video_in == nb_frames_video_out
 
     change_video_speed(video_file_in, video_file_out, 2)
-    
+
     video_in = VideoFileClip(str(video_file_in))
     video_out = VideoFileClip(str(video_file_out))
 
