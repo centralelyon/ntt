@@ -4,6 +4,7 @@
 from pathlib import Path
 
 import pytest
+from ntt.utils.environment import has_ffmpeg_cmd
 from ntt.videos.split_video import split_video_ffmpeg
 
 
@@ -27,6 +28,7 @@ def test_split_video_negative_n(sample_path_in, sample_path_out):
     assert str(e.value) == "Number of segments (n) must be greater than zero."
 
 
+@pytest.mark.skipif(not has_ffmpeg_cmd(), reason="ffmpeg command not available")
 def test_split_video(sample_path_in, sample_path_out):
     """Test ntt split_video_ffmpeg function.
 

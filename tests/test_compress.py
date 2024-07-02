@@ -3,10 +3,11 @@
 from pathlib import Path
 
 import pytest
+from ntt.utils.environment import has_ffmpeg_cmd
 from ntt.videos.compress import compress_video_ffmpeg_cmd, convert_video
 
 
-@pytest.mark.skip(reason="Needs ffmpeg to be installed in Circle-CI environment.")
+@pytest.mark.skipif(not has_ffmpeg_cmd(), reason="ffmpeg command not available")
 def test_compress_video_ffmpeg_cmd(sample_path_in, sample_path_out):
     """Test ntt compress_video_ffmpeg_cmd function.
 
@@ -24,7 +25,7 @@ def test_compress_video_ffmpeg_cmd(sample_path_in, sample_path_out):
     assert video_path_out.exists()
 
 
-@pytest.mark.skip(reason="Needs ffmpeg to be installed in Circle-CI environment.")
+@pytest.mark.skipif(not has_ffmpeg_cmd(), reason="ffmpeg command not available")
 def test_convert_video(sample_path_in, sample_path_out):
     """Test ntt convert_video function.
 
