@@ -5,20 +5,23 @@ from moviepy.editor import VideoFileClip
 
 
 def get_video_dimensions(video_path):
-    """_summary_
+    """Get the video width and height.
 
     Args:
-        video_path (_type_): _description_
+        video_path (str or Path): Full path to the input video
 
     Returns:
-        _type_: _description_
+        tuple of int: width and height of the video
     """
+    width = None
+    height = None
+
     try:
-        clip = VideoFileClip(video_path)
+        clip = VideoFileClip(str(video_path))
         width, height = clip.size
         clip.close()
-        return width, height
 
     except Exception as e:
         print(f"Error: {e}")
-        return None, None
+
+    return width, height

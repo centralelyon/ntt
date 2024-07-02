@@ -10,16 +10,14 @@ def zoom_xy(
     """_summary_
 
     Args:
-        input_video (_type_): _description_
-        output_video (_type_): _description_
+        input_video (str or Path): Full path to the input video
+        output_video (str or Path): Full path to the output video
         zoom_x (_type_): _description_
         zoom_y (_type_): _description_
         zoom_duration (float, optional): _description_. Defaults to 1.0.
         screensize (tuple, optional): _description_. Defaults to (640, 360).
     """
-    clip = VideoFileClip(input_video)
-
-    zoom_function = lambda t: 1 + zoom_duration * t
+    clip = VideoFileClip(str(input_video))
 
     zoomed_clip = (
         clip.crop(
@@ -28,7 +26,7 @@ def zoom_xy(
             y1=zoom_y - screensize[1] / 2,
             y2=zoom_y + screensize[1] / 2,
         )
-        .resize(zoom_function)
+        .resize(lambda t: 1 + zoom_duration * t)
         .set_position(("center", "center"))
         .set_duration(zoom_duration)
     )
@@ -36,4 +34,4 @@ def zoom_xy(
     final_video = CompositeVideoClip(
         [zoomed_clip.set_position(("center", "center"))], size=screensize
     )
-    final_video.write_videofile(output_video, fps=clip.fps)
+    final_video.write_videofile(str(output_video), fps=clip.fps)

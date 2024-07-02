@@ -1,17 +1,27 @@
 # pylint: disable=C0114
 
 import os
+from pathlib import Path
 
-from dotenv import load_dotenv
+import dotenv
 from ntt.videos.dimensions import get_video_dimensions
 from ntt.videos.zoom import zoom_xy
 
+# https://peps.python.org/pep-0008/#constants
+# TODO : videos not in samples folder
+VIDEO_IN_NAME = "ping.mp4"
+VIDEO_OUT_NAME = "ping_zoom.mp4"
+
 if __name__ == "__main__":
-    load_dotenv()
-    input_video_path = os.path.join(os.environ.get("VIDEO_PATH_IN"), "ping_clip.mp4")
-    output_video_path = os.path.join(
-        os.environ.get("VIDEO_PATH_IN"), "ping_clip_zoom.mp4"
-    )
+    ev_path_parent = Path(dotenv.find_dotenv()).parent
+
+    dotenv.load_dotenv()
+
+    path_in = Path(ev_path_parent / os.environ.get("PATH_IN"))
+    path_out = Path(ev_path_parent / os.environ.get("PATH_OUT"))
+
+    input_video_path = path_in / VIDEO_IN_NAME
+    output_video_path = path_out / VIDEO_OUT_NAME
 
     width, height = get_video_dimensions(input_video_path)
 
