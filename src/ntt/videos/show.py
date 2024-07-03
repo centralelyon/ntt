@@ -10,7 +10,7 @@ def show_video(video_path, window_name="Video"):
 
     Args:
         video_path (str or Path): Full path to the output video
-        window_name (str, optional): _description_. Defaults to "Video".
+        window_name (string, optional): Window title. Defaults to "Video".
     """
     cap_output = cv2.VideoCapture(video_path)
 

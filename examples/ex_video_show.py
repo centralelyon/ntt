@@ -8,6 +8,7 @@ from ntt.videos.show import show_video
 
 # https://peps.python.org/pep-0008/#constants
 VIDEO_NAME_IN = "ping.mp4"
+WINDOW_TITLE = "Table tennis video"
 
 if __name__ == "__main__":
     ev_path_parent = Path(dotenv.find_dotenv()).parent
@@ -16,4 +17,4 @@ if __name__ == "__main__":
 
     path_in = Path(ev_path_parent / os.environ.get("PATH_IN"))
 
-    show_video(path_in / VIDEO_NAME_IN)
+    show_video(path_in / VIDEO_NAME_IN, WINDOW_TITLE)
