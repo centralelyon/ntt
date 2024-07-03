@@ -1,7 +1,7 @@
 """TODO : stich module provides ...
 """
 
-import os
+from pathlib import Path
 
 import cv2
 import numpy as np
@@ -22,11 +22,11 @@ def stitch_2_videos(
     """Stitches video1 and video2 based on the source and destination points.
 
     Args:
-        video_path_in (_type_): _description_
-        video_name_in1 (_type_): _description_
-        video_name_in2 (_type_): _description_
-        video_path_out (_type_): _description_
-        video_name_out (_type_): _description_
+        video_path_in (str or Path): Full path to the input video
+        video_name_in1 (string): Name of the input video 1
+        video_name_in2 (string): Name of the input video 2
+        video_path_out (str or Path): Full path to the output video
+        video_name_out (string): Name of the output video
         time_difference (_type_): _description_
         src_pts1 (_type_): _description_
         dest_pts1 (_type_): _description_
@@ -34,9 +34,12 @@ def stitch_2_videos(
         dest_pts2 (_type_): _description_
     """
 
-    video_name1 = os.path.join(video_path_in, video_name_in1)
-    video_name2 = os.path.join(video_path_in, video_name_in2)
-    video_out = os.path.join(video_path_out, video_name_out)
+    # video_name1 = os.path.join(video_path_in, video_name_in1)
+    # video_name2 = os.path.join(video_path_in, video_name_in2)
+    # video_out = os.path.join(video_path_out, video_name_out)
+    video_name1 = Path(video_path_in) / video_name_in1
+    video_name2 = Path(video_path_in) / video_name_in2
+    video_out = Path(video_path_out) / video_name_out
 
     # hard coded size of the reference image
     size_image_ref = (900, 360)
@@ -70,6 +73,7 @@ def stitch_2_videos(
 
     if not cap1.isOpened():
         print("Error opening video 1 stream or file")
+
     if not cap2.isOpened():
         print("Error opening video 2 stream or file")
 
