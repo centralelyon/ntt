@@ -66,6 +66,7 @@ def experiment_blur():
 
 def rotate(frame, angle):
     """_summary_
+    TODO : angle are in degree ?
 
     Args:
         frame (_type_): _description_
