@@ -8,15 +8,13 @@ from ntt.utils.temporal import calculate_temporal_accuracy
 from ntt.videos.peak import detect_peak_video
 
 # https://peps.python.org/pep-0008/#constants
-# TODO : video not in samples folder
-# VIDEO_NAME_IN = "peak_black_gray_2500ms.mp4"
-VIDEO_NAME_IN = "ALEXIS-LEBRUN_vs_JANG-WOOJIN.mp4"
-VIDEO_NAME_OUT = "ALEXIS-LEBRUN_vs_JANG-WOOJIN_gray.mp4"
+VIDEO_NAME_IN = "peak_black_gray_2500ms.mp4"
+VIDEO_NAME_OUT = "peak_black_gray_2500ms_gray.mp4"
 
 # TODO : hard coded values not computed for the current video
 XA, XB, YA, YB = 0, 100, 100, 200
 NB_FRAME = 150
-THRESHOLD = 50
+THRESHOLD = 250
 FPS = 30
 
 if __name__ == "__main__":
