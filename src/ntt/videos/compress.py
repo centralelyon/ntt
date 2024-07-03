@@ -2,7 +2,6 @@
 TODO : Why not using ffmpeg package as in frame_extraction.py ?
 """
 
-# import os
 import subprocess
 from pathlib import Path
 
