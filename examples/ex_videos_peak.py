@@ -2,48 +2,47 @@
 # TODO : Removed when this sample code will be fixed
 # pylint: disable=C0103
 
-# import os
+import os
+from pathlib import Path
 
-# from dotenv import load_dotenv
+import dotenv
 from ntt.videos.peak import detect_peak_video
 
+# https://peps.python.org/pep-0008/#constants
+# TODO : videos not in samples folder
+# VIDEO_NAME_IN = "2021_Montpellier_freestyle_hommes_50_FinaleC_fixeDroite.mp4"
+# VIDEO_NAME_IN = "2023_CF_Rennes_papillon_dames_50_finaleA_fixeDroite.mp4"
+VIDEO_NAME_IN = "ALEXIS-LEBRUN_vs_JANG-WOOJIN.mp4"
+VIDEO_NAME_OUT = "ALEXIS-LEBRUN_vs_JANG-WOOJIN_gray.mp4"
+
+# TODO : hard coded values not computed for the current video
+XA, XB, YA, YB = 0, 100, 100, 200
+THRESHOLD = 50
+NB_FRAME = 150
+
 if __name__ == "__main__":
-    # TODO : Do we want to iterate on these values or are they specific
-    # to the videos
-    xa, xb, ya, yb = 2355, 2519, 1062, 1149
-    # xa, xb, ya, yb = 750, 820, 3590, 3670
-    # xa,xb,ya,yb = 500,580,3170,3230
-    # xa,xb,ya,yb = 150,220,2550,2700
-    # xa,xb,ya,yb = 10,100,2350,2400
+    ev_path_parent = Path(dotenv.find_dotenv()).parent
 
-    """rep = detect_peak_video(
-        "./vidéos/2021_Montpellier_freestyle_hommes_50_FinaleC_fixeDroite.mp4",
-        xa,
-        xb,
-        ya,
-        yb,
-        nb_frame=1300,
-        afficher_anime=True,
-        afficher_hist=True,
-    )"""
+    dotenv.load_dotenv()
 
-    # TODO : Hard coded Windows path !
-    input_path = "c:/Users/thomas/Documents/GitHub/neptune-dev/samples/2023_CF_Rennes_papillon_dames_50_finaleA"  # pylint: disable=C0301
-    video_name_in = "2023_CF_Rennes_papillon_dames_50_finaleA_fixeDroite.mp4"
-    output_path = "c:/Users/thomas/Documents/GitHub/neptune-dev/samples/2023_CF_Rennes_papillon_dames_50_finaleA"  # pylint: disable=C0301
-    video_name_out = "2023_CF_Rennes_papillon_dames_50_finaleA_fixeDroite_flash.mp4"
+    path_in = Path(ev_path_parent / os.environ.get("PATH_IN"))
+    path_out = Path(ev_path_parent / os.environ.get("PATH_OUT"))
 
+    # TODO : Get video real characteristics dynamically for the arguments
     rep = detect_peak_video(
-        input_path,
-        video_name_in,
-        output_path,
-        video_name_out,
-        xa,
-        xb,
-        ya,
-        yb,
-        nb_frame=959,
-        afficher_anime=True,
-        afficher_hist=True,
+        path_in,
+        VIDEO_NAME_IN,
+        path_out,
+        VIDEO_NAME_OUT,
+        XA,
+        XB,
+        YA,
+        YB,
+        nb_frame=NB_FRAME,
+        seuil=THRESHOLD,
+        afficher_anime=False,
+        afficher_hist=False,
+        write_video=False
     )
-    print(rep)
+
+    print(f"Peak detection done at frame {rep}.")
