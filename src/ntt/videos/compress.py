@@ -12,7 +12,7 @@ def compress_video_ffmpeg_cmd(video_path_in, video_path_out, ext="_comp35"):
 
     Args:
         video_path_in (str or Path): Full path to the input video
-        video_path_out (str or Path): Full path to the input video
+        video_path_out (str or Path): Full path to the output video
         ext (str, optional): _description_. Defaults to "_comp35".
 
     Returns:
