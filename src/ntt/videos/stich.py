@@ -34,9 +34,6 @@ def stitch_2_videos(
         dest_pts2 (_type_): _description_
     """
 
-    # video_name1 = os.path.join(video_path_in, video_name_in1)
-    # video_name2 = os.path.join(video_path_in, video_name_in2)
-    # video_out = os.path.join(video_path_out, video_name_out)
     video_name1 = Path(video_path_in) / video_name_in1
     video_name2 = Path(video_path_in) / video_name_in2
     video_out = Path(video_path_out) / video_name_out
