@@ -9,9 +9,9 @@ from ntt.videos.shake_video import translate_video_horizontally
 # from ntt.videos.shake_video import translate_video_vertically
 
 # https://peps.python.org/pep-0008/#constants
-VIDEO_NAME_IN = "sample.mp4"
-VIDEO_NAME_OUT_H = "sample_translated_horizontally.mp4"
-# VIDEO_NAME_OUT_V = "sample_translated_vertically.mp4"
+VIDEO_NAME_IN = "reference.mp4"
+VIDEO_NAME_OUT_H = "reference_translated_horizontally.mp4"
+# VIDEO_NAME_OUT_V = "reference_translated_vertically.mp4"
 TRANSLATION_RATE = 1
 
 if __name__ == "__main__":

@@ -8,7 +8,7 @@ from ntt.videos.shake_video import shake_video_randomly
 
 # https://peps.python.org/pep-0008/#constants
 VIDEO_NAME_IN = "reference.mp4"
-VIDEO_NAME_OUT = "reference_out.mp4"
+VIDEO_NAME_OUT = "reference_shaked.mp4"
 SHAKE_INTENSITY = 10
 
 if __name__ == "__main__":
