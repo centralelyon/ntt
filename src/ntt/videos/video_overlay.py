@@ -1,37 +1,42 @@
 """TODO : video_overlay module provides ...
 """
 
-import os
+# import os
+from pathlib import Path
 
 import cv2
 from moviepy.editor import CompositeVideoClip, VideoFileClip
 
 
 def overlay_two_videos_opencv(
-    path_videos, name_video1, name_video2, opacities, path_video_out
+    video_path_in, name_video1, name_video2, opacities, video_path_out
 ):
     """_summary_
 
     Args:
-        path_videos (_type_): _description_
-        name_video1 (_type_): _description_
-        name_video2 (_type_): _description_
+        video_path_in (str or Path): Path to the folder containing the input videos
+        name_video1 (string): Name of input video 1
+        name_video2 (string): Name of input video 2
         opacities (_type_): _description_
-        path_video_out (_type_): _description_
+        video_path_out (str or Path): Full path to the output video
     """
-    path_video1 = os.path.join(path_videos, name_video1)
-    path_video2 = os.path.join(path_videos, name_video2)
-    path_out = path_video_out
+    path_video1 = Path(video_path_in) / name_video1
+    path_video2 = Path(video_path_in) / name_video2
 
     video1 = cv2.VideoCapture(path_video1)
-    video2 = cv2.VideoCapture(path_video2)
     width = int(video1.get(cv2.CAP_PROP_FRAME_WIDTH))
     height = int(video1.get(cv2.CAP_PROP_FRAME_HEIGHT))
     fps = video1.get(cv2.CAP_PROP_FPS)
 
+    # TODO : assume the same properties as video1 ?
+    video2 = cv2.VideoCapture(path_video2)
+
     # Define the codec for the output video
+    # TODO : Depends of the input video type ?
     fourcc = cv2.VideoWriter_fourcc("M", "J", "P", "G")
-    output_video = cv2.VideoWriter(path_out, fourcc, fps, (width, height))
+
+    output_video = cv2.VideoWriter(video_path_out, fourcc, fps, (width, height))
+
     while True:
         # Lire une image de la vidéo
         ret1, frame1 = video1.read()
@@ -42,10 +47,12 @@ def overlay_two_videos_opencv(
         # Vérifier si la lecture de la vidéo est terminée
         if not ret1 or not ret2:
             break
+
         overlayed_frame = cv2.addWeighted(frame1, opacities[0], frame2, opacities[1], 0)
         output_video.write(overlayed_frame)
 
         # Wait for the 'q' key to quit
+
     # Libérer les ressources
     video1.release()
     video2.release()
@@ -56,9 +63,9 @@ def overlay_videos_moviepy(list_videos_path, opacities, path_video_out):
     """_summary_
 
     Args:
-        list_videos_path (_type_): _description_
-        opacities (_type_): _description_
-        path_video_out (_type_): _description_
+        list_videos_path (list of str or Path): List of video to overlay
+        opacities (list of float): One opacity parameter per video ?
+        path_video_out (str or Path): Full path to the output video
     """
     video_clips = []
     overlayed_clips = []
