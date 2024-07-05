@@ -34,6 +34,8 @@ def extract_last_frame(
     else:
         return None
 
+    vidcap.release()
+
     return frame_name
 
 
@@ -88,9 +90,12 @@ def extract_nth_frame(
 
         if i == nth_frame and success:
             cv2.imwrite(frame_name, image)
+            vidcap.release()
             return frame_name
 
         i = i + 1
+
+    vidcap.release()
 
     return frame_name
 
@@ -116,6 +121,8 @@ def extract_frame_opencv(video_path, frame_number=1):
 
     cap.set(cv2.CAP_PROP_POS_FRAMES, frame_number - 1)
     ret, frame = cap.read()
+
+    cap.release()
 
     if ret:
         return frame
