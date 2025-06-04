@@ -35,6 +35,13 @@ can run tests with `pytest`:
 ```bash
 $ pytest tests
 ```
+## Samples
+
+To download the data samples (videos, images, sounds, etc.) used in tests and examples, clone the repository and update the `.env` file with the path to the cloned folder:
+
+```
+git clone https://github.com/centralelyon/ntt-samples.git
+```
 
 ## Examples
 
@@ -44,14 +51,22 @@ Assuming you have a `crop.mp4 ` video in a `samples` folder and an `output`
 folder, here is how to use `extract_first_frame` function.
 
 ```python
+import os
+from dotenv import load_dotenv
 from ntt.frames.frame_extraction import extract_first_frame
 
 if __name__ == "__main__":
-    extract_first_frame(
-        video_path_in="samples/",
+    load_dotenv()
+
+    output = extract_first_frame(
+        video_path_in=os.environ.get("NTT_SAMPLES_PATH"),
         video_name_in="crop.mp4",
-        frame_path_out="output/",
+        frame_path_out=os.environ.get("PATH_OUT"),
         frame_name_out="crop-ex.jpg",
+    )
+
+    print(f"Frame successfully extracted at {output}") if output is not None else print(
+        "Frame extraction failed"
     )
 ```
 
@@ -149,4 +164,4 @@ $ docker build -t ntt .
 
 ## Acknowledgments
 
-<img src="https://liris.cnrs.fr/sites/default/files/logo_liris_160_0.png" style="height:100px">&nbsp;&nbsp;&nbsp;<img src="https://www.ec-lyon.fr/sites/default/files/styles/large/public/legacy-files/logo_ecl_rectangle_quadri_print.jpg" style="height:100px">&nbsp;&nbsp;&nbsp;<img src="https://www.natation-handisport.org/wp-content/uploads/2021/10/logo_NePTUNE_color-768x204.png" style="height:100px">
+<img src="https://liris.cnrs.fr/sites/default/files/logo_liris_160_0.png" style="height:100px">&nbsp;&nbsp;&nbsp;<img src="https://www.ec-lyon.fr/sites/default/files/styles/paragraph_image/public/content/paragraphs/images/2024-10/2024_logo-centrale-h_rouge_rvb.jpg.webp" style="height:100px">&nbsp;&nbsp;&nbsp;<img src="https://www.natation-handisport.org/wp-content/uploads/2021/10/logo_NePTUNE_color-768x204.png" style="height:100px">
