@@ -17,7 +17,7 @@ ntt
 
 .. rst-class:: big-font
 
-:octicon:`device-camera-video;4em` ``ntt`` is a modular video processing pipeline that has been used on swimming and table tennis
+:octicon:`device-camera-video;4em` ``ntt`` is a modular video processing for images and videos.
 
 .. grid::
     :margin: 2
