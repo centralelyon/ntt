@@ -5,27 +5,61 @@
 
 _Quickly build image or video processing pipelines_
 
-## Quick install from GitHub
+
+
+## Installation
+
+
+# ntt
+
+A simple Python module for \[brief description of what `ntt` does].
+
+## Installation
+
+### Using `venv` (recommended)
+
+1. **Create a virtual environment:**
 
 ```bash
-pip install git+https://github.com/centralelyon/ntt.git@main
+python -m venv venv
 ```
 
-## Editable install for development
 
-To develop "ntt" library, make an [editable install](https://setuptools.pypa.io/en/latest/userguide/development_mode.html)
-inside a Python virtual environment using [pip](https://pip.pypa.io/en/stable/) `-e` editable flag.
+2. **Activate the environment:**
 
-1. create a virtual environment and activate it
-2. clone this ntt repository
-3. install ntt and its "dev" dependencies
+* On macOS/Linux:
 
 ```bash
-pip install -e ".[dev]"
+source venv/bin/activate
+```
+* On Windows:
+
+```bash
+venv\Scripts\activate
 ```
 
-In case of important changes (e.g repository structure), you may have to
-install the library again.
+3. **Install the module:**
+
+```bash
+pip install ntt
+```
+
+### Or install directly
+
+```bash
+pip install ntt
+```
+
+## Usage
+
+```python
+import ntt
+
+ntt.__version__ 
+
+# Example usage
+ntt.do_something()
+```
 
 ## Tests
 
@@ -35,6 +69,7 @@ can run tests with `pytest`:
 ```bash
 $ pytest tests
 ```
+
 ## Samples
 
 To download the data samples (videos, images, sounds, etc.) used in tests and examples, clone the repository and update the `.env` file with the path to the cloned folder:
@@ -164,4 +199,4 @@ $ docker build -t ntt .
 
 ## Acknowledgments
 
-<img src="https://liris.cnrs.fr/sites/default/files/logo_liris_160_0.png" style="height:100px">&nbsp;&nbsp;&nbsp;<img src="https://www.ec-lyon.fr/sites/default/files/styles/paragraph_image/public/content/paragraphs/images/2024-10/2024_logo-centrale-h_rouge_rvb.jpg.webp" style="height:100px">&nbsp;&nbsp;&nbsp;<img src="https://www.natation-handisport.org/wp-content/uploads/2021/10/logo_NePTUNE_color-768x204.png" style="height:100px">
+<img src="https://liris.cnrs.fr/sites/default/files/logo_liris_160_0.png" style="height:50px">&nbsp;&nbsp;&nbsp;<img src="https://www.ec-lyon.fr/sites/default/files/styles/paragraph_image/public/content/paragraphs/images/2024-10/2024_logo-centrale-h_rouge_rvb.jpg.webp" style="height:50px">&nbsp;&nbsp;&nbsp;<img src="https://www.natation-handisport.org/wp-content/uploads/2021/10/logo_NePTUNE_color-768x204.png" style="height:50px">

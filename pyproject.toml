@@ -7,10 +7,10 @@ name = "ntt"
 dynamic = [ "version", "description" ]
 readme = "README.md"
 authors = [
-    {name = "Romain Vuillemot", email = "romain.vuillemot@ec-lyon.fr"},
+    {name = "Romain Vuillemot", email = "romain.vuillemot@gmail.com"},
 ]
 maintainers = [
-    {name = "Romain Vuillemot", email = "romain.vuillemot@ec-lyon.fr"},
+    {name = "Romain Vuillemot", email = "romain.vuillemot@gmail.com"},
 ]
 classifiers = [
     "Development Status :: 2 - Pre-Alpha",
