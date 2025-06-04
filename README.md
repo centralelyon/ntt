@@ -3,16 +3,8 @@
 [![CircleCI](https://dl.circleci.com/status-badge/img/gh/centralelyon/ntt/tree/main.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/centralelyon/ntt/tree/main)
 [![Documentation Status](https://readthedocs.org/projects/ntt/badge/?version=latest)](https://ntt.readthedocs.io/en/latest/?badge=latest)
 
-_Quickly build image or video processing pipelines_
+_Quickly build pipelines to process images and videos_
 
-
-
-## Installation
-
-
-# ntt
-
-A simple Python module for \[brief description of what `ntt` does].
 
 ## Installation
 
@@ -23,7 +15,6 @@ A simple Python module for \[brief description of what `ntt` does].
 ```bash
 python -m venv venv
 ```
-
 
 2. **Activate the environment:**
 
@@ -54,17 +45,13 @@ pip install ntt
 
 ```python
 import ntt
-
-ntt.__version__ 
-
-# Example usage
-ntt.do_something()
+ 
+ntt.__version__  # Example usage
 ```
 
 ## Tests
 
-Assuming you have cloned the repository or installed the source package, you
-can run tests with `pytest`:
+Assuming you have cloned the repository or installed the source package, you can run tests with `pytest`:
 
 ```bash
 $ pytest tests
