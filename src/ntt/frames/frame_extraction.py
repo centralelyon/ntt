@@ -5,7 +5,7 @@ import numpy as np
 
 
 def extract_last_frame(
-    video_path_in: str, video_name_in: str, frame_path_out: str, frame_name_out: str
+    video_path_in: str, video_name_in: str, frame_path_out: str, frame_name_out: str, video_URL=None
 ) -> str:
     """Extracts the last frame of a given video.
 
@@ -14,12 +14,15 @@ def extract_last_frame(
         video_name_in (string): name of the input video
         frame_path_out (string): path to the folder conataining the output frame
         frame_name_out (string): name of the output frame
+        video_URL (string, optional): URL of the video if it is not stored locally
 
     Returns:
         string: full path of the output frame
     """
     video_name = os.path.join(video_path_in, video_name_in)
     frame_name = os.path.join(frame_path_out, frame_name_out)
+    if (video_URL is not None) and (video_URL != ""):
+        video_name = video_URL
 
     vidcap = cv2.VideoCapture(video_name)
 
@@ -39,7 +42,9 @@ def extract_last_frame(
     return frame_name
 
 
-def extract_first_frame(video_path_in, video_name_in, frame_path_out, frame_name_out):
+def extract_first_frame(
+        video_path_in:str, video_name_in:str, frame_path_out:str, frame_name_out:str, video_URL=None
+) -> str:
     """This function extracts the first frame of a given video.
 
     Args:
@@ -47,18 +52,19 @@ def extract_first_frame(video_path_in, video_name_in, frame_path_out, frame_name
         video_name_in (string): name of the input video
         frame_path_out (string): path to the folder conataining the output frame
         frame_name_out (string): name of the output frame
+        video_URL (string, optional): URL of the video if it is not stored locally
 
     Returns:
         string: full path of the output frame
     """
     return extract_nth_frame(
-        video_path_in, video_name_in, frame_path_out, frame_name_out, 0
+        video_path_in, video_name_in, frame_path_out, frame_name_out, 0, video_URL
     )
 
 
 def extract_nth_frame(
-    video_path_in, video_name_in, frame_path_out, frame_name_out, nth_frame=0
-):
+    video_path_in:str, video_name_in:str, frame_path_out:str, frame_name_out:str, nth_frame=0, video_URL=None
+) -> str :
     """This function extracts the nth  frame of a given video.
 
     Args:
@@ -67,12 +73,15 @@ def extract_nth_frame(
         frame_path_out (string): path to the folder conataining the output frame
         frame_name_out (string): name of the output frame
         nth_frame (int): the number of the frame to be extracted
+        video_URL (string, optional): URL of the video if it is not stored locally
 
     Returns:
         string: full path of the output frame
     """
     video_name = os.path.join(video_path_in, video_name_in)
     frame_name = os.path.join(frame_path_out, frame_name_out)
+    if (video_URL is not None) and (video_URL != ""):
+        video_name = video_URL
 
     vidcap = cv2.VideoCapture(video_name)
     success = True
