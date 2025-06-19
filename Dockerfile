@@ -13,6 +13,8 @@ RUN pip install numpy moviepy opencv-python-headless eyed3 pydub pyAudioAnalysis
 
 WORKDIR /app
 
-VOLUME /app
+COPY . /app
 
-CMD [ "python", "script.py" ]
+ENV PYTHONPATH=/app/src
+
+CMD ["pytest", "tests"] # Run tests by default

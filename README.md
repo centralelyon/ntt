@@ -3,7 +3,7 @@
 [![CircleCI](https://dl.circleci.com/status-badge/img/gh/centralelyon/ntt/tree/main.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/centralelyon/ntt/tree/main)
 [![Documentation Status](https://readthedocs.org/projects/ntt/badge/?version=latest)](https://ntt.readthedocs.io/en/latest/?badge=latest)
 
-_Quickly build pipelines to process images and videos_
+_Quickly build pipelines to process images and videos._
 
 
 ## Installation
@@ -30,12 +30,6 @@ venv\Scripts\activate
 ```
 
 3. **Install the module:**
-
-```bash
-pip install ntt
-```
-
-### Or install directly
 
 ```bash
 pip install ntt
@@ -164,19 +158,21 @@ $ docker build -t ntt .
  
 #### Linux/Unix/Mac
 
-- run the image
+- run the image (rm is to remove the container after it is stopped)
 
 > docker run --rm -v ${PWD}:/app ntt
 
-(rm is to remove the container after it is stopped)
+- show the list of containers
 
 > docker ps -a
 
-(shows the list of containers)
-
 - run a custom script
 
-> docker run --rm -v ${PWD}:/app ntt python ntt/frames/test/test_frame_extraction.py
+>  docker run --rm -v ${PWD}:/app -e PYTHONPATH=/app/src ntt python tests/test_random_strings.py
+
+- run in interactive mode
+
+> docker run --rm -it -v ${PWD}:/app -e PYTHONPATH=/app/src ntt bash
 
 #### Windows
 
