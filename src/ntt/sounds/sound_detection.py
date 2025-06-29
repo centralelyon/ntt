@@ -20,9 +20,10 @@ def detect_sound_ref(
 
     # extraction on the long signal
     my_clip1 = mp.VideoFileClip(video_path)
-    fs = 44100
-    s_long = my_clip1.audio.to_soundarray(fps=fs)
-    s_long = s_long[:, 0]
+    audio_wav = "temp_audio.wav"
+    my_clip1.audio.write_audiofile(audio_wav, fps=fs)
+    s_long, _ = librosa.load(audio_wav, sr=fs)
+    os.remove(audio_wav)
     duration_long = len(s_long) / float(fs)
 
     # extract short-term features using a 50msec non-overlapping windows

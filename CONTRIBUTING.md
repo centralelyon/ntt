@@ -23,17 +23,18 @@ The project is configured to run tests on CircleCI. The configuration file is `.
 The project is configured to run on Docker. The configuration file is `Dockerfile`. 
 
 
-## Pull request
+## Pull request (PR)
 
-- Include reference to the issue you are solving (if any)
-
+- Keep the PR small and focus on a issue you are solving
+- Use an explicit title and references to the issue you are solving (if any)
+- Explain what the PR does and why you make some changes
+- Ideally include screenshots when related to UI or graphics when related to speed or errors
 
 ## Bug report
 
 You may open an issue:
 
 - Open an [Issue](/issues/new)
-
 
 ## Documentation
 
