@@ -2,7 +2,6 @@ import os
 import cv2
 import numpy as np
 import matplotlib.pyplot as plt
-from ntt.utils.temporal import calculate_temporal_accuracy
 
 
 def detect_peak_video(
@@ -95,3 +94,35 @@ def detect_peak_video(
     out.release() if write_video else None
     cap.release()
     return np.argmax(rep) + frame_begin
+
+
+# applies the function to be more compliant with the generate_peak_video function
+def detect_peak_in_video(file_path):
+
+    # get the videos dimensions
+    cap = cv2.VideoCapture(file_path)
+    if not cap.isOpened():
+        print("Error: Could not open video.")
+        return
+    width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+    height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+    cap.release()
+
+    # call the detect_peak_video function
+    return detect_peak_video(
+        input_path=".",
+        video_name_in=file_path,
+        output_path=".",
+        video_name_out="output_peak.avi",
+        xa=0,
+        xb=width,
+        ya=0,
+        yb=height,
+        seuil=250,
+        frame_begin=0,
+        frame_end=-1,
+        nb_frame=-1,
+        afficher_anime=False,
+        afficher_hist=False,
+        write_video=False,
+    )
