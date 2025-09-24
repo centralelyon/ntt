@@ -17,7 +17,7 @@ ntt
 
 .. rst-class:: big-font
 
-:octicon:`device-camera-video;4em` ``ntt`` is a modular video processing for images and videos.
+:octicon:`device-camera-video;4em` ``ntt`` let's you quickly build pipelines to process images and videos.
 
 .. grid::
     :margin: 2

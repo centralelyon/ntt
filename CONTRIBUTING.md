@@ -47,3 +47,13 @@ Use the Google style docstrings.
 ## Environment variables
 
 We use dotenv to manage environment variables. Use the `.env` file in the root of the project (or create one if it doesn't exist).
+
+## Local development setup
+
+For local development, it is recommended to use the virtual environment listed in the README.md file and run the following commands:
+
+```
+python -m pip install --upgrade pip
+pip install -e .
+pip install pytest
+```
