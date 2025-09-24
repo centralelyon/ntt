@@ -1,6 +1,10 @@
 import cv2
 import numpy as np
-from ntt.frames.frame_generation import full_frame
+from ntt.frames.frame_generation import full_frame, random_frame
+
+
+def random_video(width: int = 640, height: int = 480, fps: int = 30, duration: int = 1):
+    return [random_frame(width, height) for _ in range(int(fps * duration))]
 
 
 def generate_peak_video(file_path, width, height, fps, duration):

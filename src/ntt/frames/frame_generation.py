@@ -16,7 +16,7 @@ def number_frame(width: int, height: int, number=123) -> np.ndarray:
     return frame
 
 
-def random_frame(width: int, height: int) -> np.ndarray:
+def random_frame(width: int = 640, height: int = 480) -> np.ndarray:
     frame = np.random.rand(width, height, 3) * 255
     return frame.astype(np.uint8)
 
