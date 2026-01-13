@@ -3,13 +3,13 @@
 [![CircleCI](https://dl.circleci.com/status-badge/img/gh/centralelyon/ntt/tree/main.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/centralelyon/ntt/tree/main)
 [![Documentation Status](https://readthedocs.org/projects/ntt/badge/?version=latest)](https://ntt.readthedocs.io/en/latest/?badge=latest)
 
-`ntt` is a Python module that provides simple and consistent interfaces for common image and video processing tasks. It wraps around popular libraries such as Pillow, OpenCV, imageio, and scikit-image to simplify their usage and make them interchangeable, to build complex pipelines.
+`ntt` is a Python module that provides simple and consistent interfaces for common image and video processing tasks. It wraps around popular Python libraries to simplify their usage and make them interchangeable, to build complex pipelines. In particular:
 
 * [**Pillow**](https://python-pillow.org/) – image file handling
 * [**OpenCV**](https://opencv.org/) – computer vision, image and video processing
 * [**imageio**](https://imageio.github.io/) – read/write images and videos
 * [**scikit-image**](https://scikit-image.org/) – scientific image processing
-
+* [**NumPy**](https://numpy.org/) – arrays and calculations
 
 ## Installation
 
@@ -36,10 +36,18 @@ venv\Scripts\activate
 
 3. **Install the module:**
 
+The module is available on [Pypi](https://pypi.org/project/ntt/):
+
 ```bash
 pip install ntt
 ```
 
+Or install the development version from source:
+
+```bash
+git clone
+pip install -e .
+```
 
 ## Tests
 
@@ -73,11 +81,13 @@ video = random_video(320, 240, 10, 2)
 
 ## Building pipelines
 
-The ultimate goal of `ntt` is to build complex pipelines for video and image processing. For that, we also built a separate tool, the [`pipeoptz`](https://github.com/centralelyon/pipeoptz/) library, which provides a simple way to create and manage pipelines of functions.
+An interesting use of `ntt` is to build complex pipelines for video and image processing. For that, we also built a separate tool, the [Pipeoptz](https://github.com/centralelyon/pipeoptz/) library, which provides a simple way to create and manage pipelines of functions.
 
 <p align="center">
-<img src="https://private-user-images.githubusercontent.com/586236/493305988-6fe114c4-b1fe-46a7-a9da-2540661ad3ce.png?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NTg3MTMzNDMsIm5iZiI6MTc1ODcxMzA0MywicGF0aCI6Ii81ODYyMzYvNDkzMzA1OTg4LTZmZTExNGM0LWIxZmUtNDZhNy1hOWRhLTI1NDA2NjFhZDNjZS5wbmc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjUwOTI0JTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI1MDkyNFQxMTI0MDNaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT1lMGE2ZmMyNzRkM2JiY2NjOWFlNzUwZjA1NmFlMTgzZGViYTViOGM5ZWM2N2U3OTM5N2Y2N2Q1MmIzNGYwMGMwJlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCJ9.4ATz2sWYMydw0eI0NDlWkCZZWzarukmWlozPc6mQoUk" width="50%">
+<img src="https://private-user-images.githubusercontent.com/586236/535009904-b224b218-e59a-4f8f-bcce-355e5de044ba.png?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NjgyOTY5MDAsIm5iZiI6MTc2ODI5NjYwMCwicGF0aCI6Ii81ODYyMzYvNTM1MDA5OTA0LWIyMjRiMjE4LWU1OWEtNGY4Zi1iY2NlLTM1NWU1ZGUwNDRiYS5wbmc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjYwMTEzJTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI2MDExM1QwOTMwMDBaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT03OTIxOWVjNTVlNjM1Zjk4YTBmYmUzZDBmNWU3NWNkZmQzNWExYTMyODhmZTRjYzUxN2M3ZDcxMmFjM2U1NTQxJlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCJ9.f6z2CSZyAWEaf1RUk-wh4Ia6yEHNL7aQWqp0FEHTtr0" width="50%">
 </p>
+
+The image above is generated using the code below available as a [gist](https://gist.github.com/romsson/5e83ae6dbadf4175e3bbc1454a44a939).
 
 ```python
 import random
@@ -196,9 +206,11 @@ The project is configured to run tests on CircleCI. The configuration file is
 
 ## Docker
 
+
+
 ### Steps
 
-- build the image
+- build the image:
 
 > docker build -t ntt . 
 
