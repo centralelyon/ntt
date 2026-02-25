@@ -11,3 +11,8 @@ def generate_random_string(length=8):
 def generate_uuid4():
     """generate random id like d6799325-ba91-4cee-9ddc-3d12464e6c52"""
     return str(uuid.uuid4())
+
+
+if __name__ == "__main__":
+    print(generate_random_string())
+    print(generate_uuid4())

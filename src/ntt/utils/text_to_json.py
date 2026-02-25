@@ -1,11 +1,30 @@
 import numpy as np
 
 def Texte_to_json(texte):
+    """
+    Convert a text file to a JSON object.
+    
+    Args:
+        texte: The text file to convert.
+    
+    Returns:
+        The JSON object.
+    """
     data=texte.split('\n')
     texte=Recursive_liste_json(data)
     return(texte)
 
 def Recursive_liste_json(liste,degre=0):
+    """
+    Recursively convert a list of strings to a JSON object.
+    
+    Args:
+        liste: The list of strings to convert.
+        degre: The current degree of recursion.
+    
+    Returns:
+        The JSON object.
+    """
     if len(liste)==1:
         retour=liste[0].split('\t')[-1]
         try:
