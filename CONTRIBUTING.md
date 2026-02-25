@@ -23,17 +23,18 @@ The project is configured to run tests on CircleCI. The configuration file is `.
 The project is configured to run on Docker. The configuration file is `Dockerfile`. 
 
 
-## Pull request
+## Pull request (PR)
 
-- Include reference to the issue you are solving (if any)
-
+- Keep the PR small and focus on a issue you are solving
+- Use an explicit title and references to the issue you are solving (if any)
+- Explain what the PR does and why you make some changes
+- Ideally include screenshots when related to UI or graphics when related to speed or errors
 
 ## Bug report
 
 You may open an issue:
 
 - Open an [Issue](/issues/new)
-
 
 ## Documentation
 
@@ -46,3 +47,13 @@ Use the Google style docstrings.
 ## Environment variables
 
 We use dotenv to manage environment variables. Use the `.env` file in the root of the project (or create one if it doesn't exist).
+
+## Local development setup
+
+For local development, it is recommended to use the virtual environment listed in the README.md file and run the following commands:
+
+```
+python -m pip install --upgrade pip
+pip install -e .
+pip install pytest
+```

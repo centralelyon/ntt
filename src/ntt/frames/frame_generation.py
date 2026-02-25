@@ -16,7 +16,7 @@ def number_frame(width: int, height: int, number=123) -> np.ndarray:
     return frame
 
 
-def random_frame(width: int, height: int) -> np.ndarray:
+def random_frame(width: int = 640, height: int = 480) -> np.ndarray:
     frame = np.random.rand(width, height, 3) * 255
     return frame.astype(np.uint8)
 
@@ -26,6 +26,6 @@ def full_frame(width: int, height: int, color: tuple) -> np.ndarray:
     return frame
 
 
-def frame_from_image_file(image_path: str):
+def frame_from_image_file(image_path: str) -> np.ndarray:
     frame = cv2.imread(image_path)
     return frame
