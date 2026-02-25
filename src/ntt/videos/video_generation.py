@@ -3,7 +3,9 @@ import numpy as np
 from ntt.frames.frame_generation import full_frame, random_frame
 
 
-def random_video(width: int = 640, height: int = 480, fps: int = 30, duration: int = 1):
+def random_video(
+    width: int = 640, height: int = 480, fps: int = 30, duration: int = 1
+) -> list:
     return [random_frame(width, height) for _ in range(int(fps * duration))]
 
 

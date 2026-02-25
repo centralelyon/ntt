@@ -26,6 +26,6 @@ def full_frame(width: int, height: int, color: tuple) -> np.ndarray:
     return frame
 
 
-def frame_from_image_file(image_path: str):
+def frame_from_image_file(image_path: str) -> np.ndarray:
     frame = cv2.imread(image_path)
     return frame

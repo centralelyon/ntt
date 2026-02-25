@@ -53,8 +53,7 @@ pip install -e .
 
 ```python
 import ntt
- 
-ntt.__version__  # Check the version
+print(ntt.__version__)  # Check the version
 ```
 
 Assuming you have cloned the repository or installed the source package, you can run tests with `pytest`:
@@ -146,58 +145,6 @@ if __name__ == "__main__":
     )
 ```
 
-## Repository structure
-
-```bash
-.
-├── .circleci: configuration for CircleCI
-│   ├── config.yml
-│   └── ...
-├── examples: simple examples on how to use ntt functions
-│   ├── (files)
-│   └── ...
-├── samples: sample videos, images and data
-│   ├── (files)
-│   └── ...
-├── src: the package source code
-│   └── ntt: the main module
-│       ├── README.md
-│       ├── __init__.py
-│       ├── frames: module for frame extraction
-│       │   └── ...
-│       ├── ...
-│       └── ...
-├── tests: pytest files
-│   ├── (files)
-│   └── ...
-├── .gitignore
-├── Dockerfile
-├── README.md
-├── pyproject.toml: ntt Python packaging file, contains ntt dependencies
-├── requirements.txt
-└──
-```
-
-## Module structure
-
-Each module structure is as follows:
-
-```bash
-.
-├── ...
-├── ntt/
-│   ├── __init__.py
-│   ├── README.md
-│   ├── name_of_the_module/
-│   │   ├── __init__.py
-│   │   ├── README.md
-│   │   ├── name_of_the_function1.py
-│   │   ├── name_of_the_function2.py
-│   │   └── ...
-│   ├── ...
-│   └── ...
-└── ...
-```
 
 ## CircleCI
 
@@ -206,7 +153,7 @@ The project is configured to run tests on CircleCI. The configuration file is
 
 ## Docker
 
-
+A Docker image is available for this project in the root fo the project
 
 ### Steps
 

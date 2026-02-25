@@ -10,5 +10,9 @@ def display_video(video):
     cv2.destroyAllWindows()
 
 
+def display_frames_as_video(frames: list) -> None:
+    pass
+
+
 if __name__ == "__main__":
     display_video(random_video(320, 240, 10, 2))
