@@ -41,4 +41,5 @@ def generate_index(folder_path, index_filename="index.json", max_depth=None):
 
 # Replace '/path/to/folder' with the actual folder path
 # Provide the desired index file name and maximum depth if needed
-generate_index(".", index_filename="custom_index.json", max_depth=2)
+if __name__ == "__main__":
+    generate_index(".", index_filename="custom_index.json", max_depth=2)

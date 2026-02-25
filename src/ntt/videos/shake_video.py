@@ -1,7 +1,7 @@
 import os, cv2
 import numpy as np
 from moviepy.editor import VideoClip
-from ntt.utils.random import random_translate_direction
+from ntt.utils.random_utils import random_translate_direction
 from ntt.frames.processing import *
 
 
