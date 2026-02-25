@@ -1,4 +1,5 @@
 import os
+import shutil
 import numpy as np
 import pytest
 import cv2
@@ -59,11 +60,13 @@ def test_extract_frame_opencv():
     assert frame is not None
     assert isinstance(frame, np.ndarray)
 
+@pytest.mark.skipif(shutil.which('ffmpeg') is None, reason="ffmpeg is not installed")
 def test_extract_frame_ffmpeg():
     frame = frame_extraction.extract_frame_ffmpeg(VIDEO_PATH, 1)
     assert frame is not None
     assert isinstance(frame, np.ndarray)
 
+@pytest.mark.skipif(shutil.which('ffmpeg') is None, reason="ffmpeg is not installed")
 def test_compare_frames():
     # On ne teste que la non-erreur, car les frames peuvent différer selon les codecs
     result = frame_extraction.compare_frames(VIDEO_PATH, 1)
