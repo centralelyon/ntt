@@ -19,16 +19,8 @@ def delete_folder(path: str):
         raise Exception(f"Path '{path}' is not a folder.")
 
     if os.path.isdir(path):
-        for root, dirs, files in os.walk(path, topdown=False):
-            for file in files:
-                file_path = os.path.join(root, file)
-                os.remove(file_path)
-
-            for dir in dirs:
-                dir_path = os.path.join(root, dir)
-                os.rmdir(dir_path)
-
-        os.rmdir(path)
+        import shutil
+        shutil.rmtree(path)
 
     return path
 

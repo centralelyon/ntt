@@ -151,7 +151,7 @@ def extract_frame_ffmpeg(video_path, frame_number):
     """
     stream = ffmpeg.input(video_path)
     stream = ffmpeg.filter(stream, "select", f"eq(n,{frame_number-1})")
-    stream = ffmpeg.output(stream, "pipe:", format="rawvideo", pix_fmt="rgb24")
+    stream = ffmpeg.output(stream, "pipe:", vframes=1, format="image2", vcodec="mjpeg")
     output, _ = ffmpeg.run(stream, capture_stdout=True, quiet=True)
     frame = cv2.imdecode(np.frombuffer(output, dtype=np.uint8), cv2.IMREAD_COLOR)
     return frame

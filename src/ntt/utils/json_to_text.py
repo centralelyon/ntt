@@ -1,5 +1,4 @@
-
-def Recursive_json(data,degre=0,texte_out=""):
+def recursive_json(data, degre=0, texte_out=""):
     """
     Recursively convert a JSON object to a text file.
     
@@ -11,19 +10,23 @@ def Recursive_json(data,degre=0,texte_out=""):
     Returns:
         The text representation of the JSON object.
     """
-    type_valide=[str,float,int,bool]
-    if type(data) in type_valide or data==None:
-        texte=str(data)
-        texte_part='\t'*degre+texte+'\n'
-        return(texte_part)
-    elif(isinstance(data,dict)):
-        texte_part=''
-        for i in data:
-            texte_part=texte_part+'\t'*degre+i+'\n'+Recursive_json(data[i],degre=degre+1)
-        return(texte_part)
-    
-    elif(isinstance(data,list)):
-        texte_part=''
-        for i in range(len(data)):
-            texte_part=texte_part+'\t'*degre+str(i)+'\n'+Recursive_json(data[i],degre=degre+1)
-        return(texte_part)
+    type_valide = (str, float, int, bool)
+    if isinstance(data, type_valide) or data is None:
+        texte = str(data)
+        texte_part = '\t' * degre + texte + '\n'
+        return texte_part
+        
+    elif isinstance(data, dict):
+        texte_part = ''
+        for key, value in data.items():
+            texte_part += '\t' * degre + str(key) + '\n' + recursive_json(value, degre=degre + 1)
+        return texte_part
+        
+    elif isinstance(data, list):
+        texte_part = ''
+        for i, value in enumerate(data):
+            texte_part += '\t' * degre + str(i) + '\n' + recursive_json(value, degre=degre + 1)
+        return texte_part
+
+# Backwards compatibility alias
+Recursive_json = recursive_json
