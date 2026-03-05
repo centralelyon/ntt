@@ -11,7 +11,7 @@ def test_crop_identity():
 def test_crop_partial():
     frame = random_frame()  # default 640x480
     result = crop(frame, 100, 100, 500, 400)
-    assert result.shape == (500 - 100, 400 - 100, 3)
+    assert result.shape == (400 - 100, 500 - 100, 3)  # (height=y-range, width=x-range, channels)
 
 
 def test_crop_empty():

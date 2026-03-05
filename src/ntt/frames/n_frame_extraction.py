@@ -21,15 +21,21 @@ def extract_n_frame(video_path_in, video_name_in, n):
     vidcap = cv2.VideoCapture(video_name)
     success, image = vidcap.read()
     i = 0
-    while i < n and success != False:
+    while i < n and success:
         i = i + 1
         success, image = vidcap.read()
 
     if i == n and success:
         cv2.imwrite(os.path.join(video_path_in, str(n) + "th_frame" + ".jpg"), image)
+        vidcap.release()
     else:
+        vidcap.release()
         return None
-    frame_path_out = os.path.join(os.environ.get("PATH_OUT"), str(n) + "th_frame")
+
+    path_out = os.environ.get("PATH_OUT")
+    if path_out is None:
+        raise EnvironmentError("Environment variable 'PATH_OUT' is not set.")
+    frame_path_out = os.path.join(path_out, str(n) + "th_frame")
 
     return frame_path_out
 
@@ -55,6 +61,7 @@ def extract_frame_opencv(video_path, frame_number):
 
     cap.set(cv2.CAP_PROP_POS_FRAMES, frame_number - 1)
     ret, frame = cap.read()
+    cap.release()
 
     if ret:
         return frame

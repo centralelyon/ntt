@@ -1,4 +1,5 @@
-import subprocess, os
+import subprocess
+import os
 
 from ntt.videos.duration import get_video_duration
 
@@ -51,9 +52,9 @@ def split_video_ffmpeg(
         "expr:gte(t,n_forced*1)",
         "-f",
         "segment",
-        os.path.join(output_path, video_name[: len(video_name) - 4]) + "%03d.mp4",
+        os.path.join(output_path, os.path.splitext(video_name)[0]) + "%03d.mp4",
     ]
     try:
-        subprocess.run(command)
-    except Exception as e:
-        print(e)
+        subprocess.run(command, check=True)
+    except subprocess.CalledProcessError as e:
+        raise RuntimeError(f"ffmpeg failed while splitting '{video}': {e}") from e

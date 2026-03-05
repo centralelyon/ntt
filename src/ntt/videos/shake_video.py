@@ -1,8 +1,9 @@
-import os, cv2
+import os
+import cv2
 import numpy as np
 from moviepy.editor import VideoClip
 from ntt.utils.random_utils import random_translate_direction
-from ntt.frames.processing import *
+from ntt.frames.processing import rotate, translate_horizontally, translate_vertically
 
 
 def shake_video_randomly(video_path_in, video_name, shake_intensity, video_path_out):

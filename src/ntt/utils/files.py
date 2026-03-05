@@ -18,10 +18,7 @@ def delete_folder(path: str):
     if not os.path.isdir(path):
         raise Exception(f"Path '{path}' is not a folder.")
 
-    if os.path.isdir(path):
-        import shutil
-        shutil.rmtree(path)
-
+    shutil.rmtree(path)
     return path
 
 
@@ -79,13 +76,8 @@ def touch(file_path):
     """Create an empty file or update the file's timestamp.
 
     Args:
-        file_path (_type_): _description_
-
-    Raises:
-
-
+        file_path (str): Path to the file to touch.
     """
-    # raise an error if the file does not exist
     try:
         with open(file_path, "a"):
             os.utime(file_path, times=None)

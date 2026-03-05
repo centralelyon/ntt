@@ -17,10 +17,10 @@ def crop(image: np.ndarray, x1: int, y1: int, x2: int, y2: int) -> np.ndarray:
     Returns:
         np.ndarray: the cropped image
     """
-    w, h = image.shape[:2]
+    h, w = image.shape[:2]
 
     # raise an error if the coordinates are out of bounds
     if x1 < 0 or y1 < 0 or x2 > w or y2 > h:
         raise ValueError("Coordinates out of bounds")
 
-    return image[x1:x2, y1:y2]
+    return image[y1:y2, x1:x2]

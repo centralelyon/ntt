@@ -1,7 +1,6 @@
 import cv2
 
 from ntt.utils.constants import DEFAULT_FOURCC
-from ntt.videos.video_generation import random_video
 
 
 def read(video_path: str) -> list:
@@ -31,7 +30,7 @@ def write(video_path: str, frames: list) -> None:
 
 
 if __name__ == "__main__":
-
+    from ntt.videos.video_generation import random_video
     video_path = "path_to_your_video.mp4"
     frames = random_video(320, 240, 10, 30)
     write("output_video.mp4", frames)

@@ -50,9 +50,9 @@ def stitch_2_videos(
         video_out, fourcc, fps, (shape_output_img[0], shape_output_img[1])
     )
 
-    if cap1.isOpened() == False:
+    if not cap1.isOpened():
         print("Error opening video 1 stream or file")
-    if cap2.isOpened() == False:
+    if not cap2.isOpened():
         print("Error opening video 2 stream or file")
 
     # we read frames until synchronised
@@ -84,3 +84,4 @@ def stitch_2_videos(
     # cleanup
     cap1.release()
     cap2.release()
+    out.release()

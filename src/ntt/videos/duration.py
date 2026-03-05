@@ -1,7 +1,7 @@
-import subprocess, os
+import subprocess
+import os
 from moviepy.editor import VideoFileClip
 from moviepy.video.io.ffmpeg_tools import ffmpeg_extract_subclip
-from moviepy.editor import VideoFileClip
 
 
 def remove_duration_ffmpeg(input_file, output_file, start_time):
