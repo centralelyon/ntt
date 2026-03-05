@@ -27,7 +27,8 @@ classifiers = [
 requires-python = ">=3.7"
 # eyed3, pydub are used by pyAudioAnalysis, but not installed as dependencies
 dependencies = ["requests", "opencv-python", "ffmpeg-python", "moviepy",
-    "scipy", "python-dotenv", "matplotlib", "pyAudioAnalysis", "eyed3", "pydub","librosa"]
+    "scipy", "python-dotenv", "matplotlib", "pyAudioAnalysis", "eyed3", "pydub", "librosa",
+    "Pillow", "exifread"]
 
 [project.urls]
 GitHub = "https://github.com/centralelyon/ntt/"
