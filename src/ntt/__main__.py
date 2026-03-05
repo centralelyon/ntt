@@ -169,6 +169,63 @@ def _cmd_generate_random_image(argv):
             print(f"  {k}: {v}")
 
 
+
+def _cmd_enrich_exif(argv):
+    """Read a JSON array of file entries and enrich image entries with EXIF data.
+
+    Each entry must have ``path`` (directory) and ``name`` (filename) fields.
+    EXIF data is added under ``exif_pillow`` and ``exif_exifread`` keys.
+    Non-image files or files with no EXIF are enriched with empty dicts.
+
+    Usage:
+        python -m ntt enrich_exif [--json] <file.json>
+        python -m ntt enrich_exif [--json] -   (read from stdin)
+    """
+    import os
+    import sys
+    from ntt.frames.exif import extract_exif_pillow, extract_exif_exifread
+
+    IMAGE_EXTENSIONS = {".jpg", ".jpeg", ".tiff", ".tif", ".png", ".bmp", ".webp"}
+
+    as_json, _ = _parse(argv)
+    sources = [a for a in argv if not a.startswith("--")]
+
+    if not sources:
+        print("Usage: python -m ntt enrich_exif [--json] <file.json | ->")
+        sys.exit(1)
+
+    src = sources[0]
+    if src == "-":
+        raw = sys.stdin.read()
+    else:
+        if not os.path.isfile(src):
+            print(f"Error: file '{src}' not found.")
+            sys.exit(1)
+        with open(src, "r", encoding="utf-8") as f:
+            raw = f.read()
+
+    entries = _json.loads(raw)
+    if not isinstance(entries, list):
+        entries = [entries]
+
+    for entry in entries:
+        if entry.get("type") != "file":
+            continue
+        name = entry.get("name", "")
+        ext = os.path.splitext(name)[1].lower()
+        if ext not in IMAGE_EXTENSIONS:
+            continue
+        file_path = os.path.join(entry.get("path", "."), name)
+        try:
+            entry["exif_pillow"]   = extract_exif_pillow(file_path)
+            entry["exif_exifread"] = extract_exif_exifread(file_path)
+        except FileNotFoundError:
+            entry["exif_pillow"]   = {}
+            entry["exif_exifread"] = {}
+
+    print(_json.dumps(entries, default=str, indent=2))
+
+
 # ---------------------------------------------------------------------------
 # Dispatch table
 # ---------------------------------------------------------------------------
@@ -180,6 +237,7 @@ COMMANDS = {
     "extract_video_meta_ff": _cmd_extract_video_meta_ff,
     "extract_all_frames":    _cmd_extract_all_frames,
     "generate_random_image": _cmd_generate_random_image,
+    "enrich_exif":           _cmd_enrich_exif,
 }
 
 

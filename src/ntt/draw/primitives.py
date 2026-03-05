@@ -76,3 +76,50 @@ def draw_grid(frame, rows: int, cols: int):
         draw_line(frame, (x, 0), (x, frame_size[1]))
 
     return frame
+
+
+def draw_filled_polygon(
+    frame: np.ndarray,
+    points: list,
+    color: Tuple[int, int, int] = (255, 100, 0),
+    alpha: float = 0.3,
+) -> np.ndarray:
+    """Draw a semi-transparent filled polygon on the frame.
+
+    Args:
+        frame: Input BGR frame (modified in-place).
+        points: List of (x, y) tuples in OpenCV order (col, row).
+        color: BGR fill colour.
+        alpha: Opacity of the fill (0 = invisible, 1 = opaque).
+
+    Returns:
+        The annotated frame.
+    """
+    overlay = frame.copy()
+    pts = np.array(points, dtype=np.int32).reshape((-1, 1, 2))
+    cv2.fillPoly(overlay, [pts], color)
+    cv2.addWeighted(overlay, alpha, frame, 1 - alpha, 0, frame)
+    return frame
+
+
+def draw_frame_counter(
+    frame: np.ndarray,
+    current: int,
+    total: int,
+    posXY: Tuple[int, int] = (10, 40),
+    color: Tuple[int, int, int] = (255, 255, 255),
+) -> np.ndarray:
+    """Overlay a frame counter 'frame N / total' on the frame.
+
+    Args:
+        frame: Input BGR frame (modified in-place).
+        current: Current frame number (1-based).
+        total: Total number of frames in the video.
+        posXY: (x, y) position for the text baseline.
+        color: BGR text colour.
+
+    Returns:
+        The annotated frame.
+    """
+    text = f"frame {current} / {total}"
+    return write_text(frame, text, posXY, color, thickness=1)
