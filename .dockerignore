@@ -1,0 +1,13 @@
+.git
+.pytest_cache
+.venv
+venv
+__pycache__
+*.pyc
+.env
+.circleci
+.github
+.vscode
+dist
+docs
+test_video.avi

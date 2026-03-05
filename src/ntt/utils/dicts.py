@@ -39,7 +39,7 @@ def get_index(list_dict, key, value):
     Returns:
         _type_: _description_
     """
-
+    
     for i, item in enumerate(list_dict):
         if item.get(key) == value:
             return i

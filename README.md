@@ -153,41 +153,48 @@ The project is configured to run tests on CircleCI. The configuration file is
 
 ## Docker
 
-A Docker image is available for this project in the root fo the project
+A Dockerfile is provided to quickly set up an environment with all system dependencies (OpenCV, FFmpeg, etc.) and run tests or scripts.
 
-### Steps
-
-- build the image:
-
-> docker build -t ntt . 
+### Build the image
 
 ```bash
-$ docker build -t ntt .
+docker build -t ntt .
 ```
- 
-#### Linux/Unix/Mac
 
-- run the image (rm is to remove the container after it is stopped)
+### Run tests
 
-> docker run --rm -v ${PWD}:/app ntt
+By default, running the container executes the `pytest` test suite:
 
-- show the list of containers
+```bash
+# Run tests using the code inside the container
+docker run --rm ntt
+```
 
-> docker ps -a
+During development, you can mount your local directory to run tests on your current code:
 
-- run a custom script
+```bash
+# Linux / macOS / Windows PowerShell
+docker run --rm -v ${PWD}:/app ntt
 
->  docker run --rm -v ${PWD}:/app -e PYTHONPATH=/app/src ntt python tests/test_random_strings.py
+# Windows Command Prompt (cmd)
+docker run --rm -v "%cd%:/app" ntt
+```
 
-- run in interactive mode
+### Run a custom script
 
-> docker run --rm -it -v ${PWD}:/app -e PYTHONPATH=/app/src ntt bash
+You can override the default command to run a specific Python script:
 
-#### Windows
+```bash
+docker run --rm -v ${PWD}:/app ntt python tests/test_random_strings.py
+```
 
-- run the image
+### Run in interactive mode
 
-> docker run -v "$(pwd)":/app ntt python ntt/frames/test/test_frame_extraction.py
+To explore the container or run multiple commands manually, start a bash shell:
+
+```bash
+docker run --rm -it -v ${PWD}:/app ntt bash
+```
 
 ## Acknowledgments
 

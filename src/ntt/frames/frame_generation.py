@@ -1,5 +1,6 @@
 import numpy as np
 from ntt.draw.primitives import write_text
+from ntt.frames.display import display_frame
 import cv2
 
 
@@ -29,3 +30,7 @@ def full_frame(width: int, height: int, color: tuple) -> np.ndarray:
 def frame_from_image_file(image_path: str) -> np.ndarray:
     frame = cv2.imread(image_path)
     return frame
+
+if __name__ == "__main__":
+    frame = random_frame()
+    display_frame(frame)
