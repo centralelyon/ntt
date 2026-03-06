@@ -78,6 +78,18 @@ def draw_grid(frame, rows: int, cols: int):
     return frame
 
 
+def draw_crosshair(frame, x, y, text="", color=(0, 255, 0), cross_size=12, draw_circle=True):
+    import cv2
+    if draw_circle:
+        cv2.circle(frame, (x, y), 8, color, 2)
+        cv2.circle(frame, (x, y), 2, color, -1)
+    cv2.line(frame, (x - cross_size, y), (x + cross_size, y), color, 2)
+    cv2.line(frame, (x, y - cross_size), (x, y + cross_size), color, 2)
+    if text:
+        cv2.putText(frame, str(text), (x + 15, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 1, color, 2)
+    return frame
+
+
 def draw_filled_polygon(
     frame: np.ndarray,
     points: list,
@@ -123,3 +135,42 @@ def draw_frame_counter(
     """
     text = f"frame {current} / {total}"
     return write_text(frame, text, posXY, color, thickness=1)
+
+
+def draw_ripple(
+    frame: np.ndarray,
+    center: Tuple[int, int],
+    num_rings: int = 5,
+    max_radius: int = 100,
+    color: Tuple[int, int, int] = (0, 255, 255),
+    thickness: int = 2,
+    start_alpha: float = 0.6,
+) -> np.ndarray:
+    """Draw concentric circles from small to large with fading opacity.
+
+    Args:
+        frame: Input BGR frame (modified in-place).
+        center: (x, y) center of the ripple.
+        num_rings: Number of concentric circles.
+        max_radius: Radius of the largest (outermost) ring.
+        color: BGR colour of the rings.
+        thickness: Thickness of the rings.
+        start_alpha: Opacity of the innermost ring (fades to 0 at the outermost).
+
+    Returns:
+        The annotated frame.
+    """
+    overlay = frame.copy()
+    for i in range(num_rings):
+        # Calculate radius and alpha for each ring
+        # Radius grows from max_radius / num_rings to max_radius
+        radius = int((i + 1) * max_radius / num_rings)
+        # Alpha fades from start_alpha to near 0
+        alpha = start_alpha * (1 - i / num_rings)
+        
+        # Temporary layer for this specific ring to apply its own alpha
+        temp_layer = frame.copy()
+        cv2.circle(temp_layer, center, radius, color, thickness)
+        cv2.addWeighted(temp_layer, alpha, frame, 1 - alpha, 0, frame)
+
+    return frame
