@@ -1,7 +1,8 @@
 import os
 import cv2
 import numpy as np
-import matplotlib.pyplot as plt
+
+from ntt.videos.io import get_writer_fourcc
 
 
 def detect_peak_video(
@@ -18,7 +19,7 @@ def detect_peak_video(
     frame_end=-1,
     nb_frame=-1,
     afficher_anime=True,
-    afficher_hist=True,
+    afficher_hist=False,
     write_video=True,
 ):
     video_link = os.path.join(input_path, video_name_in)
@@ -30,16 +31,16 @@ def detect_peak_video(
     i = 0
     fps = cap.get(cv2.CAP_PROP_FPS)
 
-    fourcc = cv2.VideoWriter_fourcc("M", "J", "P", "G")
-
     if write_video:
+        fourcc = get_writer_fourcc(video_file_out)
         out = cv2.VideoWriter(
             video_file_out,
             fourcc,
             fps,
             (xb - xa, yb - ya),
-            isColor=False,
         )
+        if not out.isOpened():
+            raise ValueError(f"Could not open output video writer: {video_file_out}")
 
     while cap.isOpened():
         ret, frame = cap.read()
@@ -49,6 +50,19 @@ def detect_peak_video(
         gray = cv2.cvtColor(frame[ya:yb, xa:xb], cv2.COLOR_BGR2GRAY)
         rep.append(np.sum(gray > seuil))
         gray_values.append(np.mean(gray))
+
+        if write_video:
+            gray_bgr = cv2.cvtColor(gray, cv2.COLOR_GRAY2BGR)
+            cv2.putText(
+                gray_bgr,
+                f"{i+frame_begin}",
+                (7, 14),
+                cv2.FONT_HERSHEY_SIMPLEX,
+                0.4,
+                (255, 255, 255),
+                1,
+            )
+            out.write(gray_bgr)
 
         if afficher_anime:
             cv2.putText(
@@ -60,12 +74,8 @@ def detect_peak_video(
                 (255, 255, 255),
             )
             cv2.imshow("f", gray)
-
-            if write_video:
-                out.write(gray)
-
-        if cv2.waitKey(1) == ord("q"):
-            break
+            if cv2.waitKey(1) == ord("q"):
+                break
 
         if i == nb_frame or (frame_end != -1 and i + frame_begin >= frame_end):
             break
@@ -73,6 +83,8 @@ def detect_peak_video(
         i += 1
 
     if afficher_hist:
+        import matplotlib.pyplot as plt
+
         plt.figure(figsize=(12, 5))
         plt.subplot(1, 2, 1)
         plt.plot(rep)

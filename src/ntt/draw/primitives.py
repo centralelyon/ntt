@@ -43,14 +43,43 @@ def draw_line(
 ) -> None:
     """draw a line given 2 points"""
     cv2.line(frame, start_point, end_point, color, thickness=2)
+    return frame
 
 
 def draw_crosshair(
-    frame: np.ndarray, x: int, y: int, size=20, thickness=2, color=(0, 255, 0)
-):
-    """draw a crosshair on the image"""
+    frame: np.ndarray,
+    x: int,
+    y: int,
+    text: str = "",
+    color: Tuple[int, int, int] = (0, 255, 0),
+    size: int = 12,
+    thickness: int = 2,
+    draw_circle: bool = True,
+    cross_size: int | None = None,
+) -> np.ndarray:
+    """Draw a crosshair, optionally with a label and center marker."""
+    if cross_size is not None:
+        size = cross_size
+
+    if draw_circle:
+        cv2.circle(frame, (x, y), 8, color, thickness)
+        cv2.circle(frame, (x, y), 2, color, -1)
+
     cv2.line(frame, (x, y - size), (x, y + size), color, thickness)
     cv2.line(frame, (x - size, y), (x + size, y), color, thickness)
+
+    if text:
+        cv2.putText(
+            frame,
+            str(text),
+            (x + 15, y - 10),
+            cv2.FONT_HERSHEY_SIMPLEX,
+            1,
+            color,
+            thickness,
+        )
+
+    return frame
 
 
 def draw_bright_circle(
@@ -84,19 +113,6 @@ def draw_grid(frame, rows: int, cols: int):
         draw_line(frame, (x, 0), (x, frame_size[1]))
 
     return frame
-
-
-def draw_crosshair(frame, x, y, text="", color=(0, 255, 0), cross_size=12, draw_circle=True):
-    import cv2
-    if draw_circle:
-        cv2.circle(frame, (x, y), 8, color, 2)
-        cv2.circle(frame, (x, y), 2, color, -1)
-    cv2.line(frame, (x - cross_size, y), (x + cross_size, y), color, 2)
-    cv2.line(frame, (x, y - cross_size), (x, y + cross_size), color, 2)
-    if text:
-        cv2.putText(frame, str(text), (x + 15, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 1, color, 2)
-    return frame
-
 
 def draw_filled_polygon(
     frame: np.ndarray,

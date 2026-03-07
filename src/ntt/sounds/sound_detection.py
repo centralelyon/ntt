@@ -2,8 +2,6 @@ from pyAudioAnalysis import MidTermFeatures as aFm
 from pyAudioAnalysis import audioBasicIO as aIO
 import moviepy.editor as mp
 import numpy as np
-from pydub import AudioSegment
-import librosa
 import os
 
 
@@ -22,8 +20,15 @@ def detect_sound_ref(
     my_clip1 = mp.VideoFileClip(video_path)
     audio_wav = "temp_audio.wav"
     my_clip1.audio.write_audiofile(audio_wav, fps=fs)
-    s_long, _ = librosa.load(audio_wav, sr=fs)
+    fs_long, s_long = aIO.read_audio_file(audio_wav)
     os.remove(audio_wav)
+    my_clip1.close()
+    if fs_long != fs:
+        raise ValueError(
+            f"Unexpected sample rate in extracted audio: got {fs_long}, expected {fs}"
+        )
+    if s_long.ndim > 1:
+        s_long = np.mean(s_long, axis=1)
     duration_long = len(s_long) / float(fs)
 
     # extract short-term features using a 50msec non-overlapping windows
@@ -68,6 +73,8 @@ def detect_sound_ref(
 
 
 def simple_peak_count_librosa(video_path, video_name):
+    import librosa
+
     video = os.path.join(video_path, video_name)
     video = mp.VideoFileClip(video)
     fps = video.fps
@@ -81,6 +88,8 @@ def simple_peak_count_librosa(video_path, video_name):
 def detect_sound_ref_librosa(
     samples_path, video_name, ref_sound_name, path_out, threshold=20
 ):
+    import librosa
+
     """_summary_
 
     Args:

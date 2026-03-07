@@ -16,11 +16,18 @@ def setup_test_video():
         # Generate a dummy video for tests
         fourcc = cv2.VideoWriter_fourcc(*'mp4v')
         out = cv2.VideoWriter(VIDEO_PATH, fourcc, 10.0, (100, 100))
+        if not out.isOpened():
+            pytest.skip(f"OpenCV could not open a video writer for {VIDEO_PATH}")
         for _ in range(10): # 10 frames
             frame = np.zeros((100, 100, 3), dtype=np.uint8)
             cv2.randu(frame, 0, 255)
             out.write(frame)
         out.release()
+    cap = cv2.VideoCapture(VIDEO_PATH)
+    if not cap.isOpened():
+        cap.release()
+        pytest.skip(f"OpenCV cannot read the synthetic test video on this platform: {VIDEO_PATH}")
+    cap.release()
     yield
     if os.path.exists(VIDEO_PATH):
         os.remove(VIDEO_PATH)

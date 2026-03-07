@@ -1,6 +1,7 @@
 import cv2
 import numpy as np
 from ntt.frames.frame_generation import full_frame, random_frame
+from ntt.videos.io import get_writer_fourcc
 
 
 def random_video(
@@ -10,7 +11,7 @@ def random_video(
 
 
 def generate_peak_video(file_path, width, height, fps, duration):
-    fourcc = cv2.VideoWriter_fourcc("M", "J", "P", "G")
+    fourcc = get_writer_fourcc(file_path)
     out = cv2.VideoWriter(file_path, fourcc, fps, (width, height))
     frame_count = int(fps * duration)
 
@@ -31,7 +32,7 @@ def generate_peak_video(file_path, width, height, fps, duration):
 def generate_video_numbers(t=5, fps=25, size=(800, 600), out_path="myvideo.mp4"):
     num_frames = int(t * fps)
 
-    fourcc = cv2.VideoWriter_fourcc("M", "J", "P", "G")
+    fourcc = get_writer_fourcc(out_path)
     out = cv2.VideoWriter(out_path, fourcc, fps, size)
 
     for frame_num in range(num_frames):

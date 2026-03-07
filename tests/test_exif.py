@@ -71,6 +71,8 @@ def _make_video(path: str, frame_count: int = 10) -> None:
     """Create a tiny synthetic MP4 with OpenCV."""
     fourcc = cv2.VideoWriter_fourcc(*"mp4v")
     out = cv2.VideoWriter(path, fourcc, 10.0, (64, 64))
+    if not out.isOpened():
+        raise RuntimeError(f"OpenCV could not open a video writer for {path}")
     for _ in range(frame_count):
         frame = np.zeros((64, 64, 3), dtype=np.uint8)
         cv2.randu(frame, 0, 255)
@@ -95,7 +97,19 @@ def jpeg_no_exif(tmp_path_factory):
 @pytest.fixture(scope="module")
 def sample_video(tmp_path_factory):
     p = str(tmp_path_factory.mktemp("exif") / "sample.mp4")
-    _make_video(p, frame_count=10)
+    try:
+        _make_video(p, frame_count=10)
+    except RuntimeError as exc:
+        pytest.skip(str(exc))
+
+    if not os.path.isfile(p):
+        pytest.skip(f"OpenCV did not create the synthetic video fixture: {p}")
+
+    cap = cv2.VideoCapture(p)
+    if not cap.isOpened():
+        cap.release()
+        pytest.skip(f"OpenCV cannot read the synthetic video fixture on this platform: {p}")
+    cap.release()
     return p
 
 

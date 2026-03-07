@@ -13,13 +13,19 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libsndfile1 \                                                                                       
     && rm -rf /var/lib/apt/lists/*                                                                      
                                                                                                         
-WORKDIR /app                                                                                            
-                                                                                                        
-# Copy project files                                                                                    
-COPY . /app                                                                                             
-                                                                                                        
+WORKDIR /app
+
+# Copy dependency metadata first so dependency installation can be cached
+COPY pyproject.toml README.md LICENSE /app/
+COPY src /app/src
+
 # Install the ntt package along with its dev dependencies
 RUN pip install --no-cache-dir --upgrade pip && pip install --no-cache-dir .[dev]
+
+# Copy the rest of the project after dependencies are installed
+COPY tests /app/tests
+COPY scripts /app/scripts
+COPY CONTRIBUTING.md /app/
                                                                                                         
 ENV PYTHONPATH=/app/src                                                                                 
                                                                                                         
