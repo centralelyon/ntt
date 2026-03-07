@@ -42,3 +42,15 @@ def test_write_video_rejects_empty_frames(tmp_path):
         assert "No frames to write" in str(exc)
     else:
         raise AssertionError("write_video should reject empty frame lists")
+
+
+def test_write_video_rejects_inconsistent_frame_shapes(tmp_path):
+    video_path = tmp_path / "bad.avi"
+    frames = [random_frame(64, 48), random_frame(80, 48)]
+
+    try:
+        write_video(str(video_path), frames, fps=5)
+    except ValueError as exc:
+        assert "same width and height" in str(exc)
+    else:
+        raise AssertionError("write_video should reject inconsistent frame sizes")

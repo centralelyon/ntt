@@ -36,6 +36,18 @@
       "type": "shell",
       "command": "docker run --rm -v ${workspaceFolder}:/app ntt python /app/scripts/example_generate_video_and_extract_first_frame.py /app/output",
       "dependsOn": "docker-build-ntt"
+    },
+    {
+      "label": "docker-run-generate-primitives-showcase",
+      "type": "shell",
+      "command": "docker run --rm -v ${workspaceFolder}:/app ntt python /app/scripts/generate_primitives_showcase.py /app/output/primitives_showcase.png",
+      "dependsOn": "docker-build-ntt"
+    },
+    {
+      "label": "docker-run-example-generate-and-stitch-perspective-videos",
+      "type": "shell",
+      "command": "docker run --rm -v ${workspaceFolder}:/app ntt python /app/scripts/example_generate_and_stitch_perspective_videos.py /app/output/perspective_stitch_demo",
+      "dependsOn": "docker-build-ntt"
     }
   ]
 }
