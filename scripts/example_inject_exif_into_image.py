@@ -2,10 +2,9 @@ import os
 import sys
 from datetime import datetime
 
-import cv2
-
 from ntt.frames.exif import inject_exif
 from ntt.frames.frame_generation import random_frame
+from ntt.frames.io import write
 
 
 def main() -> None:
@@ -13,7 +12,7 @@ def main() -> None:
     os.makedirs(os.path.dirname(output_path) or ".", exist_ok=True)
 
     frame = random_frame(640, 480)
-    cv2.imwrite(output_path, frame)
+    write(output_path, frame)
 
     metadata = {
         "Make": "ntt",

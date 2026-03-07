@@ -191,9 +191,11 @@ docker run --rm -v ${PWD}:/app ntt python tests/test_random_strings.py
 ### Example scripts
 
 The `scripts/` folder contains small end-to-end examples that can all be run in one Docker command.
+The image examples write files through `ntt.frames.io.write`, and the video example writes files through `ntt.videos.io.write`.
 
 ```bash
 docker run --rm -v ${PWD}:/app ntt python /app/scripts/example_generate_random_image.py /app/output/random_image.jpg
+docker run --rm -v ${PWD}:/app ntt python /app/scripts/example_generate_video_and_extract_first_frame.py /app/output
 ```
 
 You can also run those examples from VS Code:

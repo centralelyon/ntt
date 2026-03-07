@@ -1,3 +1,5 @@
+import os
+
 import cv2
 
 from ntt.utils.constants import DEFAULT_FOURCC, FOURCC_MP4V
@@ -22,18 +24,26 @@ def read(video_path: str) -> list:
     return frames
 
 
-def write(video_path: str, frames: list) -> None:
+def write(video_path: str, frames: list, fps: int = 30) -> str:
     if not frames:
-        print("No frames to write.")
-        return
+        raise ValueError("No frames to write.")
 
     height, width, _ = frames[0].shape
-    out = cv2.VideoWriter(video_path, get_writer_fourcc(video_path), 30, (width, height))
+    os.makedirs(os.path.dirname(video_path) or ".", exist_ok=True)
+    out = cv2.VideoWriter(
+        video_path, get_writer_fourcc(video_path), fps, (width, height)
+    )
+
+    if not out.isOpened():
+        raise ValueError(f"Could not open video writer for: {video_path}")
 
     for frame in frames:
+        if frame.shape[:2] != (height, width):
+            raise ValueError("All frames must have the same width and height.")
         out.write(frame)
 
     out.release()
+    return video_path
 
 
 if __name__ == "__main__":
