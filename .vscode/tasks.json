@@ -1,0 +1,41 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "docker-build-ntt",
+      "type": "shell",
+      "command": "docker build -t ntt .",
+      "group": "build"
+    },
+    {
+      "label": "docker-run-example-generate-random-image",
+      "type": "shell",
+      "command": "docker run --rm -v ${workspaceFolder}:/app ntt python /app/scripts/example_generate_random_image.py /app/output/random_image.jpg",
+      "dependsOn": "docker-build-ntt"
+    },
+    {
+      "label": "docker-run-example-generate-annotated-image",
+      "type": "shell",
+      "command": "docker run --rm -v ${workspaceFolder}:/app ntt python /app/scripts/example_generate_annotated_image.py /app/output/annotated_image.jpg",
+      "dependsOn": "docker-build-ntt"
+    },
+    {
+      "label": "docker-run-example-inject-exif-into-image",
+      "type": "shell",
+      "command": "docker run --rm -v ${workspaceFolder}:/app ntt python /app/scripts/example_inject_exif_into_image.py /app/output/image_with_exif.jpg",
+      "dependsOn": "docker-build-ntt"
+    },
+    {
+      "label": "docker-run-example-extract-exif-from-image",
+      "type": "shell",
+      "command": "docker run --rm -v ${workspaceFolder}:/app ntt python /app/scripts/example_extract_exif_from_image.py /app/output/image_with_exif.jpg",
+      "dependsOn": "docker-build-ntt"
+    },
+    {
+      "label": "docker-run-example-generate-video-and-extract-first-frame",
+      "type": "shell",
+      "command": "docker run --rm -v ${workspaceFolder}:/app ntt python /app/scripts/example_generate_video_and_extract_first_frame.py /app/output",
+      "dependsOn": "docker-build-ntt"
+    }
+  ]
+}

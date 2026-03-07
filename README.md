@@ -188,6 +188,26 @@ You can override the default command to run a specific Python script:
 docker run --rm -v ${PWD}:/app ntt python tests/test_random_strings.py
 ```
 
+### Example scripts
+
+The `scripts/` folder contains small end-to-end examples that can all be run in one Docker command.
+
+```bash
+docker run --rm -v ${PWD}:/app ntt python /app/scripts/example_generate_random_image.py /app/output/random_image.jpg
+```
+
+You can also run those examples from VS Code:
+
+This repository includes VS Code tasks in [.vscode/tasks.json](.vscode/tasks.json) for the Docker build and for each example script.
+
+In VS Code:
+
+1. Open `Terminal > Run Task`.
+2. Run `docker-build-ntt` to build the image.
+3. Run any example task such as `docker-run-example-extract-exif-from-image`.
+
+Each example task runs the matching script in Docker with the workspace mounted at `/app`, so outputs are written to the local `output/` folder.
+
 ### Run in interactive mode
 
 To explore the container or run multiple commands manually, start a bash shell:
@@ -195,6 +215,18 @@ To explore the container or run multiple commands manually, start a bash shell:
 ```bash
 docker run --rm -it -v ${PWD}:/app ntt bash
 ```
+
+Examples of commands to run inside the container:
+
+```bash
+# Run tests
+pytest
+# Run a script
+python /app/scripts/example_generate_random_image.py /app/output/random_image.jpg
+```
+
+The python version in the container is 3.12 and you can check the versions of the dependancies in the [Dockerfile](Dockerfile).
+
 
 ## Acknowledgments
 
