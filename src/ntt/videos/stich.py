@@ -2,6 +2,8 @@ import os
 import cv2
 import numpy as np
 
+from ntt.videos.io import get_writer_fourcc
+
 
 def stitch_2_videos(
     video_path_in,
@@ -44,7 +46,7 @@ def stitch_2_videos(
     time_shift = round(time_difference * fps)
 
     # output video
-    fourcc = cv2.VideoWriter_fourcc("M", "J", "P", "G")
+    fourcc = get_writer_fourcc(video_name_out)
 
     out = cv2.VideoWriter(
         video_out, fourcc, fps, (shape_output_img[0], shape_output_img[1])

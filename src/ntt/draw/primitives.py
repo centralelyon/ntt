@@ -21,9 +21,17 @@ def draw_rectangle(
     posXY: Tuple[int, int] = (10, 10, 30, 30),
     color: Tuple[int, int, int] = (0, 0, 255),
 ) -> None:
-    """draw a rectangle given 2 points"""
+    """Draw a rectangle from either two points or four coordinates."""
     thickness = 1
-    cv2.rectangle(frame, posXY, color, thickness)
+    if len(posXY) == 2:
+        pt1, pt2 = posXY
+    elif len(posXY) == 4:
+        pt1 = (posXY[0], posXY[1])
+        pt2 = (posXY[2], posXY[3])
+    else:
+        raise ValueError("posXY must be ((x1, y1), (x2, y2)) or (x1, y1, x2, y2)")
+
+    cv2.rectangle(frame, pt1, pt2, color, thickness)
     return frame
 
 

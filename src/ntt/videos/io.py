@@ -1,6 +1,13 @@
 import cv2
 
-from ntt.utils.constants import DEFAULT_FOURCC
+from ntt.utils.constants import DEFAULT_FOURCC, FOURCC_MP4V
+
+
+def get_writer_fourcc(video_path: str) -> int:
+    """Return a container-compatible fourcc for the output path."""
+    if video_path.lower().endswith(".mp4"):
+        return FOURCC_MP4V
+    return DEFAULT_FOURCC
 
 
 def read(video_path: str) -> list:
@@ -21,7 +28,7 @@ def write(video_path: str, frames: list) -> None:
         return
 
     height, width, _ = frames[0].shape
-    out = cv2.VideoWriter(video_path, DEFAULT_FOURCC, 30, (width, height))
+    out = cv2.VideoWriter(video_path, get_writer_fourcc(video_path), 30, (width, height))
 
     for frame in frames:
         out.write(frame)
