@@ -6,8 +6,10 @@ Usage:
 Available commands:
     extract_exif_pillow     Extract EXIF from an image using Pillow
     extract_exif_exifread   Extract EXIF from an image using ExifRead
+    image_metadata          Extract EXIF, dimensions, color mode, and file size
     extract_video_meta_cv   Extract metadata from a video using OpenCV
     extract_video_meta_ff   Extract metadata from a video using ffprobe
+    video_info              Extract unified video info, including audio presence
     extract_all_frames      Extract all frames from a video to the same folder
     generate_random_image   Generate a random JPEG with injected EXIF metadata
     change_speed            Change video speed with OpenCV, ffmpeg, or MoviePy
@@ -16,7 +18,9 @@ Available commands:
 Examples:
     python -m ntt extract_exif_pillow photo.jpg
     python -m ntt extract_exif_pillow --json photo.jpg
+    python -m ntt image_metadata photo.jpg
     python -m ntt extract_video_meta_cv video.mp4
+    python -m ntt video_info video.mp4
     python -m ntt extract_all_frames video.mp4
     python -m ntt generate_random_image
     python -m ntt generate_random_image --output /app/myimage.jpg
@@ -75,6 +79,16 @@ def _cmd_extract_exif_exifread(argv):
     _print(data, as_json)
 
 
+def _cmd_image_metadata(argv):
+    as_json, args = _parse(argv)
+    if not args:
+        print("Usage: python -m ntt image_metadata [--json] <image_path>")
+        sys.exit(1)
+    from ntt.frames.metadata import extract_image_metadata
+    data = extract_image_metadata(args[0])
+    _print(data, as_json)
+
+
 def _cmd_extract_video_meta_cv(argv):
     as_json, args = _parse(argv)
     if not args:
@@ -92,6 +106,22 @@ def _cmd_extract_video_meta_ff(argv):
         sys.exit(1)
     from ntt.videos.exif import extract_metadata_ffprobe
     data = extract_metadata_ffprobe(args[0])
+    _print(data, as_json)
+
+
+def _cmd_video_info(argv):
+    as_json, args = _parse(argv)
+    if not args:
+        print("Usage: python -m ntt video_info [--json] <video_path>")
+        sys.exit(1)
+
+    backend = "auto"
+    for i, arg in enumerate(argv):
+        if arg == "--backend" and i + 1 < len(argv):
+            backend = argv[i + 1]
+
+    from ntt.videos.info import extract_video_info
+    data = extract_video_info(args[0], backend=backend)
     _print(data, as_json)
 
 
@@ -268,8 +298,10 @@ def _cmd_enrich_exif(argv):
 COMMANDS = {
     "extract_exif_pillow":   _cmd_extract_exif_pillow,
     "extract_exif_exifread": _cmd_extract_exif_exifread,
+    "image_metadata":        _cmd_image_metadata,
     "extract_video_meta_cv": _cmd_extract_video_meta_cv,
     "extract_video_meta_ff": _cmd_extract_video_meta_ff,
+    "video_info":            _cmd_video_info,
     "extract_all_frames":    _cmd_extract_all_frames,
     "generate_random_image": _cmd_generate_random_image,
     "change_speed":          _cmd_change_speed,
