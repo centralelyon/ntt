@@ -5,7 +5,7 @@ import cv2
 
 from ntt.draw.primitives import draw_rectangle, write_text
 from ntt.frames.frame_generation import random_frame
-from ntt.frames.io import write
+from ntt.frames.io import write_frame
 
 
 def main() -> None:
@@ -17,7 +17,7 @@ def main() -> None:
     write_text(frame, "ntt example", (20, 40), (255, 255, 255))
     draw_rectangle(frame, ((40, 60), (280, 200)), (0, 255, 0))
 
-    write(output_path, frame)
+    write_frame(output_path, frame)
     print(f"Saved annotated image: {output_path}")
 
 

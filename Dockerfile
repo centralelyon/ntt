@@ -19,8 +19,12 @@ WORKDIR /app
 COPY pyproject.toml README.md LICENSE /app/
 COPY src /app/src
 
-# Install the ntt package along with its dev dependencies
-RUN pip install --no-cache-dir --upgrade pip && pip install --no-cache-dir .[dev]
+# Install the ntt package along with its dev dependencies.
+# coverage is not needed at runtime and currently breaks numba/librosa optional
+# integration under Python 3.12 in this image.
+RUN pip install --no-cache-dir --upgrade pip \
+    && pip install --no-cache-dir .[dev] \
+    && pip uninstall -y coverage || true
 
 # Copy the rest of the project after dependencies are installed
 COPY tests /app/tests

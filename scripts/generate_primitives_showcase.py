@@ -13,7 +13,7 @@ from ntt.draw.primitives import (
 )
 from ntt.frames.display import display_frame
 from ntt.frames.frame_generation import full_frame
-from ntt.frames.io import write
+from ntt.frames.io import write_frame
 
 
 def generate_primitives_showcase(output_path: str = "primitives_showcase.png"):
@@ -48,7 +48,7 @@ def generate_primitives_showcase(output_path: str = "primitives_showcase.png"):
     draw_ripple(frame, center=(600, 600), num_rings=10, max_radius=150, color=(100, 255, 100), thickness=2)
     write_text(frame, "draw_ripple", posXY=(550, 770), color=(100, 255, 100), thickness=1)
 
-    write(output_path, frame)
+    write_frame(output_path, frame)
     print(f"Primitives showcase saved to {output_path}")
     return frame
 

@@ -1,10 +1,10 @@
 import os
 
 from ntt.frames.frame_generation import random_frame
-from ntt.frames.io import read as read_frame
-from ntt.frames.io import write as write_frame
-from ntt.videos.io import read as read_video
-from ntt.videos.io import write as write_video
+from ntt.frames.io import read_frame
+from ntt.frames.io import write_frame
+from ntt.videos.io import read_video
+from ntt.videos.io import write_video
 from ntt.videos.video_generation import random_video
 
 

@@ -7,7 +7,7 @@ import numpy as np
 
 from ntt.draw.primitives import write_text
 from ntt.frames.frame_generation import full_frame
-from ntt.videos.io import write
+from ntt.videos.io import write_video
 from ntt.videos.stich import stitch_2_videos
 
 
@@ -124,8 +124,8 @@ def main():
         label="right camera",
     )
 
-    left_path = write(os.path.join(output_dir, left_video_name), left_frames, fps=FPS)
-    right_path = write(os.path.join(output_dir, right_video_name), right_frames, fps=FPS)
+    left_path = write_video(os.path.join(output_dir, left_video_name), left_frames, fps=FPS)
+    right_path = write_video(os.path.join(output_dir, right_video_name), right_frames, fps=FPS)
     json_path = write_perspective_json(
         output_dir,
         left_video_name,

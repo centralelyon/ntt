@@ -5,6 +5,74 @@ import numpy as np
 from ntt.videos.io import get_writer_fourcc
 
 
+def _write_peak_clip(
+    video_link,
+    video_file_out,
+    fps,
+    peak_frame,
+    xa,
+    xb,
+    ya,
+    yb,
+    frame_begin,
+    clip_before_seconds,
+    clip_after_seconds,
+):
+    cap = cv2.VideoCapture(video_link)
+    if not cap.isOpened():
+        raise ValueError(f"Could not reopen input video for flash clip: {video_link}")
+
+    start_frame = max(frame_begin, int(round(peak_frame - clip_before_seconds * fps)))
+    end_frame = int(round(peak_frame + clip_after_seconds * fps))
+    cap.set(cv2.CAP_PROP_POS_FRAMES, start_frame)
+
+    fourcc = get_writer_fourcc(video_file_out)
+    out = cv2.VideoWriter(
+        video_file_out,
+        fourcc,
+        fps,
+        (xb - xa, yb - ya),
+    )
+    if not out.isOpened():
+        cap.release()
+        raise ValueError(f"Could not open output video writer: {video_file_out}")
+
+    current_frame = start_frame
+    while cap.isOpened() and current_frame <= end_frame:
+        ret, frame = cap.read()
+        if not ret:
+            break
+
+        gray = cv2.cvtColor(frame[ya:yb, xa:xb], cv2.COLOR_BGR2GRAY)
+        gray_bgr = cv2.cvtColor(gray, cv2.COLOR_GRAY2BGR)
+
+        offset_label = (current_frame - peak_frame) / fps
+        color = (0, 0, 255) if current_frame == peak_frame else (255, 255, 255)
+        cv2.putText(
+            gray_bgr,
+            f"frame {current_frame}",
+            (8, 18),
+            cv2.FONT_HERSHEY_SIMPLEX,
+            0.45,
+            color,
+            1,
+        )
+        cv2.putText(
+            gray_bgr,
+            f"t={offset_label:+.2f}s",
+            (8, 38),
+            cv2.FONT_HERSHEY_SIMPLEX,
+            0.45,
+            color,
+            1,
+        )
+        out.write(gray_bgr)
+        current_frame += 1
+
+    out.release()
+    cap.release()
+
+
 def detect_peak_video(
     input_path,
     video_name_in,
@@ -21,26 +89,21 @@ def detect_peak_video(
     afficher_anime=True,
     afficher_hist=False,
     write_video=True,
+    clip_before_seconds=1.0,
+    clip_after_seconds=1.0,
 ):
     video_link = os.path.join(input_path, video_name_in)
     video_file_out = os.path.join(output_path, video_name_out)
     cap = cv2.VideoCapture(video_link)  # read video
+    if not cap.isOpened():
+        raise ValueError(f"Could not open input video: {video_link}")
     cap.set(cv2.CAP_PROP_POS_FRAMES, int(frame_begin))  # go to first frame
     rep = []  # optimizable by preallocation
     gray_values = []
     i = 0
     fps = cap.get(cv2.CAP_PROP_FPS)
-
-    if write_video:
-        fourcc = get_writer_fourcc(video_file_out)
-        out = cv2.VideoWriter(
-            video_file_out,
-            fourcc,
-            fps,
-            (xb - xa, yb - ya),
-        )
-        if not out.isOpened():
-            raise ValueError(f"Could not open output video writer: {video_file_out}")
+    if isinstance(nb_frame, bool):
+        nb_frame = -1
 
     while cap.isOpened():
         ret, frame = cap.read()
@@ -50,19 +113,6 @@ def detect_peak_video(
         gray = cv2.cvtColor(frame[ya:yb, xa:xb], cv2.COLOR_BGR2GRAY)
         rep.append(np.sum(gray > seuil))
         gray_values.append(np.mean(gray))
-
-        if write_video:
-            gray_bgr = cv2.cvtColor(gray, cv2.COLOR_GRAY2BGR)
-            cv2.putText(
-                gray_bgr,
-                f"{i+frame_begin}",
-                (7, 14),
-                cv2.FONT_HERSHEY_SIMPLEX,
-                0.4,
-                (255, 255, 255),
-                1,
-            )
-            out.write(gray_bgr)
 
         if afficher_anime:
             cv2.putText(
@@ -103,9 +153,25 @@ def detect_peak_video(
         plt.tight_layout()
         plt.show()
 
-    out.release() if write_video else None
     cap.release()
-    return np.argmax(rep) + frame_begin
+    peak_frame = int(np.argmax(rep) + frame_begin)
+
+    if write_video:
+        _write_peak_clip(
+            video_link,
+            video_file_out,
+            fps,
+            peak_frame,
+            xa,
+            xb,
+            ya,
+            yb,
+            frame_begin,
+            clip_before_seconds,
+            clip_after_seconds,
+        )
+
+    return peak_frame
 
 
 # applies the function to be more compliant with the generate_peak_video function

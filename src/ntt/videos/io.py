@@ -12,7 +12,7 @@ def get_writer_fourcc(video_path: str) -> int:
     return DEFAULT_FOURCC
 
 
-def read(video_path: str) -> list:
+def read_video(video_path: str) -> list:
     cap = cv2.VideoCapture(video_path)
     frames = []
     while cap.isOpened():
@@ -24,7 +24,7 @@ def read(video_path: str) -> list:
     return frames
 
 
-def write(video_path: str, frames: list, fps: int = 30) -> str:
+def write_video(video_path: str, frames: list, fps: int = 30) -> str:
     if not frames:
         raise ValueError("No frames to write.")
 
@@ -46,10 +46,15 @@ def write(video_path: str, frames: list, fps: int = 30) -> str:
     return video_path
 
 
+# Preview compatibility aliases
+read = read_video
+write = write_video
+
+
 if __name__ == "__main__":
     from ntt.videos.video_generation import random_video
     video_path = "path_to_your_video.mp4"
     frames = random_video(320, 240, 10, 30)
-    write("output_video.mp4", frames)
-    frames = read("output_video.mp4")
+    write_video("output_video.mp4", frames)
+    frames = read_video("output_video.mp4")
     print(f"Total frames extracted: {len(frames)}")

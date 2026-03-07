@@ -161,6 +161,13 @@ A Dockerfile is provided to quickly set up an environment with all system depend
 docker build -t ntt .
 ```
 
+To rebuild the image without cache (for example to test changes in the Dockerfile), run:
+
+```bash
+docker build --no-cache -t ntt .
+```
+
+
 ### Run tests
 
 By default, running the container executes the `pytest` test suite:
@@ -210,6 +217,8 @@ In VS Code:
 3. Run any example task such as `docker-run-example-extract-exif-from-image`.
 
 Each example task runs the matching script in Docker with the workspace mounted at `/app`, so outputs are written to the local `output/` folder.
+
+To rebuild the image without cache (for example to test changes in the Dockerfile), run:
 
 ### Run in interactive mode
 

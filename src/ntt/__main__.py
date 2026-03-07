@@ -10,6 +10,8 @@ Available commands:
     extract_video_meta_ff   Extract metadata from a video using ffprobe
     extract_all_frames      Extract all frames from a video to the same folder
     generate_random_image   Generate a random JPEG with injected EXIF metadata
+    change_speed            Change video speed with OpenCV, ffmpeg, or MoviePy
+    change_video_speed      Backward-compatible alias for change_speed
 
 Examples:
     python -m ntt extract_exif_pillow photo.jpg
@@ -18,6 +20,8 @@ Examples:
     python -m ntt extract_all_frames video.mp4
     python -m ntt generate_random_image
     python -m ntt generate_random_image --output /app/myimage.jpg
+    python -m ntt change_speed input.avi --output output.avi --factor 2 --backend ffmpeg
+    python -m ntt change_video_speed input.avi --output output.avi --factor 2 --backend ffmpeg
 """
 
 import sys
@@ -169,6 +173,37 @@ def _cmd_generate_random_image(argv):
             print(f"  {k}: {v}")
 
 
+def _cmd_change_speed(argv):
+    if not argv:
+        print(
+            "Usage: python -m ntt change_speed <video_path> --output <out_path> "
+            "[--factor <speed_factor>] [--backend opencv|ffmpeg|moviepy]"
+        )
+        sys.exit(1)
+
+    video_path_in = argv[0]
+    video_path_out = "video_speed_changed.avi"
+    speed_factor = 1.0
+    backend = "opencv"
+
+    for i, arg in enumerate(argv):
+        if arg == "--output" and i + 1 < len(argv):
+            video_path_out = argv[i + 1]
+        elif arg == "--factor" and i + 1 < len(argv):
+            speed_factor = float(argv[i + 1])
+        elif arg == "--backend" and i + 1 < len(argv):
+            backend = argv[i + 1]
+
+    from ntt.videos.change_speed import change_speed
+
+    output = change_speed(
+        video_path_in=video_path_in,
+        video_path_out=video_path_out,
+        speed_factor=speed_factor,
+        backend=backend,
+    )
+    print(f"Saved: {output}")
+
 
 def _cmd_enrich_exif(argv):
     """Read a JSON array of file entries and enrich image entries with EXIF data.
@@ -237,6 +272,8 @@ COMMANDS = {
     "extract_video_meta_ff": _cmd_extract_video_meta_ff,
     "extract_all_frames":    _cmd_extract_all_frames,
     "generate_random_image": _cmd_generate_random_image,
+    "change_speed":          _cmd_change_speed,
+    "change_video_speed":    _cmd_change_speed,
     "enrich_exif":           _cmd_enrich_exif,
 }
 

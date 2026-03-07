@@ -2,7 +2,7 @@ import cv2
 
 from ntt.frames.frame_generation import full_frame
 from ntt.videos.crop import _validate_crop_box, crop_video, crop_video_opencv
-from ntt.videos.io import write
+from ntt.videos.io import write_video
 
 
 def test_validate_crop_box():
@@ -22,7 +22,7 @@ def test_crop_video_opencv_preserves_requested_output_size(tmp_path):
     input_path = tmp_path / "input.avi"
     output_path = tmp_path / "cropped.avi"
     frames = [full_frame(120, 80, (10, 20, 30)) for _ in range(4)]
-    write(str(input_path), frames, fps=5)
+    write_video(str(input_path), frames, fps=5)
 
     crop_video_opencv(str(input_path), str(output_path), 20, 10, 90, 60)
 
@@ -37,7 +37,7 @@ def test_crop_video_dispatches_to_opencv_backend(tmp_path):
     input_path = tmp_path / "input.avi"
     output_path = tmp_path / "cropped.avi"
     frames = [full_frame(120, 80, (10, 20, 30)) for _ in range(4)]
-    write(str(input_path), frames, fps=5)
+    write_video(str(input_path), frames, fps=5)
 
     result = crop_video(
         str(input_path), str(output_path), 20, 10, 90, 60, backend="opencv"

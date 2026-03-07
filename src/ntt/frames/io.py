@@ -4,7 +4,7 @@ import cv2
 import numpy as np
 
 
-def read(image_path: str) -> np.ndarray:
+def read_frame(image_path: str) -> np.ndarray:
     """Read an image from disk as a BGR frame."""
     frame = cv2.imread(image_path)
     if frame is None:
@@ -12,7 +12,7 @@ def read(image_path: str) -> np.ndarray:
     return frame
 
 
-def write(image_path: str, frame: np.ndarray) -> str:
+def write_frame(image_path: str, frame: np.ndarray) -> str:
     """Write a frame to disk and return the output path."""
     os.makedirs(os.path.dirname(image_path) or ".", exist_ok=True)
 
@@ -21,3 +21,8 @@ def write(image_path: str, frame: np.ndarray) -> str:
         raise ValueError(f"Could not write image: {image_path}")
 
     return image_path
+
+
+# Preview compatibility aliases
+read = read_frame
+write = write_frame

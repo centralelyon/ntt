@@ -48,6 +48,12 @@
       "type": "shell",
       "command": "docker run --rm -v ${workspaceFolder}:/app ntt python /app/scripts/example_generate_and_stitch_perspective_videos.py /app/output/perspective_stitch_demo",
       "dependsOn": "docker-build-ntt"
+    },
+    {
+      "label": "docker-run-example-change-video-speed",
+      "type": "shell",
+      "command": "docker run --rm -v ${workspaceFolder}:/app ntt python /app/scripts/example_change_video_speed.py /app/output/change_speed_demo opencv",
+      "dependsOn": "docker-build-ntt"
     }
   ]
 }

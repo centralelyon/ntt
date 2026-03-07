@@ -4,7 +4,7 @@ import sys
 import cv2
 
 from ntt.frames.frame_extraction import extract_first_frame
-from ntt.videos.io import write
+from ntt.videos.io import write_video
 from ntt.videos.video_generation import random_video
 
 
@@ -16,7 +16,7 @@ def main() -> None:
     frame_path = os.path.join(output_dir, "random_video_first_frame.jpg")
 
     frames = random_video(width=320, height=240, fps=5, duration=2)
-    write(video_path, frames, fps=5)
+    write_video(video_path, frames, fps=5)
     extracted = extract_first_frame(
         video_path_in=output_dir,
         video_name_in=os.path.basename(video_path),

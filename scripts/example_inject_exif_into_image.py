@@ -4,7 +4,7 @@ from datetime import datetime
 
 from ntt.frames.exif import inject_exif
 from ntt.frames.frame_generation import random_frame
-from ntt.frames.io import write
+from ntt.frames.io import write_frame
 
 
 def main() -> None:
@@ -12,7 +12,7 @@ def main() -> None:
     os.makedirs(os.path.dirname(output_path) or ".", exist_ok=True)
 
     frame = random_frame(640, 480)
-    write(output_path, frame)
+    write_frame(output_path, frame)
 
     metadata = {
         "Make": "ntt",
