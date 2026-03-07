@@ -6,6 +6,7 @@ build-backend = "flit_core.buildapi"
 name = "ntt"
 dynamic = [ "version", "description" ]
 readme = "README.md"
+license = {file = "LICENSE"}
 authors = [
     {name = "Romain Vuillemot", email = "romain.vuillemot@gmail.com"},
 ]
@@ -15,6 +16,7 @@ maintainers = [
 classifiers = [
     "Development Status :: 2 - Pre-Alpha",
     "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
     "Natural Language :: English",
     "Programming Language :: Python :: 3 :: Only",
@@ -66,3 +68,11 @@ dev = [
 
 [tool.flit.sdist]
 exclude = [".circleci", ".vscode", ".gitignore", ".readthedocs.yaml"]
+
+[tool.pytest.ini_options]
+filterwarnings = [
+    "ignore:.*oneOf.*deprecated.*:DeprecationWarning",
+    "ignore:.*parseString.*deprecated.*:DeprecationWarning",
+    "ignore:.*resetCache.*deprecated.*:DeprecationWarning",
+    "ignore:.*enablePackrat.*deprecated.*:DeprecationWarning",
+]

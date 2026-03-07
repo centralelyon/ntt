@@ -20,7 +20,38 @@ The project is configured to run tests on CircleCI. The configuration file is `.
 
 ## Docker
 
-The project is configured to run on Docker. The configuration file is `Dockerfile`. 
+The project is configured to run on Docker. The configuration file is `Dockerfile`.
+
+Build the image with:
+
+```bash
+docker build -t ntt .
+```
+
+Run the example scripts with:
+
+```bash
+docker run --rm -v ${PWD}:/app ntt python /app/scripts/example_generate_random_image.py /app/output/random_image.jpg
+docker run --rm -v ${PWD}:/app ntt python /app/scripts/example_generate_annotated_image.py /app/output/annotated_image.jpg
+docker run --rm -v ${PWD}:/app ntt python /app/scripts/example_inject_exif_into_image.py /app/output/image_with_exif.jpg
+docker run --rm -v ${PWD}:/app ntt python /app/scripts/example_extract_exif_from_image.py /app/output/image_with_exif.jpg
+docker run --rm -v ${PWD}:/app ntt python /app/scripts/example_generate_video_and_extract_first_frame.py /app/output
+```
+
+These scripts use the project I/O helpers rather than raw OpenCV writes:
+`ntt.frames.io.write` for images and `ntt.videos.io.write` for videos.
+
+### VS Code
+
+VS Code tasks are provided in [.vscode/tasks.json](.vscode/tasks.json) for the Docker build and for each example script.
+
+In VS Code:
+
+1. Open `Terminal > Run Task`.
+2. Run `docker-build-ntt`.
+3. Run one of the `docker-run-example-*` tasks.
+
+The workspace is mounted into the container at `/app`, and generated files are written to the local `output/` folder.
 
 
 ## Pull request (PR)

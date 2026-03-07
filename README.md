@@ -196,6 +196,7 @@ The image examples write files through `ntt.frames.io.write`, and the video exam
 ```bash
 docker run --rm -v ${PWD}:/app ntt python /app/scripts/example_generate_random_image.py /app/output/random_image.jpg
 docker run --rm -v ${PWD}:/app ntt python /app/scripts/example_generate_video_and_extract_first_frame.py /app/output
+docker run --rm -v ${PWD}:/app ntt python /app/scripts/example_generate_and_stitch_perspective_videos.py /app/output/perspective_stitch_demo
 ```
 
 You can also run those examples from VS Code:
@@ -229,6 +230,9 @@ python /app/scripts/example_generate_random_image.py /app/output/random_image.jp
 
 The python version in the container is 3.12 and you can check the versions of the dependancies in the [Dockerfile](Dockerfile).
 
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file.
 
 ## Acknowledgments
 
