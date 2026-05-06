@@ -78,7 +78,7 @@ def translate_horizontally(frame, translation_rate):
 
 
 def translate_vertically(frame, translation_rate):
-    frame1 = np.zeros(frame.shape)
+    frame1 = np.zeros_like(frame)
     h, w, _ = frame.shape
 
     if translation_rate > 0:
