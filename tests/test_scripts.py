@@ -3,6 +3,8 @@ import subprocess
 import sys
 from pathlib import Path
 
+import pytest
+
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -37,6 +39,26 @@ def test_example_inject_and_extract_exif_scripts(tmp_path):
     assert "Saved image with EXIF" in inject.stdout
     assert payload["image"] == str(output_path)
     assert payload["pillow"]["Make"] == "ntt"
+
+
+def test_example_flatdir_exif_script(tmp_path):
+    pytest.importorskip("flatdir")
+
+    image_path = tmp_path / "image_with_exif.jpg"
+    output_path = tmp_path / "files_with_exif.json"
+
+    _run_script("example_inject_exif_into_image.py", str(image_path))
+    result = _run_script(
+        "example_flatdir_exif.py",
+        str(tmp_path),
+        "--output",
+        str(output_path),
+    )
+    payload = json.loads(output_path.read_text(encoding="utf-8"))
+
+    assert "Saved flatdir with EXIF" in result.stdout
+    assert payload[0]["name"] == "image_with_exif.jpg"
+    assert payload[0]["exif_pillow"]["Make"] == "ntt"
 
 
 def test_generate_primitives_showcase_script(tmp_path):

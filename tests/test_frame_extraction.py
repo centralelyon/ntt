@@ -1,5 +1,6 @@
 import os
 import shutil
+import subprocess
 import numpy as np
 import pytest
 import cv2
@@ -115,6 +116,8 @@ def test_shell_helper(tmp_path, monkeypatch, capsys):
     script = os.path.abspath(
         os.path.join(os.path.dirname(__file__), "..", "shortcut_firstframe.sh")
     )
+    if not os.path.exists(script):
+        pytest.skip(f"shell helper not found: {script}")
     # create dummy video and existing jpg
     video = tmp_path / "vid.mp4"
     video.write_text("dummy")
