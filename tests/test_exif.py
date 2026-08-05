@@ -7,6 +7,7 @@ the approach in test_frame_extraction.py).
 
 import io
 import os
+import shutil
 import struct
 
 import cv2
@@ -15,6 +16,9 @@ import pytest
 
 from ntt.frames.exif import extract_exif_pillow, extract_exif_exifread
 from ntt.videos.exif import extract_metadata_opencv, extract_metadata_ffprobe
+
+
+FFPROBE_AVAILABLE = shutil.which("ffprobe") is not None
 
 
 # ---------------------------------------------------------------------------
@@ -199,19 +203,23 @@ class TestExtractMetadataFfprobe:
 
     EXPECTED_KEYS = {"width", "height", "fps", "frame_count", "duration_s", "codec"}
 
+    @pytest.mark.skipif(not FFPROBE_AVAILABLE, reason="ffprobe is not installed")
     def test_returns_dict(self, sample_video):
         result = extract_metadata_ffprobe(sample_video)
         assert isinstance(result, dict)
 
+    @pytest.mark.skipif(not FFPROBE_AVAILABLE, reason="ffprobe is not installed")
     def test_has_expected_keys(self, sample_video):
         result = extract_metadata_ffprobe(sample_video)
         assert self.EXPECTED_KEYS.issubset(result.keys())
 
+    @pytest.mark.skipif(not FFPROBE_AVAILABLE, reason="ffprobe is not installed")
     def test_dimensions(self, sample_video):
         result = extract_metadata_ffprobe(sample_video)
         assert result["width"] == 64
         assert result["height"] == 64
 
+    @pytest.mark.skipif(not FFPROBE_AVAILABLE, reason="ffprobe is not installed")
     def test_fps_positive(self, sample_video):
         result = extract_metadata_ffprobe(sample_video)
         assert result["fps"] > 0
@@ -226,6 +234,8 @@ class TestExtractMetadataFfprobe:
 # ---------------------------------------------------------------------------
 
 def test_video_backends_same_keys(sample_video):
+    if not FFPROBE_AVAILABLE:
+        pytest.skip("ffprobe is not installed")
     r1 = extract_metadata_opencv(sample_video)
     r2 = extract_metadata_ffprobe(sample_video)
     assert set(r1.keys()) == set(r2.keys())

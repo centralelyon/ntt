@@ -1,6 +1,7 @@
 import numpy as np
 from ntt.draw.primitives import write_text
 import cv2
+import sys
 
 
 def empty_frame(width: int, height: int, nb_colors=3) -> np.ndarray:
@@ -59,7 +60,11 @@ def frame_from_image_file(image_path: str) -> np.ndarray:
     frame = cv2.imread(image_path)
     return frame
 
+
 if __name__ == "__main__":
-    from ntt.frames.display import display_frame
     frame = random_frame()
-    display_frame(frame)
+    print(f"Generated random frame: shape={frame.shape}, dtype={frame.dtype}")
+    if "--display" in sys.argv:
+        from ntt.frames.display import display_frame
+
+        display_frame(frame)

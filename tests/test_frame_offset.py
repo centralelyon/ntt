@@ -13,6 +13,9 @@ from ntt.videos.io import write_video
 
 
 ROOT = Path(__file__).resolve().parents[1]
+FFMPEG_TOOLS_AVAILABLE = (
+    shutil.which("ffmpeg") is not None and shutil.which("ffprobe") is not None
+)
 
 
 def _make_frame_sequence(frame_count: int = 8) -> list:
@@ -40,7 +43,7 @@ def _frame_count(video_path: Path) -> int:
     return count
 
 
-@pytest.mark.skipif(shutil.which("ffmpeg") is None, reason="ffmpeg is not installed")
+@pytest.mark.skipif(not FFMPEG_TOOLS_AVAILABLE, reason="ffmpeg/ffprobe is not installed")
 def test_split_video_at_frame_offset_creates_offset_and_synced_outputs(tmp_path):
     input_path = tmp_path / "input.avi"
     frames = _make_frame_sequence(frame_count=8)
@@ -68,7 +71,7 @@ def test_split_video_at_frame_offset_creates_offset_and_synced_outputs(tmp_path)
     assert synced_meta["codec"] == input_meta["codec"]
 
 
-@pytest.mark.skipif(shutil.which("ffmpeg") is None, reason="ffmpeg is not installed")
+@pytest.mark.skipif(not FFMPEG_TOOLS_AVAILABLE, reason="ffmpeg/ffprobe is not installed")
 def test_split_video_at_frame_offset_can_remove_duration_using_video_fps(tmp_path):
     input_path = tmp_path / "input.avi"
     frames = _make_frame_sequence(frame_count=8)
@@ -91,7 +94,7 @@ def test_split_video_at_frame_offset_can_remove_duration_using_video_fps(tmp_pat
     assert float(synced_first_frame.mean()) == pytest.approx(expected_mean, abs=8.0)
 
 
-@pytest.mark.skipif(shutil.which("ffmpeg") is None, reason="ffmpeg is not installed")
+@pytest.mark.skipif(not FFMPEG_TOOLS_AVAILABLE, reason="ffmpeg/ffprobe is not installed")
 def test_split_video_at_frame_offset_script(tmp_path):
     input_path = tmp_path / "input.avi"
     write_video(str(input_path), _make_frame_sequence(frame_count=6), fps=3)

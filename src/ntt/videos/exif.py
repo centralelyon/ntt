@@ -13,6 +13,7 @@ Both functions:
 """
 
 import os
+import shutil
 
 
 # ---------------------------------------------------------------------------
@@ -80,6 +81,8 @@ def extract_metadata_ffprobe(video_path: str) -> dict:
     """
     if not os.path.isfile(video_path):
         raise FileNotFoundError(f"Video file not found: {video_path}")
+    if shutil.which("ffprobe") is None:
+        raise RuntimeError("ffprobe executable is not available")
 
     import ffmpeg
 

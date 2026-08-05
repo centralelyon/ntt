@@ -1,4 +1,5 @@
 import os
+import shutil
 
 import ffmpeg
 
@@ -21,6 +22,8 @@ def extract_video_info_ffprobe(video_path: str) -> dict:
     """Return unified video info using ffprobe."""
     if not os.path.isfile(video_path):
         raise FileNotFoundError(f"Video file not found: {video_path}")
+    if shutil.which("ffprobe") is None:
+        raise RuntimeError("ffprobe executable is not available")
 
     metadata = extract_metadata_ffprobe(video_path)
     probe = ffmpeg.probe(video_path)

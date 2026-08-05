@@ -30,7 +30,7 @@ def test_extract_video_info_opencv_returns_expected_fields(tmp_path):
     assert info["audio_present"] is None
 
 
-@pytest.mark.skipif(shutil.which("ffmpeg") is None, reason="ffmpeg is not installed")
+@pytest.mark.skipif(shutil.which("ffprobe") is None, reason="ffprobe is not installed")
 def test_extract_video_info_ffprobe_returns_expected_fields(tmp_path):
     video_path = _make_video(tmp_path)
 

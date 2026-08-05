@@ -10,15 +10,23 @@ from ntt.videos.change_speed import (
     change_speed_opencv,
     change_video_speed,
 )
-from ntt.videos.io import write_video
+from ntt.videos.io import read_video, write_video
 from ntt.videos.video_generation import random_video
 
 
 def _make_input_video(tmp_path):
-    input_path = tmp_path / "input.avi"
     frames = random_video(width=64, height=48, fps=6, duration=2)
-    write_video(str(input_path), frames, fps=6)
-    return input_path
+
+    for filename in ("input.avi", "input.mp4"):
+        input_path = tmp_path / filename
+        try:
+            write_video(str(input_path), frames, fps=6)
+        except ValueError:
+            continue
+        if input_path.is_file() and read_video(str(input_path)):
+            return input_path
+
+    pytest.skip("OpenCV could not create a readable test video on this platform")
 
 
 def _frame_count(video_path):
@@ -31,7 +39,7 @@ def _frame_count(video_path):
 
 def test_change_video_speed_opencv_creates_faster_output(tmp_path):
     input_path = _make_input_video(tmp_path)
-    output_path = tmp_path / "opencv.avi"
+    output_path = tmp_path / f"opencv{input_path.suffix}"
 
     changed = change_speed_opencv(str(input_path), str(output_path), 2.0)
 
