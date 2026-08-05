@@ -36,5 +36,5 @@ environment`_ using pip with ``-e`` `editable flag`_.
 3. install ntt and its "development" dependencies
 
 .. _PyPI: https://pypi.org/project/ntt
-.. _virtual environment: https://docs.python.org/3.9/library/venv.html
+.. _virtual environment: https://docs.python.org/3.13/library/venv.html
 .. _editable flag: https://pip.pypa.io/en/stable/topics/local-project-installs/#editable-installs

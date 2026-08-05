@@ -212,10 +212,12 @@ The Pipeoptz example uses the `pipeoptz` development dependency that is included
 docker run --rm -v ${PWD}:/app ntt python /app/scripts/example_generate_random_image.py /app/output/random_image.jpg
 docker run --rm -v ${PWD}:/app ntt python /app/scripts/example_generate_video_and_extract_first_frame.py /app/output
 docker run --rm -v ${PWD}:/app ntt python /app/scripts/example_generate_and_stitch_perspective_videos.py /app/output/perspective_stitch_demo
+docker run --rm -v ${PWD}:/app ntt python /app/scripts/example_flatdir_exif.py /app/output --output /app/output/files_with_exif.json
 docker run --rm -v ${PWD}:/app ntt python /app/scripts/example_pipeoptz_transform_pipeline.py /app/output/pipeoptz_transform_pipeline.jpg --dag-output /app/output/pipeoptz_transform_pipeline_dag.png --no-display
 docker run --rm -v ${PWD}:/app ntt python /app/scripts/generate_pipeoptz_script_gallery.py /app/output/pipeoptz_script_gallery
 ```
 
+The Flatdir example requires `flatdir` and creates a JSON file index enriched with EXIF data extracted by `ntt`.
 The Pipeoptz example recreates the `transform_frame()` workflow as a pipeline with separate `resize`, `grayscale`, and `annotate` nodes, writes the final frame, and can also render the pipeline DAG as `.dot` + `.png`.
 The gallery generator renders one Pipeoptz DAG per script in `scripts/`, plus one overview image and a JSON manifest.
 
@@ -250,7 +252,7 @@ pytest
 python /app/scripts/example_generate_random_image.py /app/output/random_image.jpg
 ```
 
-The python version in the container is 3.12 and you can check the versions of the dependancies in the [Dockerfile](Dockerfile).
+The python version in the container is 3.13 and you can check the versions of the dependancies in the [Dockerfile](Dockerfile).
 
 ## License
 

@@ -1,4 +1,4 @@
-FROM python:3.12-slim-bookworm
+FROM python:3.13-slim-bookworm
 
 # Install system dependencies                                                                           
 # libsndfile1 is required by librosa                                                                    
@@ -21,7 +21,7 @@ COPY src /app/src
 
 # Install the ntt package along with its dev dependencies.
 # coverage is not needed at runtime and currently breaks numba/librosa optional
-# integration under Python 3.12 in this image.
+# integration under Python 3.13 in this image.
 RUN pip install --no-cache-dir --upgrade pip \
     && pip install --no-cache-dir .[dev] \
     && pip uninstall -y coverage || true

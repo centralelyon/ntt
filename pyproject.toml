@@ -1,5 +1,5 @@
 [build-system]
-requires = [ "flit_core==3.9.0" ]
+requires = [ "flit_core==3.12.0" ]
 build-backend = "flit_core.buildapi"
 
 [project]
@@ -20,27 +20,28 @@ classifiers = [
     "Operating System :: OS Independent",
     "Natural Language :: English",
     "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.13",
     "Topic :: Multimedia :: Video",
     "Topic :: Multimedia :: Sound/Audio :: Analysis",
     "Topic :: Scientific/Engineering :: Image Processing",
     "Topic :: Scientific/Engineering :: Visualization",
     "Topic :: Software Development :: Libraries"
 ]
-requires-python = ">=3.7"
+requires-python = ">=3.13"
 # eyed3, pydub are used by pyAudioAnalysis, but not installed as dependencies
 dependencies = [
     "requests==2.31.0",
-    "opencv-python==4.6.0.66",
+    "opencv-python==4.12.0.88",
     "ffmpeg-python==0.2.0",
     "moviepy==1.0.3",
-    "scipy==1.12.0",
+    "scipy==1.18.0",
     "python-dotenv==1.0.1",
-    "matplotlib==3.9.0",
+    "matplotlib==3.11.1",
     "pyAudioAnalysis==0.3.14",
     "eyed3==0.9.7",
     "pydub==0.25.1",
-    "librosa==0.10.1",
-    "Pillow==10.3.0",
+    "librosa==0.11.0",
+    "Pillow==12.3.0",
     "exifread==3.5.1",
 ]
 
@@ -54,7 +55,8 @@ CI = "https://github.com/centralelyon/ntt/actions"
 dev = [
     "black==23.3.0",
     "pytest==8.1.1",
-    "flit==3.9.0",
+    "flit==3.12.0",
+    "flatdir==0.0.25",
     "pipeoptz==0.1.5",
     "sphinx==6.2.1",
     "sphinx-rtd-theme==1.2.2",
