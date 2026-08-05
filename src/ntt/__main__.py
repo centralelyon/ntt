@@ -36,6 +36,7 @@ import json as _json
 # Helpers
 # ---------------------------------------------------------------------------
 
+
 def _print(data: dict, as_json: bool) -> None:
     if as_json:
         print(_json.dumps(data, default=str, indent=2))
@@ -59,12 +60,14 @@ def _parse(argv, expected_args=1):
 # Command implementations
 # ---------------------------------------------------------------------------
 
+
 def _cmd_extract_exif_pillow(argv):
     as_json, args = _parse(argv)
     if not args:
         print("Usage: python -m ntt extract_exif_pillow [--json] <image_path>")
         sys.exit(1)
     from ntt.frames.exif import extract_exif_pillow
+
     data = extract_exif_pillow(args[0])
     _print(data, as_json)
 
@@ -75,6 +78,7 @@ def _cmd_extract_exif_exifread(argv):
         print("Usage: python -m ntt extract_exif_exifread [--json] <image_path>")
         sys.exit(1)
     from ntt.frames.exif import extract_exif_exifread
+
     data = extract_exif_exifread(args[0])
     _print(data, as_json)
 
@@ -85,6 +89,7 @@ def _cmd_image_metadata(argv):
         print("Usage: python -m ntt image_metadata [--json] <image_path>")
         sys.exit(1)
     from ntt.frames.metadata import extract_image_metadata
+
     data = extract_image_metadata(args[0])
     _print(data, as_json)
 
@@ -95,6 +100,7 @@ def _cmd_extract_video_meta_cv(argv):
         print("Usage: python -m ntt extract_video_meta_cv [--json] <video_path>")
         sys.exit(1)
     from ntt.videos.exif import extract_metadata_opencv
+
     data = extract_metadata_opencv(args[0])
     _print(data, as_json)
 
@@ -105,6 +111,7 @@ def _cmd_extract_video_meta_ff(argv):
         print("Usage: python -m ntt extract_video_meta_ff [--json] <video_path>")
         sys.exit(1)
     from ntt.videos.exif import extract_metadata_ffprobe
+
     data = extract_metadata_ffprobe(args[0])
     _print(data, as_json)
 
@@ -121,6 +128,7 @@ def _cmd_video_info(argv):
             backend = argv[i + 1]
 
     from ntt.videos.info import extract_video_info
+
     data = extract_video_info(args[0], backend=backend)
     _print(data, as_json)
 
@@ -132,6 +140,7 @@ def _cmd_extract_all_frames(argv):
         sys.exit(1)
     import os
     import cv2
+
     video_path = args[0]
     if not os.path.isfile(video_path):
         print(f"Error: file '{video_path}' not found.")
@@ -146,13 +155,61 @@ def _cmd_extract_all_frames(argv):
         ret, frame = cap.read()
         if not ret:
             break
-        cv2.imwrite(os.path.join(video_dir, f"{video_name}_frame_{count:04d}.jpg"), frame)
+        cv2.imwrite(
+            os.path.join(video_dir, f"{video_name}_frame_{count:04d}.jpg"), frame
+        )
         count += 1
     cap.release()
     if as_json:
         print(_json.dumps({"frames_extracted": count, "output_dir": video_dir}))
     else:
         print(f"Done: {count} frames extracted.")
+
+
+def _cmd_extract_first_frame(argv):
+    """Extract the first frame of a video and save it as JPEG in the same
+    directory.  This is a lightweight wrapper around
+    ``ntt.frames.frame_extraction.extract_first_frame`` intended for the
+    command line and helper scripts.
+
+    Usage::
+
+        python -m ntt extract_first_frame <video_path>
+
+    The output file will be ``<video_basename>.jpg`` and the full path is
+    printed on success.  Any error (missing file, extraction failure) is
+    reported to stdout and the process exits non-zero.
+    """
+    as_json, args = _parse(argv)
+    if not args:
+        print("Usage: python -m ntt extract_first_frame <video_path>")
+        sys.exit(1)
+    import os
+    from ntt.frames.frame_extraction import extract_first_frame
+
+    video_path = args[0]
+    if not os.path.isfile(video_path):
+        print(f"Error: file '{video_path}' not found.")
+        sys.exit(1)
+    video_dir = os.path.dirname(os.path.abspath(video_path))
+    video_name = os.path.basename(video_path)
+    base = os.path.splitext(video_name)[0]
+    out_name = base + ".jpg"
+
+    result = extract_first_frame(
+        video_path_in=video_dir,
+        video_name_in=video_name,
+        frame_path_out=video_dir,
+        frame_name_out=out_name,
+    )
+    if result is None:
+        print("Error: failed to extract frame")
+        sys.exit(1)
+
+    if as_json:
+        print(_json.dumps({"output": result}))
+    else:
+        print(f"Saved: {result}")
 
 
 def _cmd_generate_random_image(argv):
@@ -187,11 +244,11 @@ def _cmd_generate_random_image(argv):
 
     # Inject EXIF metadata
     metadata = {
-        "Make":             "ntt",
-        "Model":            "random_frame_generator",
-        "DateTime":         datetime.datetime.now().strftime("%Y:%m:%d %H:%M:%S"),
+        "Make": "ntt",
+        "Model": "random_frame_generator",
+        "DateTime": datetime.datetime.now().strftime("%Y:%m:%d %H:%M:%S"),
         "ImageDescription": "Randomly generated image by ntt",
-        "Software":         "ntt/__main__.py",
+        "Software": "ntt/__main__.py",
     }
     inject_exif(output_path, metadata)
 
@@ -282,13 +339,51 @@ def _cmd_enrich_exif(argv):
             continue
         file_path = os.path.join(entry.get("path", "."), name)
         try:
-            entry["exif_pillow"]   = extract_exif_pillow(file_path)
+            entry["exif_pillow"] = extract_exif_pillow(file_path)
             entry["exif_exifread"] = extract_exif_exifread(file_path)
         except FileNotFoundError:
-            entry["exif_pillow"]   = {}
+            entry["exif_pillow"] = {}
             entry["exif_exifread"] = {}
 
     print(_json.dumps(entries, default=str, indent=2))
+
+
+def _cmd_list_dirs(argv):
+    """List only the immediate subdirectories of a folder.
+
+    Usage::
+
+        python -m ntt list_dirs <folder> [--pattern <regex>]
+
+    The output is one directory path per line (or JSON when ``--json`` is
+    passed).  ``--pattern`` restricts the results to names matching the
+    given Python regular expression.  Only entries at the root of ``<folder>``
+    are considered; subdirectories of those entries are ignored.
+    """
+    import os
+    from ntt.utils.index import list_directories
+
+    as_json, args = _parse(argv)
+    if not args:
+        print("Usage: python -m ntt list_dirs <folder> [--pattern <regex>]")
+        sys.exit(1)
+
+    folder = args[0]
+    if not os.path.isdir(folder):
+        print(f"Error: '{folder}' is not a directory")
+        sys.exit(1)
+
+    pattern = None
+    for i, arg in enumerate(argv):
+        if arg == "--pattern" and i + 1 < len(argv):
+            pattern = argv[i + 1]
+
+    dirs = list_directories(folder, pattern)
+    if as_json:
+        print(_json.dumps({"dirs": dirs}))
+    else:
+        for d in dirs:
+            print(d)
 
 
 # ---------------------------------------------------------------------------
@@ -296,17 +391,19 @@ def _cmd_enrich_exif(argv):
 # ---------------------------------------------------------------------------
 
 COMMANDS = {
-    "extract_exif_pillow":   _cmd_extract_exif_pillow,
+    "extract_exif_pillow": _cmd_extract_exif_pillow,
     "extract_exif_exifread": _cmd_extract_exif_exifread,
-    "image_metadata":        _cmd_image_metadata,
+    "image_metadata": _cmd_image_metadata,
     "extract_video_meta_cv": _cmd_extract_video_meta_cv,
     "extract_video_meta_ff": _cmd_extract_video_meta_ff,
-    "video_info":            _cmd_video_info,
-    "extract_all_frames":    _cmd_extract_all_frames,
+    "video_info": _cmd_video_info,
+    "extract_all_frames": _cmd_extract_all_frames,
+    "extract_first_frame": _cmd_extract_first_frame,
+    "list_dirs": _cmd_list_dirs,
     "generate_random_image": _cmd_generate_random_image,
-    "change_speed":          _cmd_change_speed,
-    "change_video_speed":    _cmd_change_speed,
-    "enrich_exif":           _cmd_enrich_exif,
+    "change_speed": _cmd_change_speed,
+    "change_video_speed": _cmd_change_speed,
+    "enrich_exif": _cmd_enrich_exif,
 }
 
 
