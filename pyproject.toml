@@ -48,13 +48,14 @@ dependencies = [
 GitHub = "https://github.com/centralelyon/ntt/"
 Documentation = "https://ntt.readthedocs.io/"
 Issues = "https://github.com/centralelyon/ntt/issues"
-CI = "https://app.circleci.com/pipelines/github/centralelyon/ntt"
+CI = "https://github.com/centralelyon/ntt/actions"
 
 [project.optional-dependencies]
 dev = [
     "black==23.3.0",
     "pytest==8.1.1",
     "flit==3.9.0",
+    "pipeoptz==0.1.5",
     "sphinx==6.2.1",
     "sphinx-rtd-theme==1.2.2",
     "pydata-sphinx-theme==0.15.2",
@@ -67,7 +68,7 @@ dev = [
 ]
 
 [tool.flit.sdist]
-exclude = [".circleci", ".vscode", ".gitignore", ".readthedocs.yaml"]
+exclude = [".vscode", ".gitignore", ".readthedocs.yaml"]
 
 [tool.pytest.ini_options]
 filterwarnings = [

@@ -1,6 +1,6 @@
 # ntt
 
-[![CircleCI](https://dl.circleci.com/status-badge/img/gh/centralelyon/ntt/tree/main.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/centralelyon/ntt/tree/main)
+[![Tests](https://github.com/centralelyon/ntt/actions/workflows/tests.yml/badge.svg)](https://github.com/centralelyon/ntt/actions/workflows/tests.yml)
 [![Documentation Status](https://readthedocs.org/projects/ntt/badge/?version=latest)](https://ntt.readthedocs.io/en/latest/?badge=latest)
 
 `ntt` is a Python module that provides simple and consistent interfaces for common image and video processing tasks. It wraps around popular Python libraries to simplify their usage and make them interchangeable, to build complex pipelines. In particular:
@@ -125,6 +125,13 @@ You may look at the `examples` folder to see how to use `ntt` functions. Also a 
 Assuming you have a `crop.mp4 ` video in a `samples` folder and an `output`
 folder, here is how to use `extract_first_frame` function.
 
+At the command line you can now use the corresponding helper as well:
+
+```sh
+python -m ntt extract_first_frame samples/crop.mp4   # prints saved path
+```
+
+
 ```python
 import os
 from dotenv import load_dotenv
@@ -146,10 +153,10 @@ if __name__ == "__main__":
 ```
 
 
-## CircleCI
+## GitHub Actions
 
-The project is configured to run tests on CircleCI. The configuration file is
-`.circleci/config.yml`.
+The project is configured to run tests on GitHub Actions. The configuration file is
+`.github/workflows/tests.yml`.
 
 ## Docker
 
@@ -199,12 +206,18 @@ docker run --rm -v ${PWD}:/app ntt python tests/test_random_strings.py
 
 The `scripts/` folder contains small end-to-end examples that can all be run in one Docker command.
 The image examples write files through `ntt.frames.io.write`, and the video example writes files through `ntt.videos.io.write`.
+The Pipeoptz example uses the `pipeoptz` development dependency that is included in the Docker image.
 
 ```bash
 docker run --rm -v ${PWD}:/app ntt python /app/scripts/example_generate_random_image.py /app/output/random_image.jpg
 docker run --rm -v ${PWD}:/app ntt python /app/scripts/example_generate_video_and_extract_first_frame.py /app/output
 docker run --rm -v ${PWD}:/app ntt python /app/scripts/example_generate_and_stitch_perspective_videos.py /app/output/perspective_stitch_demo
+docker run --rm -v ${PWD}:/app ntt python /app/scripts/example_pipeoptz_transform_pipeline.py /app/output/pipeoptz_transform_pipeline.jpg --dag-output /app/output/pipeoptz_transform_pipeline_dag.png --no-display
+docker run --rm -v ${PWD}:/app ntt python /app/scripts/generate_pipeoptz_script_gallery.py /app/output/pipeoptz_script_gallery
 ```
+
+The Pipeoptz example recreates the `transform_frame()` workflow as a pipeline with separate `resize`, `grayscale`, and `annotate` nodes, writes the final frame, and can also render the pipeline DAG as `.dot` + `.png`.
+The gallery generator renders one Pipeoptz DAG per script in `scripts/`, plus one overview image and a JSON manifest.
 
 You can also run those examples from VS Code:
 

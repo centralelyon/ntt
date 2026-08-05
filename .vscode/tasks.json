@@ -54,6 +54,37 @@
       "type": "shell",
       "command": "docker run --rm -v ${workspaceFolder}:/app ntt python /app/scripts/example_change_video_speed.py /app/output/change_speed_demo opencv",
       "dependsOn": "docker-build-ntt"
+    },
+    {
+      "label": "docker-run-example-pipeoptz-transform-pipeline",
+      "type": "shell",
+      "command": "docker run --rm -v ${workspaceFolder}:/app ntt python /app/scripts/example_pipeoptz_transform_pipeline.py /app/output/pipeoptz_transform_pipeline.jpg --dag-output /app/output/pipeoptz_transform_pipeline_dag.png --no-display",
+      "dependsOn": "docker-build-ntt"
+    },
+    {
+      "label": "docker-run-generate-pipeoptz-script-gallery",
+      "type": "shell",
+      "command": "docker run --rm -v ${workspaceFolder}:/app ntt python /app/scripts/generate_pipeoptz_script_gallery.py /app/output/pipeoptz_script_gallery",
+      "dependsOn": "docker-build-ntt"
+    },
+    {
+      "label": "docker-run-split-video-at-frame-offset",
+      "type": "shell",
+      "command": "docker run --rm -v ${workspaceFolder}:/app ntt python /app/scripts/split_video_at_frame_offset.py \"/app/${input:frameOffsetVideoPath}\" ${input:frameOffsetCount}",
+      "dependsOn": "docker-build-ntt"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "frameOffsetVideoPath",
+      "type": "promptString",
+      "description": "Video path relative to the workspace, for example output/input.avi"
+    },
+    {
+      "id": "frameOffsetCount",
+      "type": "promptString",
+      "description": "Number of leading frames to move into the _offset file",
+      "default": "1"
     }
   ]
 }
